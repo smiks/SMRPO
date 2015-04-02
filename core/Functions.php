@@ -16,24 +16,6 @@ class Functions {
 		return $outputVal;
 	}
 	
-	/* Function generates hash of given plain text (one way hash function) */
-	public static function hashing($plainText, $salt="A!$%csa132_-s", $numIterations=10000)
-	{
-		$i = 1;
-		$hash = hash('haval256,3', $plainText.$salt, false);
-		while($i <= $numIterations)
-		{
-			$hash = hash('haval256,4', $hash.$salt, false);
-			$len  = strlen($hash);
-			$size = $len%$i;
-			$salt = substr(sha1($hash), 0, $size);
-			$hash = hash("haval256,5", $hash.$salt, false);
-			$i++;
-		}
-
-		return ($hash.$salt);
-	}
-
 	/* Function returns client's IP address */
 	public static function getClientIP()
 	{
@@ -61,6 +43,24 @@ class Functions {
 		{
 			return $_SERVER["REMOTE_ADDR"];
 		}
+	}
+		
+	/* Function generates hash of given plain text (one way hash function) */
+	public static function hashing($plainText, $salt="A!$%csa132_-s", $numIterations=10000)
+	{
+		$i = 1;
+		$hash = hash('haval256,3', $plainText.$salt, false);
+		while($i <= $numIterations)
+		{
+			$hash = hash('haval256,4', $hash.$salt, false);
+			$len  = strlen($hash);
+			$size = $len%$i;
+			$salt = substr(sha1($hash), 0, $size);
+			$hash = hash("haval256,5", $hash.$salt, false);
+			$i++;
+		}
+
+		return ($hash.$salt);
 	}
 
 	public static function input($type="ALL"){
