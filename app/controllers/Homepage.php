@@ -5,7 +5,7 @@ require_once 'app/models/user.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 
-class Main extends Controller{
+class Homepage extends Controller{
 	
 
 	public function post() {
@@ -14,15 +14,10 @@ class Main extends Controller{
 
 
 	public function home() {
-		if($_SESSION['loggedin'] == 1){
-
-			Functions::redirect("http://dev.smrpo.avatar-rpg.net/index.php?page=homepage");
-		}		
-		$this -> show("signIn.view.php");
+		$this -> show("homepage.view.php");
 	}
 
 	public function __construct() {
-	
 		if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->post();
 		}

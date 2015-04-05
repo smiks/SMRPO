@@ -14,6 +14,14 @@ class Login extends Controller{
 			$data = array("error" => "Username is too short");
 		}
 
+		/* this MUST be changed */
+		if($inputData['usrname'] == "test" && $inputData['passwrd'] == "test"){
+			$_SESSION['loggedin'] = 1;
+
+			/* everything is "ok" */
+			Functions::redirect("http://dev.smrpo.avatar-rpg.net/index.php?page=homepage");
+		}
+
 		$this->show("home.view.php", $data);
 	}
 

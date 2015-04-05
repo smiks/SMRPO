@@ -25,6 +25,8 @@ require_once 'core/Functions.php';
 Router::home('main', 'app/controllers/SignIn.php');
 Router::make('main', 'app/controllers/SignIn.php');
 Router::make('login', 'app/controllers/Login.php');
+Router::make('logout', 'app/controllers/Logout.php');
+Router::make('homepage', 'app/controllers/Homepage.php');
 Router::route();
 
 

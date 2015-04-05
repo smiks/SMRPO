@@ -81,7 +81,7 @@ class Functions {
 	}
 
 	public static function redirect($toUrl) {
-		header("Location: {$toURL}");
+		header("Location: {$toUrl}");
 	}
 
 	public static function reload($toUrl, $time=0) {

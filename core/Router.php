@@ -23,7 +23,6 @@ class Router {
 
 	public static function route() {
 		$pages = self::$pages;
-
 		/* pages are routed using $_GET['page'] */
 		if (!isset($_GET["page"])){
 			$_GET["page"] = "";
