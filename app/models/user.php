@@ -27,6 +27,22 @@ class user extends Model{
 
 	}
 	*/
+	
+	//funkcija, ki vrne stevilo vrstic v bazi, ki ustrezajo podanim podatkom
+	//to bomo uporabili za preverjanje pravilnosti uporabniskega imena ter gesla ob prijavi oz za preverjanje, ce vneseno uporabnisko ime ze obstaja ob registraciji
+	public function countUsersByInfo($email, $password = null)
+	{
+		global $db;
+		
+		if(is_null($password))
+			$q  = $db -> query("SELECT COUNT(*) FROM users WHERE email LIKE ('{$email}');");
+		else
+			$q  = $db -> query("SELECT COUNT(*) FROM users WHERE email LIKE ('{$email}') AND password LIKE ('{$password}');");
+		
+		$data = $db -> fetch_single($q);
+		return ($data)
+	}
+	
 	public function __construct() {
 
 	}
