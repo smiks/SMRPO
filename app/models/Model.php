@@ -3,9 +3,98 @@
 
 class Model {
 
-  public function __construct() {
+	private $table;
+	private $_sql;
+	private $usedOrAnd;
 
-  }
+	public function orm(){
+		$this->_sql = "SELECT <select> FROM <from>";
+		return $this;
+	}
+
+	public function table($table){
+		$sl = $this->_sql;
+		$sl = str_replace("<from>", $table, $sl);
+		$this->_sql = $sl;
+		return $this;
+	}
+
+	public function select($select){
+		$sl = $this->_sql;
+		$sl = str_replace("<select>", $select, $sl);
+		$this->_sql = $sl;
+		return $this;
+	}
+
+	public function where($what, $op, $toWhat){
+		$sl = $this->_sql;
+		$sl .= "<where>";
+		if($this->usedOrAnd){
+			$sentence = " {$what} {$op} '{$toWhat}' ";
+		}
+		else{
+			$sentence = " WHERE {$what} {$op} '{$toWhat}' ";	
+		}
+		
+		$sl = str_replace("<where>", $sentence, $sl);
+		$this->_sql = $sl;
+		return $this;
+	}
+
+	public function whereAnd($what, $op, $toWhat){
+		$sl = $this->_sql;
+		$sl .= "<where>";
+		$sentence = " WHERE {$what} {$op} '{$toWhat}' AND ";
+		$sl = str_replace("<where>", $sentence, $sl);
+		$this->_sql = $sl;
+		$this->usedOrAnd = true;
+		return $this;
+	}
+
+	public function whereOr($what, $op, $toWhat){
+		$sl = $this->_sql;
+		$sl .= "<where>";
+		$sentence = " WHERE {$what} {$op} '{$toWhat}' OR ";
+		$sl = str_replace("<where>", $sentence, $sl);
+		$this->_sql = $sl;
+		$this->usedOrAnd = true;
+		return $this;
+	}
+
+	public function limit($limit){
+		$sl = $this->_sql;
+		$sl .= "<limit>";
+		$sentence = " LIMIT {$limit} ";
+		$sl = str_replace("<limit>", $sentence, $sl);
+		$this->_sql = $sl;
+		return $this;
+	}	
+
+	public function toSql(){
+		return $this->_sql;
+	}
+
+	public function fetchRow(){
+		global $db;
+		$sl = $this->_sql;
+		$sl .= ";";
+		$q  = $db -> query($sl);
+		$data = $db -> fetch_row($q);
+		return ($data);
+	}
+
+	public function fetchSingle(){
+		global $db;
+		$sl = $this->_sql;
+		$sl .= ";";
+		$q  = $db -> query($sl);
+		$data = $db -> fetch_single($q);
+		return ($data);
+	}
+
+	public function __construct() {
+
+	}
 
 
 }

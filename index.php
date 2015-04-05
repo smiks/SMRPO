@@ -1,9 +1,10 @@
 <?php
 /******************/
 /* Author: smiks  */
-/* Version: 0.5   */
+/* Version: 0.6   */
 /******************/
 /* Latest upgrade */
+/* - Basic ORM    */
 /* - CSRF token   */
 /* - cache        */
 /* - routing      */
