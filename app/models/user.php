@@ -40,7 +40,7 @@ class user extends Model{
 			$q  = $db -> query("SELECT COUNT(*) FROM users WHERE email LIKE ('{$email}') AND password LIKE ('{$password}');");
 		
 		$data = $db -> fetch_single($q);
-		return ($data)
+		return ($data);
 	}
 	
 	public function __construct() {
