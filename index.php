@@ -22,8 +22,8 @@ require_once 'core/Functions.php';
 
 
 /* routing */
-Router::home('main', 'app/controllers/Main.php');
-Router::make('main', 'app/controllers/Main.php');
+Router::home('main', 'app/controllers/SignIn.php');
+Router::make('main', 'app/controllers/SignIn.php');
 Router::make('login', 'app/controllers/Login.php');
 Router::route();
 
