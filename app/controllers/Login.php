@@ -22,7 +22,7 @@ class Login extends Controller{
 			Functions::redirect(Functions::internalLink("?page=homepage"));
 		}
 
-		$this->show("home.view.php", $data);
+		$this->show("homepage.view.php", $data);
 	}
 
 	public function get() {

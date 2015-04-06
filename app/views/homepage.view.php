@@ -1,10 +1,14 @@
 [include]app/views/header.view.php[/include]
 
-WELCOME<br>
-{% if($isAdministrator) { %}
-<a href='?page=adminpanel'>Admin Panel</a>
-{% } %}
-&nbsp;
-<a href='?page=logout'>Logout</a>
-&nbsp;
+<div style="background-color:#FFFFFF">
+	<div style="background-color: #D0E0EB; height:30px">
+		WELCOME
+		{% if($isAdministrator) { %}
+		<a href='?page=adminpanel'>Admin Panel</a>
+		{% } %}
+		&nbsp;
+		<div style="float:right; padding-right:5px; padding-top:5px"><a href='?page=logout'>Logout</a></div>
+		&nbsp;
+	</div>
+</div>
 [include]app/views/footer.view.php[/include]
