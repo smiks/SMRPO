@@ -44,7 +44,12 @@ class Model {
 	public function whereAnd($what, $op, $toWhat){
 		$sl = $this->_sql;
 		$sl .= "<where>";
-		$sentence = " WHERE {$what} {$op} '{$toWhat}' AND ";
+				if($this->usedOrAnd){
+			$sentence = " {$what} {$op} '{$toWhat}' AND ";
+		}
+		else{
+			$sentence = " WHERE {$what} {$op} '{$toWhat}' AND ";	
+		}
 		$sl = str_replace("<where>", $sentence, $sl);
 		$this->_sql = $sl;
 		$this->usedOrAnd = true;
@@ -54,7 +59,12 @@ class Model {
 	public function whereOr($what, $op, $toWhat){
 		$sl = $this->_sql;
 		$sl .= "<where>";
-		$sentence = " WHERE {$what} {$op} '{$toWhat}' OR ";
+				if($this->usedOrAnd){
+			$sentence = " {$what} {$op} '{$toWhat}' OR ";
+		}
+		else{
+			$sentence = " WHERE {$what} {$op} '{$toWhat}' OR ";	
+		}
 		$sl = str_replace("<where>", $sentence, $sl);
 		$this->_sql = $sl;
 		$this->usedOrAnd = true;
