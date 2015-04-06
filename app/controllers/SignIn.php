@@ -16,7 +16,7 @@ class Main extends Controller{
 	public function home() {
 		if($_SESSION['loggedin'] == 1){
 
-			Functions::redirect("http://dev.smrpo.avatar-rpg.net/index.php?page=homepage");
+			Functions::redirect(Functions::internalLink("?page=homepage"));
 		}		
 		$this -> show("signIn.view.php");
 	}

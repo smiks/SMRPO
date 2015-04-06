@@ -2,24 +2,27 @@
 
 require_once 'Controller.php';
 require_once 'app/models/user.php';
-require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 
-class Homepage extends Controller{
+class Adminpanel extends Controller{
 	
-
 	public function post() {
-
+		
 	}
 
 	public function get() {
+		/* TODO :: get info from database */
 		$isAdministrator = true;
-		$data = array("isAdministrator" => $isAdministrator);		
-		$this -> show("homepage.view.php", $data);
-	}
-
-	public function home() {
-		$this -> show("homepage.view.php", $data);
+		if($isAdministrator){
+			$this->show("adminpanel.view.php");
+		}
+		else{
+			$error = "Access Denied";
+			$errorCode = "403";
+			$data = array("error" => $error, "errorCode" => $errorCode);
+			$this->show("error.view.php", $data);
+		}
+		
 	}
 
 	public function __construct() {
@@ -33,6 +36,5 @@ class Homepage extends Controller{
 			$this->home();
 		}	
 	}
-	
 
 }
