@@ -15,6 +15,14 @@ class Functions {
 		$outputVal   = str_replace($replace, $replacement, $value);
 		return $outputVal;
 	}
+
+
+	/* creates internal link. Example: domain.com/?page.... */
+	public function internalLink($url){
+		global $_Domain;
+		$internalLink = $_Domain."/".$url;
+		return ($internalLink);
+	}
 	
 	/* Function returns client's IP address */
 	public static function getClientIP()

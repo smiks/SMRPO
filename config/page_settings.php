@@ -31,7 +31,7 @@
 	$_PrivateKey = "framework";
 
 /* Domain */
-	$_Domain = "c3.bleach-soulsoftime.com";
+	$_Domain = "dev.smrpo.avatar-rpg.net";
 
 
 if($_ERROR_REPORT== 1) 
