@@ -19,7 +19,7 @@ class Login extends Controller{
 			$_SESSION['loggedin'] = 1;
 
 			/* everything is "ok" */
-			Functions::redirect("http://dev.smrpo.avatar-rpg.net/index.php?page=homepage");
+			Functions::redirect(Functions::internalLink("?page=homepage"));
 		}
 
 		$this->show("home.view.php", $data);

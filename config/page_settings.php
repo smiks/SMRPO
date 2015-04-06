@@ -31,6 +31,7 @@
 	$_PrivateKey = "framework";
 
 /* Domain */
+	$_http   = "http://"; // or https://
 	$_Domain = "dev.smrpo.avatar-rpg.net";
 
 
