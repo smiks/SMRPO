@@ -1,10 +1,11 @@
 [include]app/views/header.view.php[/include]
 
-ADMIN PANEL<br>
-<a href='?page=homepage'>Back</a>
+ADMIN PANEL :: Edit User<br>
+<a href='?page=homepage'>Home</a>
+&nbsp;
+<a href='?page=adminpanel'>Back</a>
 &nbsp;
 <a href='?page=logout'>Logout</a>
 &nbsp;
 <br>
-<a href='?page=edituser'>Edit User</a>
 [include]app/views/footer.view.php[/include]
