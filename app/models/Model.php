@@ -7,6 +7,32 @@ class Model {
 	private $_sql;
 	private $usedOrAnd;
 
+	public function sql($sql, $return="array", $key=null){
+		global $db;
+		$q  = $db -> query($sql);
+		if($return == "single"){
+			return $db -> fetch_single($q);
+		}
+		elseif($return == "array"){
+			$acc = array();
+
+			while($r = $db -> fetch_row($q)){
+				if(array_key_exists($key, $r)){
+					$k = $r[$key];
+					$acc[$k] = $r;
+				}
+				else{
+					throw new Exception("SQL_ARRAY_KEY_NOTFOUND");
+				}
+			}
+			return $acc;
+		}
+		else{
+			throw new Exception("SQL_ARRAY_RETURN_METHOD_NOTFOUND");
+		}
+
+	}
+
 	public function orm(){
 		$this->_sql = "SELECT <select> FROM <from>";
 		return $this;
