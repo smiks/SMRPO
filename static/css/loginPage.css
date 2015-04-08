@@ -1,0 +1,143 @@
+/* 
+    Document   : login
+    Created on : 6.4.2015, 14:07:20
+    Author     : Kanbanize.com
+    Description: This file was modified by Rok Sokol
+*/
+
+@font-face {
+    font-family: 'BryantProBoldAlternateRegular';
+    src: url('../fonts/bryantpro/bryantpro-boldalt.eot');
+    src: url('../fonts/bryantpro/bryantpro-boldalt.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/bryantpro/bryantpro-boldalt.ttf') format('truetype'),
+        url('../fonts/bryantpro/bryantpro-boldalt.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background-color: #FFF;
+    margin: 0;
+    padding: 0;
+    color: #333333;
+    font-size: 13px;
+    line-height: 20px;
+    font-family: HelveticaNeueRoman, Verdana, sans-serif;
+}
+
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+}
+
+input[type=text],
+input[type=password],
+input[type=email] {
+    display: block;
+    width: 100%;
+    height: 46px;
+    padding: 0;
+    border: 0 none;
+    line-height: 46px;
+    font-size: 16px;
+    background-color: #FFF;
+}
+
+.btn_signup,
+input[type=submit] {
+	/* Submit button on login page */
+    display: inline-block;
+    height: 58px;
+	width:240px;
+    padding: 0 30px;
+    margin: 10px 0 10px 0;
+    background-color: #79bbff;
+    color: #FFF;
+    font: 30px/30px BryantProBoldAlternateRegular;
+    border: 0 none;
+    border-radius: 6px;
+    cursor: pointer;	
+}
+
+textarea {
+    height: 140px;
+    line-height: 18px;
+}
+
+input:focus,
+textarea:focus {
+    outline: 0 none;
+}
+
+#layout_createacc,
+#layout_confirm,
+#layout_login {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    background-color: #067db7;
+}
+
+#layout_createacc td,
+#layout_confirm td,
+#layout_login td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.center_block {
+    display: inline-block;
+    width: 100%;
+    max-width: 	400px;
+}
+
+.center_block > div {
+    padding: 20px 80px;
+    background-color: #FFF;
+    border-radius: 6px;
+    text-align: left;
+    overflow: hidden;
+}
+
+.center_block h1 {
+    margin: 0 0 10px 0;
+}
+
+.center_block h1 img {
+    max-height: 70px;
+}
+
+
+.center_block .input_holder.email {
+	overflow: hidden;
+    padding: 0 6px 0 46px;
+    border: 1px solid #cfcfcf;
+    border-radius: 6px;
+    background-color: #FFF;
+    margin: 5px 0 20px 0;
+    background-image: url(../images/user.png);
+    background-repeat: no-repeat;
+    background-position: 15px 13px;
+}
+
+.center_block .input_holder.password {
+	overflow: hidden;
+    padding: 0 6px 0 46px;
+    border: 1px solid #cfcfcf;
+    border-radius: 6px;
+    background-color: #FFF;
+    margin: 5px 0 20px 0;
+    background-image: url(../images/lock.png);
+    background-repeat: no-repeat;
+    background-position: 15px 11px;
+}
+
+
+
