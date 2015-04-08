@@ -26,8 +26,8 @@ class Main extends Controller{
 		if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->post();
 		}
-		elseif($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$this->post();
+		elseif($_SERVER['REQUEST_METHOD'] == 'GET') {
+			$this->get();
 		}		
 		else{
 			$this->home();
