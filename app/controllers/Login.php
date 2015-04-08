@@ -9,20 +9,16 @@ class Login extends Controller{
 	public function post() {
 		$inputData = Functions::input()["POST"];
 
-		/* To je samo testno */
-		if(strlen($inputData['usrname']) < 5){
-			$data = array("error" => "Username is too short");
-		}
-
 		/* this MUST be changed */
-		if($inputData['usrname'] == "test" && $inputData['passwrd'] == "test"){
+		if($inputData['login_email'] == "test@test.test" && $inputData['login_password'] == "test"){
 			$_SESSION['loggedin'] = 1;
 
 			/* everything is "ok" */
 			Functions::redirect(Functions::internalLink("?page=homepage"));
 		}
 
-		$this->show("homepage.view.php", $data);
+		$data = array("error" => "Wrong login credentials!");
+		$this->show("signIn.view.php", $data);
 	}
 
 	public function get() {

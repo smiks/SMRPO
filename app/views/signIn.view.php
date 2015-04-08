@@ -18,6 +18,11 @@
 									<div class="input_holder password">
 										<input type="password" value=""  title="" name="login_password" required />
 									</div>
+									<div>
+									{% if(isset($error)){ %}
+										{{error}}
+									{% } %}
+									</div>
 							</fieldset>
 							<input type="submit" value="Log In" />
 					</form>

@@ -1,0 +1,37 @@
+.page {
+	width: 100%;
+    height: 100%;
+    min-height: 100%;
+    background-color: #067db7;
+    text-align: center;
+}
+
+#adminmenurow {
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+	padding: 2%;
+}
+
+#adminmenu{
+    color: #333333;
+    font-size: 13px;
+    line-height: 20px;
+    font-family: HelveticaNeueRoman, Verdana, sans-serif;
+}
+
+#adminmenu_option{
+    border-radius: 18px; 
+	-moz-border-radius: 18px; 
+	-webkit-border-radius: 18px; 
+	border: 0px ridge #1D805F;
+	background-color: #65A8CF;
+	width: 100px;
+	text-align: center;
+	float: left;
+}
+
+#adminmenu_option a{
+    text-decoration: none;
+    color: #CCC;
+}
