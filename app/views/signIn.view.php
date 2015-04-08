@@ -8,7 +8,7 @@
 				<div>
 					<h1><center><img alt="Logo" src="../../static/images/logo7_1200.png" /></center></h1>
 					<div id="login_block">
-						<form id="form_login" action="https://friunilj.kanbanize.com/ctrl_login/login" method="post" style="display:block">
+						<form id="form_login" action="?page=login" method="post" style="display:block">
 							<fieldset>
 									<label>Email</label>
 									<div class="input_holder email">
