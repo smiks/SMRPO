@@ -33,6 +33,4 @@ class Homepage extends Controller{
 			$this->home();
 		}	
 	}
-	
-
 }

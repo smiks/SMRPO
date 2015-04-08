@@ -34,6 +34,11 @@
 	$_http   = "http://"; // or https://
 	$_Domain = "dev.smrpo.avatar-rpg.net";
 
+/* static file access */
+	$_images = "/static/images/";
+	$_css    = "/static/css/";
+	$_js     = "/static/js/";
+	
 
 if($_ERROR_REPORT== 1) 
 {
