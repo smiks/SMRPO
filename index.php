@@ -30,6 +30,7 @@ Router::make('logout', 'app/controllers/Logout.php');
 Router::make('homepage', 'app/controllers/Homepage.php');
 Router::make('adminpanel', 'app/controllers/Adminpanel.php');
 Router::make('edituser', 'app/controllers/Edituser.php');
+Router::make('creategroup', 'app/controllers/CreateGroup.php');
 Router::route();
 
 

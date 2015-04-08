@@ -11,4 +11,8 @@
 		&nbsp;
 	</div>
 </div>
+
+<div>
+	<a href="?page=creategroup"><button> Create group </button></a>
+</div>
 [include]app/views/footer.view.php[/include]

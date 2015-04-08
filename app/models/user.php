@@ -35,9 +35,9 @@ class user extends Model{
 		global $db;
 		
 		if(is_null($password))
-			$q  = $db -> query("SELECT COUNT(*) FROM users WHERE email LIKE ('{$email}');");
+			$q  = $db -> query("SELECT COUNT(*) FROM User WHERE email LIKE ('{$email}');");
 		else
-			$q  = $db -> query("SELECT COUNT(*) FROM users WHERE email LIKE ('{$email}') AND password LIKE ('{$password}');");
+			$q  = $db -> query("SELECT COUNT(*) FROM User WHERE email LIKE ('{$email}') AND password LIKE ('{$password}');");
 		
 		$data = $db -> fetch_single($q);
 		return ($data);
@@ -55,8 +55,27 @@ class user extends Model{
 			return array();
 		}
 
-		$q  = $db -> query("SELECT * FROM users WHERE id_user='{$id}' LIMIT 1;");
+		$q  = $db -> query("SELECT * FROM User WHERE id_user='{$id}' LIMIT 1;");
 		$data = $db -> fetch_row($q);
 		return ($data);
+	}
+
+	public function getAllUsersWithAbilities ($role)
+	{
+		global $db;
+		
+		preg_match('/1\d\d/', $role, $matches);
+
+		if (sizeOf($matches) > 0){
+			$ret = $this->sql("SELECT * FROM User WHERE abilities LIKE ('1__');", $return = "array", $key ="id_user");
+		}
+		else
+		{
+			preg_match('/\d\d1/', $role, $matches);
+			if (sizeOf($matches) > 0)
+			$ret = $this->sql("SELECT * FROM User WHERE abilities LIKE ('__1');", $return = "array", $key ="id_user");
+		}
+
+		return ($ret);
 	}
 }
