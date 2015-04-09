@@ -3,7 +3,7 @@
 
 <div id="toCenter">
 	<div id="field">
-		<h2>Edit User</h2>
+		<h2>Delete User</h2>
 	</div>
 	<br>
 	<div id="field">
@@ -21,7 +21,7 @@
 				?>
 				</select>
 			<br>
-			<input type='submit' value='Select' name='submit'><br>
+			<input type='submit' value='Delete' name='submit'><br>
 		</form>
 	</div>
 </div>
