@@ -1,7 +1,84 @@
-<div id="menurow">
-	<div id="menu">
-		<div id="menu_option">
-			<a href='?page=logout'>Logout</a>
-		</div>
-	</div>
-</div>
+.page {
+	width: 100%;
+    height: 100%;
+    min-height: 100%;
+    background-color: #067db7;
+    text-align: center;
+}
+
+.menu_bar {
+	height: 50px;
+	max-height: 175px;
+	width: auto;
+	background-color: #FFF;
+}
+
+#logo {
+	float: left;
+}
+
+#logo img{
+	height: 40px;
+	max-height: 60px;
+	width: auto;
+}
+
+#menu{
+    font-size: 20px;
+    line-height: 35px;
+    font-family: HelveticaNeueRoman, Verdana, sans-serif;
+    padding: 5px;
+    float: right;
+}
+
+#menu_option{
+    border-radius: 18px; 
+	-moz-border-radius: 18px; 
+	-webkit-border-radius: 18px; 
+	border: 1px outset #1D805F;
+	background-color: #65A8CF;
+	width: 150px;
+	max-width: 170px;
+	text-align: center;
+	float: left;
+	padding: 3px;
+	margin: 1px;
+}
+
+#menu_option:hover{
+    border-radius: 18px; 
+	-moz-border-radius: 18px; 
+	-webkit-border-radius: 18px; 
+	border: 1px inset #1D805F;
+	background-color: #97c5df;
+	width: 150px;
+	max-width: 170px;
+	text-align: center;
+	float: left;
+	padding: 3px;
+	margin: 1px;
+}
+
+#menu_option:active{
+    border-radius: 18px; 
+	-moz-border-radius: 18px; 
+	-webkit-border-radius: 18px; 
+	border: 2px inset #1D805F;
+	background-color: #97c5df;
+	width: 150px;
+	max-width: 170px;
+	text-align: center;
+	float: left;
+	padding: 2px;
+	margin: 1px;
+}
+
+#menu_option a{
+    text-decoration: none;
+    color: #333;
+}
+
+#menu_option a:hover {
+	background-color: #97c5df;
+	color: #222;
+}

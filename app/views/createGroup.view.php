@@ -1,20 +1,8 @@
 [include]app/views/header.view.php[/include]
-
-<div style="background-color:#FFFFFF">
-	<div style="background-color: #D0E0EB; height:30px">
-		<a href='?page=homepage'>Back</a>
-		{% if($isAdministrator) { %}
-		&nbsp;<a href='?page=adminpanel'>Admin Panel</a>
-		{% } %}
-		&nbsp;
-		<div style="float:right; padding-right:5px; padding-top:5px"><a href='?page=logout'>Logout</a></div>
-		&nbsp;
-	</div>
-</div>
+[include]app/views/menu.view.php[/include]
 
 <div>
 	<form action='?page=login' method='post'>
-		<div style = "background-color: #BBC9D3; height:30px; padding-top:0px"> <h3 style="padding-left:8px; padding-top:5px"> Create group </h3></div>
 		<p style="padding-left:8px;"> 
 			<label>Group name:
 				<input type = "text" id = "groupname" name="groupname" placeholder = "Group name" required/>
