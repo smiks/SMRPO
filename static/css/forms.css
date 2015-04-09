@@ -1,0 +1,34 @@
+#form {
+	 border-radius: 18px; 
+	-moz-border-radius: 18px; 
+	-webkit-border-radius: 18px; 
+	border: 0px inset #1D805F;
+	background-color: #fff;
+	width: 300px;
+	max-width: 350px;
+	height: 400px;
+	max-height: 500px;
+	margin: 5px;
+}
+
+#field {
+	 border-radius: 18px; 
+	-moz-border-radius: 18px; 
+	-webkit-border-radius: 18px; 
+	border: 0px inset #1D805F;
+	background-color: #fff;
+	padding: 5px;
+	margin: 5px;
+}
+
+#toCenter {
+	text-align: center;
+	margin-left:25%;
+	margin-right:25%;
+}
+
+label {
+	font-weight: bold;
+	padding: 1px;
+	font-size: 16px;
+}

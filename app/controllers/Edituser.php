@@ -6,15 +6,26 @@ require_once 'core/Functions.php';
 
 class Edituser extends Controller{
 	
+
+	private function getAllUsers()
+	{
+		$user = new user();
+		return ($user -> getAllUsers());
+	}
+
 	public function post() {
 		
 	}
 
 	public function get() {
+
+		$allUsers = $this->getAllUsers();
+
 		/* TODO :: get info from database */
 		$isAdministrator = true;
 		if($isAdministrator){
-			$this->show("edituser.view.php");
+			$data = array("users" => $allUsers);
+			$this->show("edituser.view.php", $data);
 		}
 		else{
 			$error = "Access Denied";

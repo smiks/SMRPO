@@ -3,14 +3,15 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>Kanbanize - SMRPO#6</title>        
-		<meta name="robots" content="" />
+        <meta name="robots" content="" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		
+        
         <link rel="icon" type="image/png" href="../../static/images/favicon.png"/>
         <link type="text/css" rel="stylesheet" href="../../static/css/loginPage.css" />
         <link type="text/css" rel="stylesheet" href="../../static/css/adminMenu.css" />
         <link type="text/css" rel="stylesheet" href="../../static/css/menu.css" />
+        <link type="text/css" rel="stylesheet" href="../../static/css/forms.css" />
  
-	</head>
+    </head>
     <body>
     <div class="page">

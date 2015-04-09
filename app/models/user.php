@@ -60,6 +60,12 @@ class user extends Model{
 		return ($data);
 	}
 
+
+	public function getAllUsers(){
+		return $this->sql("SELECT * FROM User ORDER BY name ASC, surname ASC", $return = "array", $key ="id_user");
+	}
+
+
 	public function getAllUsersWithAbilities ($role)
 	{
 		global $db;
