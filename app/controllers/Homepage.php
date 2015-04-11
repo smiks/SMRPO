@@ -13,12 +13,21 @@ class Homepage extends Controller{
 	}
 
 	public function get() {
-		$isAdministrator = true;
-		$data = array("isAdministrator" => $isAdministrator);		
+		$user = new user();
+		$info = $user->userInfoByID($_SESSION['userid']);
+		$name = $info['name'];
+		$surname = $info['surname'];
+		$isAdministrator = $info['administrator'];
+		$data = array("myName" => $name, "mySurname" => $surname, "isAdministrator" => $isAdministrator);
 		$this -> show("homepage.view.php", $data);
 	}
 
 	public function home() {
+		$user = new user();
+		$info = $user->userInfoByID($_myUserID);
+		$name = $info['name'];
+		$surname = $info['surname'];
+		$data = array("myName" => $name, "mySurname" => $surname);
 		$this -> show("homepage.view.php", $data);
 	}
 

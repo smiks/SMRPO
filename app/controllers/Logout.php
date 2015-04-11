@@ -22,6 +22,7 @@ class Logout extends Controller{
 
 	public function __construct() {
 		$_SESSION['loggedin'] = 0;
+		$_SESSION['userid']   = 0;
 		Functions::redirect("http://dev.smrpo.avatar-rpg.net/index.php?page=main");
 	}
 

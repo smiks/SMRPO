@@ -12,12 +12,11 @@ class Main extends Controller{
 
 	}
 
-
+	public function get() {
+		$this -> show("signIn.view.php");
+	}
+	
 	public function home() {
-		if($_SESSION['loggedin'] == 1){
-
-			Functions::redirect(Functions::internalLink("?page=homepage"));
-		}		
 		$this -> show("signIn.view.php");
 	}
 

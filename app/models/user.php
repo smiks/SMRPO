@@ -117,6 +117,24 @@ class user extends Model{
 		return $lastID;
 	}
 
+	public function lockUser($email){
+		global $db;
+		$sql 	="UPDATE User SET locked = 1 WHERE email LIKE ('{$email}') LIMIT 1;";
+		$q = $db -> query($sql);
+	}
+
+	public function resetFailedLoginAttempt($email){
+		global $db;
+		$sql 	="UPDATE User SET num_invalid_login = 0 WHERE email LIKE ('{$email}') LIMIT 1;";
+		$q = $db -> query($sql);
+	}
+
+	public function updateFailedLoginAttempt($email){
+		global $db;
+		$sql 	="UPDATE User SET num_invalid_login = num_invalid_login + 1 WHERE email LIKE ('{$email}') LIMIT 1;";
+		$q = $db -> query($sql);
+	}
+
 	public function updateUser($userid, $data){
 		global $db;
 		$sql = "UPDATE User SET <SET> WHERE id_user='{$userid}' LIMIT 1;";
@@ -133,13 +151,15 @@ class user extends Model{
 		return true;
 	}
 
-	public function userInfoByID($id=0){
+	public function userInfoByEmail($email){
 		global $db;
+		$q  = $db -> query("SELECT * FROM User WHERE email LIKE ('{$email}') LIMIT 1;");
+		$data = $db -> fetch_row($q);
+		return ($data);
+	}
 
-		if($id == 0){
-			return array();
-		}
-
+	public function userInfoByID($id){
+		global $db;
 		$q  = $db -> query("SELECT * FROM User WHERE id_user='{$id}' LIMIT 1;");
 		$data = $db -> fetch_row($q);
 		return ($data);
