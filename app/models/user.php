@@ -35,9 +35,9 @@ class user extends Model{
 		global $db;
 		
 		if(is_null($password))
-			$q  = $db -> query("SELECT COUNT(*) FROM User WHERE email LIKE ('{$email}');");
+			$q  = $db -> query("SELECT COUNT(*) FROM User WHERE email LIKE ('{$email}') AND active=1;");
 		else
-			$q  = $db -> query("SELECT COUNT(*) FROM User WHERE email LIKE ('{$email}') AND password LIKE ('{$password}');");
+			$q  = $db -> query("SELECT COUNT(*) FROM User WHERE email LIKE ('{$email}') AND password LIKE ('{$password}') AND active=1;");
 		
 		$data = $db -> fetch_single($q);
 		return ($data);
@@ -62,13 +62,13 @@ class user extends Model{
 
 
 	public function getAllUsers(){
-		return $this->sql("SELECT * FROM User ORDER BY name ASC, surname ASC", $return = "array", $key ="id_user");
+		return $this->sql("SELECT * FROM User WHERE active=1 ORDER BY name ASC, surname ASC", $return = "array", $key ="id_user");
 	}
 
 	public function isKanbanMAster($userId)
 	{
 		global $db;
-		$q  = $db -> query("SELECT COUNT(*) FROM User WHERE id_user =('{$userId}') AND abilities LIKE ('_1_');");
+		$q  = $db -> query("SELECT COUNT(*) FROM User WHERE id_user =('{$userId}') AND abilities LIKE ('_1_') AND active=1;");
 
 		$isKM = $db -> fetch_single($q);
 
@@ -86,13 +86,13 @@ class user extends Model{
 		preg_match('/1\d\d/', $role, $matches);
 
 		if (sizeOf($matches) > 0){
-			$ret = $this->sql("SELECT * FROM User WHERE abilities LIKE ('1__');", $return = "array", $key ="id_user");
+			$ret = $this->sql("SELECT * FROM User WHERE abilities LIKE ('1__') AND active=1;", $return = "array", $key ="id_user");
 		}
 		else
 		{
 			preg_match('/\d\d1/', $role, $matches);
 			if (sizeOf($matches) > 0)
-			$ret = $this->sql("SELECT * FROM User WHERE abilities LIKE ('__1');", $return = "array", $key ="id_user");
+			$ret = $this->sql("SELECT * FROM User WHERE abilities LIKE ('__1') AND active=1;", $return = "array", $key ="id_user");
 		}
 
 		return ($ret);
