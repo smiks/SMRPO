@@ -39,6 +39,19 @@
 	margin-right:auto;
 }
 
+#textinput_100{
+	background-color: #fffedd; 
+	width: 100px;
+}
+#textinput_150{
+	background-color: #fffedd; 
+	width: 150px;
+}
+#textinput_200{
+	background-color: #fffedd; 
+	width: 200px;
+}
+
 label {
 	font-weight: bold;
 	padding: 1px;
