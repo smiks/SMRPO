@@ -59,6 +59,7 @@ class user extends Model{
 		return $this->sql("SELECT * FROM User WHERE active=1 ORDER BY name ASC, surname ASC", $return = "array", $key ="id_user");
 	}
 
+	//funkcija, ki za vlogo (razvijalec, product owner ali KM) vrne vse uporabnike z želenimi ability-ji
 	public function getAllUsersWithAbilities ($role)
 	{
 		global $db;
@@ -96,6 +97,7 @@ class user extends Model{
 		return true;
 	}
 
+	//funkcija, ki preveri, ce ima vneseni uporabnik pravice za kreiranje skupine - KM
 	public function isKanbanMAster($userId)
 	{
 		global $db;
@@ -158,10 +160,23 @@ class user extends Model{
 		return ($data);
 	}
 
+<<<<<<< HEAD
 	public function userInfoByID($id){
 		global $db;
+=======
+		if($id == 0){
+			return array();
+		}
+
+<<<<<<< HEAD
+		return ($ret);
+	}
+
+=======
+>>>>>>> 27fe04e095021c7ddcb80d30bad9bc02ada15ac6
 		$q  = $db -> query("SELECT * FROM User WHERE id_user='{$id}' LIMIT 1;");
 		$data = $db -> fetch_row($q);
 		return ($data);
 	}	
+>>>>>>> 047ab6098fb12a2819aabbf488968c06db1aed15
 }
