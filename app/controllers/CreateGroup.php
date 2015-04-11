@@ -23,12 +23,24 @@ class CreateGroup extends Controller{
 
 	public function getUsersWithAbilities()
 	{
-		
-		$developers = $this->getDevelopers();
-		$owners = $this->getOwners();
-
-		$data = array("developers" => $developers, "owners" => $owners);
-		$this -> show("createGroup.view.php", $data);
+	
+		// TODO: iz baze podatkov
+		$isMaster = false;
+		if(!$isMaster){
+			$error = "Access Denied";
+			$errorCode = "403";
+			$data = array("error" => $error, "errorCode" => $errorCode);
+			$this->show("error.view.php", $data);
+		}
+		else
+		{
+			
+			$developers = $this->getDevelopers();
+			$owners = $this->getOwners();
+	
+			$data = array("developers" => $developers, "owners" => $owners);
+			$this -> show("createGroup.view.php", $data);
+		}
 	}
 
 	public function __construct() {
@@ -37,5 +49,7 @@ class CreateGroup extends Controller{
 		}	
 		
 	}
+
+
 	
 }

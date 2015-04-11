@@ -65,6 +65,19 @@ class user extends Model{
 		return $this->sql("SELECT * FROM User ORDER BY name ASC, surname ASC", $return = "array", $key ="id_user");
 	}
 
+	public function isKanbanMAster($userId)
+	{
+		global $db;
+		$q  = $db -> query("SELECT COUNT(*) FROM User WHERE id_user =('{$userId}') AND abilities LIKE ('_1_');");
+
+		$isKM = $db -> fetch_single($q);
+
+		if ($isKM != 0)
+			return true;
+
+		return false;		
+	}
+
 
 	public function getAllUsersWithAbilities ($role)
 	{

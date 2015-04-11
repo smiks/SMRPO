@@ -1,17 +1,17 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
 
-<div>
-	<form action='?page=login' method='post'>
-		<p style="padding-left:8px;"> 
+<div style="margin-left:40%;">
+	<form action='?page=login' method='post' style = "float:left; padding-top:30px">
+		<p> 
 			<label>Group name:
-				<input type = "text" id = "groupname" name="groupname" placeholder = "Group name" required/>
+				<input type = "text" id = "groupname" name="groupname" placeholder = "Group name" required style="border-radius:5px; margin-top:5px"/>
 			</label>
 		</p>	
-		<p style="padding-left:8px;"> 
+		<p> 
 
 			<label>Product owner:<br>
-				<select name="owners">
+				<select name="owners" style="border-radius:5px; margin-top:5px">
 				<?
 				foreach($owners as $key => $value){
 					$owner   = $owners[$key];
@@ -25,7 +25,7 @@
 			</label>
 			<br><br>
 			<label>Product developers:<br>
-				<select name="developers" multiple>
+				<select name="developers" multiple style="border-radius:5px; margin-top:5px">
 				<?
 				foreach($developers as $key => $value){
 					$developer   = $developers[$key];
@@ -38,6 +38,9 @@
 				</select>
 			</label>
 		</p>
+
+		<input type="submit" value="Create"/>
+		
 		<p>
 			{% if(isset($error)){ %}
 				{{error}}
