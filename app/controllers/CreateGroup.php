@@ -25,7 +25,7 @@ class CreateGroup extends Controller{
 	{
 	
 		// TODO: iz baze podatkov
-		$isMaster = false;
+		$isMaster = true;
 		if(!$isMaster){
 			$error = "Access Denied";
 			$errorCode = "403";
@@ -46,10 +46,31 @@ class CreateGroup extends Controller{
 	public function __construct() {
 		if($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$this->getUsersWithAbilities();
-		}	
+		}
+		else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->post();
+		}
 		
 	}
+	
+	public function post()
+	{
+		$input = Functions::input("POST");
 
+		$owner = $input["owners"];
+		$gName = $input["groupname"];
+		$develop = $input["developers"];
 
+		$group = new group();
+		if($group->addGroup($gName, $develop, $owner))
+		{
+			$message = "Successfully added group {$gName}.";
+			$data = array("message" => $message);
+		}
+		else{
+			$data = array("error" => "Group was not created.");
+		}
+		$this->show("addGroup.view.php", $data);
+	}
 	
 }

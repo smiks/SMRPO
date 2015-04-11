@@ -5,9 +5,20 @@ require_once 'Model.php';
 
 class user extends Model{
 
+	/* construction and helper functions */
 	public function __construct() {
 
 	}
+
+	private static function cleanInput($value)
+	{
+		$replace     = array("'",'"','<','>','\\');
+		$replacement = array("&#39;",'&quot;','&lt;','&gt;','&#092;');
+		$outputVal   = str_replace($replace, $replacement, $value);
+		return $outputVal;
+	}
+
+	/* other functions ordered by name asc */
 
 	//funkcija, ki vrne stevilo vrstic v bazi, ki ustrezajo podanim podatkom
 	//to bomo uporabili za preverjanje pravilnosti uporabniskega imena ter gesla ob prijavi oz za preverjanje, ce vneseno uporabnisko ime ze obstaja ob registraciji
@@ -30,7 +41,19 @@ class user extends Model{
 		return true;
 	}
 
-
+	public function exists($parameter, $table){
+		global $db;
+		$pName  = $parameter[0];
+		$pValue = $parameter[1];
+		$sql 	="SELECT COUNT(*) FROM {$table} WHERE {$pName} = '{$pValue}' LIMIT 1;";
+		$q = $db -> query($sql);
+		$exists = $db -> fetch_single($q);
+		if($exists == 1)
+		{
+			return true;
+		}
+		return false;
+	}
 
 	public function getAllUsers(){
 		return $this->sql("SELECT * FROM User WHERE active=1 ORDER BY name ASC, surname ASC", $return = "array", $key ="id_user");
@@ -55,6 +78,24 @@ class user extends Model{
 		return ($ret);
 	}
 
+	public function insertUser($userid, $data){
+		global $db;
+		$sql 	= "INSERT INTO User (<INSERT> active) VALUES (<VALUES> '1');";
+		$insert = "";
+		$values = "";
+		foreach ($data as $key => $value) {
+			$value = $this->cleanInput($value);
+			$insert .= $key.", ";
+			$values .= "'{$value}', ";
+		}
+		$sql = str_replace("<INSERT>", $insert, $sql);
+		$sql = str_replace("<VALUES>", $values, $sql);
+		
+		$db -> query($sql);
+
+		return true;
+	}
+
 	public function isKanbanMAster($userId)
 	{
 		global $db;
@@ -68,8 +109,28 @@ class user extends Model{
 		return false;		
 	}
 
+	public function lastUserID(){
+		global $db;
+		$sql 	="SELECT id_user FROM User ORDER BY id_user DESC LIMIT 1;";
+		$q = $db -> query($sql);
+		$lastID = $db -> fetch_single($q);
+		return $lastID;
+	}
+
 	public function updateUser($userid, $data){
-		global $db;	
+		global $db;
+		$sql = "UPDATE User SET <SET> WHERE id_user='{$userid}' LIMIT 1;";
+		$set = "";
+		foreach ($data as $key => $value) {
+			$value = $this->cleanInput($value);
+			$set .= $key." = '".$value."', ";
+		}
+		$set = substr($set, 0, strlen($set)-2);
+		$sql = str_replace("<SET>", $set, $sql);
+		
+		$db -> query($sql);
+
+		return true;
 	}
 
 	public function userInfoByID($id=0){

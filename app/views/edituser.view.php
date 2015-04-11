@@ -9,7 +9,7 @@
 	<div id="field_50">
 		<form action='' method='post'>
 			<label>User</label>
-				<select name="users">
+				<select name="userid">
 				<?
 				foreach($users as $key => $value){
 					$user    = $users[$key];

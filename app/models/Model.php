@@ -7,6 +7,14 @@ class Model {
 	private $_sql;
 	private $usedOrAnd;
 
+	/* function returns ID of insert */
+	public function insertID($sql){
+		global $c;
+		mysqli_query($c, $sql);
+		$id = mysqli_insert_id($c);
+		return $id;
+	}
+
 	public function sql($sql, $return="array", $key=null){
 		global $db;
 		$q  = $db -> query($sql);
