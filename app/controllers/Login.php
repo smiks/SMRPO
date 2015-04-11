@@ -20,6 +20,7 @@ class Login extends Controller{
 		$attempts   = $info['num_invalid_login']; 
 		$mattempts  = $info['max_num_invalid_login'];
 		$locked     = $info['locked'];
+		$active     = $info['active'];
 
 		if($numAcc != 1){
 			$user->updateFailedLoginAttempt($email);
@@ -35,8 +36,10 @@ class Login extends Controller{
 			$error .= "Your account is locked.<br>";
 			$allowLogin = false;	
 		}
-
-
+		if($active != 1){
+			$error .= "This account is deleted.<br>";
+			$allowLogin = false;	
+		}
 		if(!$allowLogin){
 			$data = array("error" => $error);
 			$this->show("signIn.view.php", $data);	
