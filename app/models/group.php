@@ -32,6 +32,7 @@ class group extends Model{
 		$groupID = $this->insertID($sql);
 		$insertToUsers_Groups = "INSERT INTO Users_Groups (user_id, group_id, permission) VALUES <MULTIINESRT>;";
 		$multiInsert = "";
+		
 		foreach($developers as $key => $value){
 			$multiInsert .= "('{$value}', '{$groupID}', '001'), ";
 		}

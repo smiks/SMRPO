@@ -8,19 +8,21 @@ require_once 'core/Functions.php';
 
 class CreateGroup extends Controller{
 
-
+	//vrne vse uporabnike, ki imajo ability biti product owner
 	private function getOwners()
 	{
 		$user = new user();
 		return ($user -> getAllUsersWithAbilities("100"));
 	}
-
+	//vrne vse uporabnike, ki imajo ability biti razvijalci
 	private function getDevelopers()
 	{
 		$user = new user();
 		return ($user -> getAllUsersWithAbilities("001"));
 	}
 
+	//ce uporabnik ni KM, ne more kreirati grupe
+	//ta funkcija se uporabi za pridobitev seznama uporabnikov z ability-ji razvijalca in product owner-ja
 	public function getUsersWithAbilities()
 	{
 	
@@ -53,6 +55,7 @@ class CreateGroup extends Controller{
 		
 	}
 	
+	//pridobivanje podatkov za kreiranje nove skupine
 	public function post()
 	{
 		$input = Functions::input("POST");

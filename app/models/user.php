@@ -59,6 +59,7 @@ class user extends Model{
 		return $this->sql("SELECT * FROM User WHERE active=1 ORDER BY name ASC, surname ASC", $return = "array", $key ="id_user");
 	}
 
+	//funkcija, ki za vlogo (razvijalec, product owner ali KM) vrne vse uporabnike z želenimi ability-ji
 	public function getAllUsersWithAbilities ($role)
 	{
 		global $db;
@@ -96,6 +97,7 @@ class user extends Model{
 		return true;
 	}
 
+	//funkcija, ki preveri, ce ima vneseni uporabnik pravice za kreiranje skupine - KM
 	public function isKanbanMAster($userId)
 	{
 		global $db;
