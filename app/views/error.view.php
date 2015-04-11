@@ -1,7 +1,12 @@
 [include]app/views/header.view.php[/include]
-
-ERROR <br>
-Error message: {{error}}<br>
-Error code: {{errorCode}}<br>
-<a href='?page=homepage'>Go back</a>
+[include]app/views/menu.view.php[/include]
+<br>
+<div id="toCenter">
+	<div id="field_50">
+		ERROR <br>
+		Error message: {{error}}<br>
+		Error code: {{errorCode}}<br>
+		<a href='?page=homepage'>Go back</a>
+	</div>
+</div>
 [include]app/views/footer.view.php[/include]
