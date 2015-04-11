@@ -29,7 +29,7 @@
 				<label>Administrator</label><br>
 				Yes: <input type="radio" value="1" name="administrator">
 				&nbsp;&nbsp;&nbsp;
-				No: <input type="radio" value="0" name="administrator"><br>
+				No: <input type="radio" value="0" name="administrator" checked><br>
 
 				<br>
 				<label>Change password</label><br>
