@@ -21,10 +21,22 @@
 	margin: 5px;
 }
 
+#field_50 {
+	 border-radius: 18px; 
+	-moz-border-radius: 18px; 
+	-webkit-border-radius: 18px; 
+	border: 0px inset #1D805F;
+	background-color: #fff;
+	padding: 5px;
+	margin: 5px;
+	width:50%;
+	max-width: 50%;
+}
+
 #toCenter {
 	text-align: center;
-	margin-left:25%;
-	margin-right:25%;
+	margin-left:33%;
+	margin-right:auto;
 }
 
 label {
