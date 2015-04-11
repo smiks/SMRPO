@@ -16,6 +16,9 @@ class Functions {
 		return $outputVal;
 	}
 
+	public static function dateTime(){
+		return (date("H:i, d/M, Y"));
+	}
 
 	/* creates internal link. Example: domain.com/?page.... */
 	public function internalLink($url){

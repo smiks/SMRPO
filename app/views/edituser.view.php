@@ -2,11 +2,11 @@
 [include]app/views/adminmenu.view.php[/include]	
 
 <div id="toCenter">
-	<div id="field">
+	<div id="field_50">
 		<h2>Edit User</h2>
 	</div>
 	<br>
-	<div id="field">
+	<div id="field_50">
 		<form action='' method='post'>
 			<label>User</label>
 				<select name="users">

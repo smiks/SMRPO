@@ -5,29 +5,6 @@ require_once 'Model.php';
 
 class user extends Model{
 
-	/*
-	* koda je zakomentirana ker je trenutno ni v uporabi
-	* sem jo pa pustil ce bo hotel kdo si pogledat kako je kaj narjeno
-	*/
-
-	/*
-	public function allKanbanMasters() {
-		global $db;
-		$q  = $db -> query("SELECT * FROM users WHERE permissions='0100';");
-		$data = $db -> fetch_row($q);
-
-		$podatki = array();
-
-		while($r = $db -> fetch_row($q)){
-			$key = $r['id'];
-			$podatki[$key] = array("username" => $r['username'], "email" => $r['email']);
-		}
-
-		return ($podatki);
-
-	}
-	*/
-	
 	//funkcija, ki vrne stevilo vrstic v bazi, ki ustrezajo podanim podatkom
 	//to bomo uporabili za preverjanje pravilnosti uporabniskega imena ter gesla ob prijavi oz za preverjanje, ce vneseno uporabnisko ime ze obstaja ob registraciji
 	public function countUsersByInfo($email, $password = null)
@@ -96,5 +73,11 @@ class user extends Model{
 		}
 
 		return ($ret);
+	}
+
+	public function deleteUser($userid){
+		global $db;
+		$db -> query("UPDATE User SET active=0 WHERE id_user='{$userid}' LIMIT 1;");
+		return true;
 	}
 }

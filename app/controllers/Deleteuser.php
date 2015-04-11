@@ -2,6 +2,7 @@
 
 require_once 'Controller.php';
 require_once 'app/models/user.php';
+require_once 'app/models/log.php';
 require_once 'core/Functions.php';
 
 class Deleteuser extends Controller{
@@ -14,7 +15,21 @@ class Deleteuser extends Controller{
 	}
 
 	public function post() {
-		
+		$log = new log();
+		$user = new user();
+		$input = Functions::input("POST");
+		$userid = $input['userid'];
+
+		if($user->deleteUser($userid))
+		{
+			$log->insertLog(1, "Deleted user with ID {$userid}");
+			$message = "Successfully deleted user with ID {$userid}";
+			$data = array("message" => $message);
+		}
+		else{
+			$data = array("error" => "User was not deleted.");
+		}
+		$this->show("deleteusersub.view.php", $data);
 	}
 
 	public function get() {
