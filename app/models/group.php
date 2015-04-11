@@ -17,13 +17,33 @@ class group extends Model{
 		$numOfMasters = $db -> fetch_single($q2);
 		$numOfDevelopers = $db -> fetch_single($q3);
 		
-		$data = array(“numberOfOwners” => $numberOfOwners, “numberOfMasters” => $numberOfMasters, “numberOfDevelopers” => $numberOfDevelopers);
+		$data = array("numberOfOwners" => $numberOfOwners, "numberOfMasters" => $numberOfMasters, "numberOfDevelopers" => $numberOfDevelopers);
 		
 	   return($data);
 
 	}
 
 	//dodajanje clanov skupini
+	public function addGroup($groupName, $developers, $owner)
+	{
+		global $db;
+
+		$sql = "INSERT INTO Groups (group_name) VALUES ('{$groupName}');";
+		$groupID = $this->insertID($sql);
+		$insertToUsers_Groups = "INSERT INTO Users_Groups (user_id, group_id, permission) VALUES <MULTIINESRT>;";
+		$multiInsert = "";
+		foreach($developers as $key => $value){
+			$multiInsert .= "('{$value}', '{$groupID}', '001'), ";
+		}
+		$multiInsert = substr($multiInsert, 0, strlen($multiInsert)-2);
+		$insertToUsers_Groups = str_replace("<MULTIINESRT>", $multiInsert, $insertToUsers_Groups);
+		$db -> query($insertToUsers_Groups);
+		$db -> query("INSERT INTO Users_Groups (user_id, group_id, permission) VALUES ('{$owner}', '{$groupID}', '100');");
+
+
+		return true;
+	}
+	
 
 	//brisanje clanov skupine
 }

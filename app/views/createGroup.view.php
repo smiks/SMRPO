@@ -2,7 +2,7 @@
 [include]app/views/menu.view.php[/include]
 
 <div style="margin-left:40%;">
-	<form action='?page=login' method='post' style = "float:left; padding-top:30px">
+	<form action='?page=creategroup' method='post' style = "float:left; padding-top:30px">
 		<p> 
 			<label>Group name:
 				<input type = "text" id = "groupname" name="groupname" placeholder = "Group name" required style="border-radius:5px; margin-top:5px"/>
@@ -25,7 +25,7 @@
 			</label>
 			<br><br>
 			<label>Product developers:<br>
-				<select name="developers" multiple style="border-radius:5px; margin-top:5px">
+				<select name="developers[]" multiple style="border-radius:5px; margin-top:5px">
 				<?
 				foreach($developers as $key => $value){
 					$developer   = $developers[$key];
