@@ -35,6 +35,8 @@ Router::make('adduser', 'app/controllers/AddUser.php');
 Router::make('deleteuser', 'app/controllers/Deleteuser.php');
 Router::make('creategroup', 'app/controllers/CreateGroup.php');
 Router::make('editgroup', 'app/controllers/EditGroup.php');
+Router::make('createproject', 'app/controllers/CreateProject.php');
+Router::make('projects', 'app/controllers/Projects.php');
 Router::route();
 
 /* optional "garbage collector" */
