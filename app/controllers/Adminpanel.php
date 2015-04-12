@@ -4,6 +4,8 @@ require_once 'Controller.php';
 require_once 'app/models/user.php';
 require_once 'core/Functions.php';
 
+Functions::forceLogin();
+
 class Adminpanel extends Controller{
 	
 	public function post() {
