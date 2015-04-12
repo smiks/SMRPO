@@ -29,15 +29,10 @@ class group extends Model{
 		
 	}
 
-	//All Groups
-	public function getAllGroupsFromDb(){
-		return $this->sql("SELECT DISTINCT * FROM Groups;", $return = "array", $key ="group_id");
-	}
-
 	//funkcija vrne vse člane skupine
 	public function getMembers($groupid)
 	{
-		return $this->sql("SELECT user_id, name, surname, permission FROM Users_Groups LEFT JOIN User ON (Users_Groups.user_id=User.id_user) WHERE group_id = '{$groupid}' AND Users_Groups.active_end IS NULL;", $return = "array", $key ="user_id");
+		return $this->sql("SELECT ug_id, user_id, name, surname, permission FROM Users_Groups LEFT JOIN User ON (Users_Groups.user_id=User.id_user) WHERE group_id = '{$groupid}' AND Users_Groups.active_end IS NULL;", $return = "array", $key ="ug_id");
 	}
 
 
@@ -57,29 +52,12 @@ class group extends Model{
 		$insertToUsers_Groups = str_replace("<MULTIINESRT>", $multiInsert, $insertToUsers_Groups);
 		$db -> query($insertToUsers_Groups);
 		$db -> query("INSERT INTO Users_Groups (user_id, group_id, permission) VALUES ('{$owner}', '{$groupID}', '100'), ('{$_SESSION['userid']}', '{$groupID}', '010');");
+		#$db -> query("INSERT INTO Users_Groups (user_id, group_id, permission) VALUES ('{$_SESSION['userid']}', '{$groupID}', '010');");
 
 
 		return true;
 	}
 	
 
-	//brisanje skupine
-	public function deleteGroup($groupid){
-		global $db;
-		$db -> query("DELETE FROM Users_Groups WHERE group_id='{$groupid}';");
-		$db -> query("DELETE FROM Groups WHERE group_id='{$groupid}';");
-		
-		return true;
-
-	}
-	
-	public function getGroupName($groupid)
-	{
-		global $db;
-		
-		$q = $db -> query ("SELECT group_name FROM Groups WHERE group_id='{$groupid}';");
-		$groupname = $db -> fetch_single($q);
-		
-		return ($groupname);
-	}
+	//brisanje clanov skupine
 }
