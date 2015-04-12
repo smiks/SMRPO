@@ -29,6 +29,11 @@ class group extends Model{
 		
 	}
 
+	//All Groups
+	public function getAllGroupsFromDb(){
+		return $this->sql("SELECT DISTINCT * FROM Groups;", $return = "array", $key ="group_id");
+	}
+
 	//funkcija vrne vse člane skupine
 	public function getMembers($groupid)
 	{

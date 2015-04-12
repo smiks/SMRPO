@@ -25,7 +25,7 @@ class CreateProject extends Controller{
 	private function getGroups()
 	{
 		$group = new group();
-		return ($group -> getAllGroups());
+		return ($group -> getAllGroupsFromDb());
 	}
 
 	public function getUsersWithAbilities()
