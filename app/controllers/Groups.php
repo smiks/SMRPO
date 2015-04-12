@@ -16,7 +16,11 @@ class Groups extends Controller{
 		}
 		
 	}
+<<<<<<< HEAD
 	//vrne vse skupine, katerih vpisani član je KM
+=======
+	//vrne vse skupine, katerih vpisani clan je KM
+>>>>>>> c57ba59dda14ab4dac0133f70eb4ebd531c20df7
 	private function getGroups()
 	{
 		$group = new group();

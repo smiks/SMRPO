@@ -28,7 +28,11 @@ class CreateGroup extends Controller{
 		$isMaster = false;
 		$user = new user();
 		$isMaster = $user->isKanbanMaster($_SESSION['userid']);
+<<<<<<< HEAD
+
+=======
 		
+>>>>>>> cd6d9d8913ef82f930e908f7dac6e5b13965cb6c
 		if(!$isMaster){
 			$error = "Access Denied";
 			$errorCode = "403";
