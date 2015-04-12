@@ -52,12 +52,29 @@ class group extends Model{
 		$insertToUsers_Groups = str_replace("<MULTIINESRT>", $multiInsert, $insertToUsers_Groups);
 		$db -> query($insertToUsers_Groups);
 		$db -> query("INSERT INTO Users_Groups (user_id, group_id, permission) VALUES ('{$owner}', '{$groupID}', '100'), ('{$_SESSION['userid']}', '{$groupID}', '010');");
-		#$db -> query("INSERT INTO Users_Groups (user_id, group_id, permission) VALUES ('{$_SESSION['userid']}', '{$groupID}', '010');");
 
 
 		return true;
 	}
 	
 
-	//brisanje clanov skupine
+	//brisanje skupine
+	public function deleteGroup($groupid){
+		global $db;
+		$db -> query("DELETE FROM Users_Groups WHERE group_id='{$groupid}';");
+		$db -> query("DELETE FROM Groups WHERE group_id='{$groupid}';");
+		
+		return true;
+
+	}
+	
+	public function getGroupName($groupid)
+	{
+		global $db;
+		
+		$q = $db -> query ("SELECT group_name FROM Groups WHERE group_id='{$groupid}';");
+		$groupname = $db -> fetch_single($q);
+		
+		return ($groupname);
+	}
 }
