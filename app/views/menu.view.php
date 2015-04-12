@@ -15,6 +15,10 @@
 			<a href="?page=creategroup">Create group</a>
 		</div>
 
+		<div id="menu_option" onClick="location.href='?page=groups'">
+			<a href="?page=groups">Groups</a>
+		</div>
+
 		<? if($isAdministrator) { ?>
 		<div id="menu_option" onClick="location.href='?page=adminpanel'">
 			<a href='?page=adminpanel'>Admin Panel</a>

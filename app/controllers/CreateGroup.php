@@ -25,9 +25,10 @@ class CreateGroup extends Controller{
 	//ta funkcija se uporabi za pridobitev seznama uporabnikov z ability-ji razvijalca in product owner-ja
 	public function getUsersWithAbilities()
 	{
-	
-		// TODO: iz baze podatkov
-		$isMaster = true;
+		$isMaster = false;
+		$user = new user();
+		$isMaster = $user->isKanbanMaster($_SESSION['userid']);
+
 		if(!$isMaster){
 			$error = "Access Denied";
 			$errorCode = "403";
