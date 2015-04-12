@@ -13,8 +13,8 @@ class Adminpanel extends Controller{
 	}
 
 	public function get() {
-		/* TODO :: get info from database */
-		$isAdministrator = true;
+		$user = new user();
+		$isAdministrator = $user->isAdmin($_SESSION['userid']);
 		if($isAdministrator){
 			$this->show("adminpanel.view.php");
 		}

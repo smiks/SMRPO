@@ -19,27 +19,37 @@ class Deleteuser extends Controller{
 	public function post() {
 		$log = new log();
 		$user = new user();
-		$input = Functions::input("POST");
-		$userid = $input['userid'];
-
-		if($user->deleteUser($userid))
+		$isAdministrator = $user->isAdmin($_SESSION['userid']);
+		if($isAdministrator)
 		{
-			$log->insertLog(1, "Deleted user with ID {$userid}");
-			$message = "Successfully deleted user with ID {$userid}";
-			$data = array("message" => $message);
+			$input = Functions::input("POST");
+			$userid = $input['userid'];
+
+			if($user->deleteUser($userid))
+			{
+				$log->insertLog(1, "Deleted user with ID {$userid}");
+				$message = "Successfully deleted user with ID {$userid}";
+				$data = array("message" => $message);
+			}
+			else{
+				$data = array("error" => "User was not deleted.");
+			}
+			$this->show("deleteusersub.view.php", $data);
 		}
 		else{
-			$data = array("error" => "User was not deleted.");
-		}
-		$this->show("deleteusersub.view.php", $data);
+			$error = "Access Denied";
+			$errorCode = "403";
+			$data = array("error" => $error, "errorCode" => $errorCode);
+			$this->show("error.view.php", $data);
+		}			
 	}
 
 	public function get() {
 
 		$allUsers = $this->getAllUsers();
 
-		/* TODO :: get info from database */
-		$isAdministrator = true;
+		$user = new user();
+		$isAdministrator = $user->isAdmin($_SESSION['userid']);
 		if($isAdministrator){
 			$data = array("users" => $allUsers);
 			$this->show("deleteuser.view.php", $data);

@@ -16,39 +16,48 @@ class Edituser extends Controller{
 	}
 
 	public function post() {
-		$input = Functions::input("POST");
-		$userid = $input['userid'];
 		$user = new user();
-		$info = $user->userInfoByID($userid);
-		$abilities = $info['abilities'];
+		$isAdministrator = $user->isAdmin($_SESSION['userid']);
+		if($isAdministrator){		
+			$input = Functions::input("POST");
+			$userid = $input['userid'];
+			$info = $user->userInfoByID($userid);
+			$abilities = $info['abilities'];
 
-		$isAdmin = $info['administrator'];
+			$isAdmin = $info['administrator'];
 
-		$isOwner = substr($abilities, 0, 1);  // takes bit that represents owner abilities
-		$isKM    = substr($abilities, 1, 1);  // takes bit that represents kanban master abilities
-		$isDev   = substr($abilities, 2, 1);  // takes bit that represents developer abilities
+			$isOwner = substr($abilities, 0, 1);  // takes bit that represents owner abilities
+			$isKM    = substr($abilities, 1, 1);  // takes bit that represents kanban master abilities
+			$isDev   = substr($abilities, 2, 1);  // takes bit that represents developer abilities
 
-		/* prepares checked command for checkboxes in view */
-		if($isOwner == 1){
-			$isOwner = " checked ";
+			/* prepares checked command for checkboxes in view */
+			if($isOwner == 1){
+				$isOwner = " checked ";
+			}
+			if($isKM == 1){
+				$isKM = " checked ";
+			}
+			if($isDev == 1){
+				$isDev = " checked ";
+			}
+
+			$data = array("r" => $info, "isOwner" => $isOwner, "isKM" => $isKM, "isDev" => $isDev, "isAdmin" => $isAdmin);
+			$this->show("edituserform.view.php", $data);
 		}
-		if($isKM == 1){
-			$isKM = " checked ";
+		else{
+			$error = "Access Denied";
+			$errorCode = "403";
+			$data = array("error" => $error, "errorCode" => $errorCode);
+			$this->show("error.view.php", $data);
 		}
-		if($isDev == 1){
-			$isDev = " checked ";
-		}
-
-		$data = array("r" => $info, "isOwner" => $isOwner, "isKM" => $isKM, "isDev" => $isDev, "isAdmin" => $isAdmin);
-		$this->show("edituserform.view.php", $data);
 	}
 
 	public function get() {
 
 		$allUsers = $this->getAllUsers();
 
-		/* TODO :: get info from database */
-		$isAdministrator = true;
+		$user = new user();
+		$isAdministrator = $user->isAdmin($_SESSION['userid']);
 		if($isAdministrator){
 			$data = array("users" => $allUsers);
 			$this->show("edituser.view.php", $data);

@@ -21,11 +21,6 @@ require_once 'config/connect.php';
 require_once 'core/Router.php';
 require_once 'core/Functions.php';
 
-/* check login */
-if($_SESSION['loggedin'] == 0 && $_GET['page'] != "main" && !isset($_POST)){
-	Functions::redirect(Functions::internalLink("?page=main"));
-}
-
 
 /* routing */
 Router::home('main', 'app/controllers/SignIn.php');

@@ -97,11 +97,25 @@ class user extends Model{
 		return true;
 	}
 
-	//funkcija, ki preveri, ce ima vneseni uporabnik pravice za kreiranje skupine - KM
-	public function isKanbanMAster($userId)
+	//funkcija, ki preveri, ce ima vneseni uporabnik pravice administratorja
+	public function isAdmin($userID)
 	{
 		global $db;
-		$q  = $db -> query("SELECT COUNT(*) FROM User WHERE id_user =('{$userId}') AND abilities LIKE ('_1_') AND active=1;");
+		$q  = $db -> query("SELECT COUNT(*) FROM User WHERE id_user =('{$userID}') AND administrator='1' LIMIT 1;");
+
+		$isAdmin = $db -> fetch_single($q);
+
+		if ($isAdmin != 0)
+			return true;
+
+		return false;		
+	}
+
+	//funkcija, ki preveri, ce ima vneseni uporabnik pravice za kreiranje skupine - KM
+	public function isKanbanMAster($userID)
+	{
+		global $db;
+		$q  = $db -> query("SELECT COUNT(*) FROM User WHERE id_user =('{$userID}') AND abilities LIKE ('_1_') AND active=1;");
 
 		$isKM = $db -> fetch_single($q);
 
@@ -160,23 +174,18 @@ class user extends Model{
 		return ($data);
 	}
 
-<<<<<<< HEAD
+
 	public function userInfoByID($id){
 		global $db;
-=======
+		$q  = $db -> query("SELECT * FROM User WHERE id_user='{$id}' LIMIT 1;");
+		$data = $db -> fetch_row($q);
+		return ($data);
 		if($id == 0){
 			return array();
 		}
 
-<<<<<<< HEAD
-		return ($ret);
-	}
 
-=======
->>>>>>> 27fe04e095021c7ddcb80d30bad9bc02ada15ac6
-		$q  = $db -> query("SELECT * FROM User WHERE id_user='{$id}' LIMIT 1;");
-		$data = $db -> fetch_row($q);
-		return ($data);
+		return ($ret);
 	}	
->>>>>>> 047ab6098fb12a2819aabbf488968c06db1aed15
+
 }
