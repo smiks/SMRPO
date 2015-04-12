@@ -27,6 +27,13 @@ class Functions {
 		return ($internalLink);
 	}
 	
+
+	public static function forceLogin(){
+		if($_SESSION['loggedin'] == 0 || !isset($_SESSION['loggedin'])){
+			Functions::redirect(Functions::internalLink("?page=main"));
+		}
+	}
+
 	/* Function returns client's IP address */
 	public static function getClientIP()
 	{
