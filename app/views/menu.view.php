@@ -5,18 +5,24 @@
 
 	<div id="menu">
 
-		<? if($_GET['page'] != "homepage") { ?>
 		<div id="menu_option" onClick="location.href='?page=homepage'">
 			<a href="?page=homepage">Home</a>
 		</div>
-		<? } ?>
 		
 		<div id="menu_option" onClick="location.href='?page=creategroup'">
 			<a href="?page=creategroup">Create group</a>
 		</div>
-
+		
 		<div id="menu_option" onClick="location.href='?page=groups'">
 			<a href="?page=groups">Groups</a>
+		</div>
+
+		<div id="menu_option" onClick="location.href='?page=createproject'">
+			<a href="?page=createproject">Create project</a>
+		</div>
+
+		<div id="menu_option" onClick="location.href='?page=projects'">
+			<a href="?page=projects">Projects</a>
 		</div>
 
 		<? if($isAdministrator) { ?>
