@@ -5,6 +5,8 @@ require_once 'app/models/user.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 
+Functions::forceLogin();
+
 class Homepage extends Controller{
 	
 

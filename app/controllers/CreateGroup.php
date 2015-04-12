@@ -6,29 +6,33 @@ require_once 'app/models/group.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 
+Functions::forceLogin();
+
 class CreateGroup extends Controller{
 
-	//vrne vse uporabnike, ki imajo ability biti product owner
+
 	private function getOwners()
 	{
 		$user = new user();
 		return ($user -> getAllUsersWithAbilities("100"));
 	}
-	//vrne vse uporabnike, ki imajo ability biti razvijalci
+
 	private function getDevelopers()
 	{
 		$user = new user();
 		return ($user -> getAllUsersWithAbilities("001"));
 	}
 
-	//ce uporabnik ni KM, ne more kreirati grupe
-	//ta funkcija se uporabi za pridobitev seznama uporabnikov z ability-ji razvijalca in product owner-ja
 	public function getUsersWithAbilities()
 	{
 		$isMaster = false;
 		$user = new user();
 		$isMaster = $user->isKanbanMaster($_SESSION['userid']);
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> cd6d9d8913ef82f930e908f7dac6e5b13965cb6c
 		if(!$isMaster){
 			$error = "Access Denied";
 			$errorCode = "403";
@@ -56,7 +60,6 @@ class CreateGroup extends Controller{
 		
 	}
 	
-	//pridobivanje podatkov za kreiranje nove skupine
 	public function post()
 	{
 		$input = Functions::input("POST");

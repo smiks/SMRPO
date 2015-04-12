@@ -5,6 +5,8 @@ require_once 'app/models/user.php';
 require_once 'app/models/log.php';
 require_once 'core/Functions.php';
 
+Functions::forceLogin();
+
 class Deleteuser extends Controller{
 	
 
