@@ -29,10 +29,10 @@
 					<td>
 						<!-- owners -->
 						<div style="align:center">
-							<div style="width: 100px; height: 50px; overflow: auto;">
+							<div style="width: 100px; height: 75px; overflow: auto;">
 							<?
 								foreach ($info['members'] as $userID => $r) {
-									if($r['permission'] == "100"){
+									if($r['permission'] == "100" || $r['permission'] == "110" || $r['permission'] == "101" || $r['permission'] == "111"){
 										echo"{$r['name']} {$r['surname']} <br>";
 									}
 								}
@@ -44,10 +44,10 @@
 					<td>
 						<!-- developers -->
 						<div style="align:center">
-							<div style="width: 100px; height: 50px; overflow: auto;">
+							<div style="width: 100px; height: 75px; overflow: auto;">
 							<?
 								foreach ($info['members'] as $userID => $r) {
-									if($r['permission'] == "001"){
+									if($r['permission'] == "001" || $r['permission'] == "011" || $r['permission'] == "111" || $r['permission'] == "101"){
 										echo"{$r['name']} {$r['surname']} <br>";
 									}
 								}
@@ -63,7 +63,7 @@
 					</td>
 					<td>
 						<div id="menu_option" onClick="location.href='?page=editgroup'" style="float:right;">
-							<? echo"<a href='?page=editgroup&groupID={$groupID}'>Edit group</a>"; ?>
+							<? echo"<a href='?page=editgroup&groupID={$groupID}&groupName={$groupName}'>Edit group</a>"; ?>
 						</div>
 					</td>
 			</tr>
