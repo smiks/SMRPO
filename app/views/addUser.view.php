@@ -32,14 +32,13 @@
 				No: <input type="radio" value="0" name="administrator" checked><br>
 
 				<br>
-				<label>Change password</label><br>
 				<label>Password</label><br>
 				<input type="password" name="password" id="textinput_200"><br>
 
 				<label>Re-type Password</label><br>
 				<input type="password" name="repassword" id="textinput_200"><br>				
 				<br>
-				<input type='submit' value='Edit' name='submit'><br>
+				<input type='submit' value='Add' name='submit'><br>
 			</center>
 		</form>
 	</div>

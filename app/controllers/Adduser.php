@@ -84,7 +84,7 @@ class Adduser extends Controller{
 			else
 			{
 				$hpassword = Functions::hashing($passwd);
-				$insertData	= array("name" => $name, "surname" => $surname, "email" => $email, "abilities" => $abilities, "administrator" => $admin, "password" => $hpassword);	
+				$insertData	= array("name" => $name, "surname" => $surname, "email" => $email, "abilities" => $abilities, "administrator" => $admin, "password" => $hpassword, "locked" => '0', "max_num_invalid_login" => '3');
 
 				if($user->insertUser($userid, $insertData))
 				{
