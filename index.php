@@ -33,10 +33,7 @@ Router::make('deletegroup', 'app/controllers/DeleteGroup.php');
 Router::make('groups', 'app/controllers/Groups.php');
 Router::make('createproject', 'app/controllers/CreateProject.php');
 Router::make('projects', 'app/controllers/Projects.php');
-<<<<<<< HEAD
-=======
 Router::make('editproject', 'app/controllers/EditProject.php');
->>>>>>> b99c90f6670d8c05ebd9ed6d51533ca394a51c5d
 Router::make('editgroup', 'app/controllers/Editgroup.php');
 Router::route();
 /* optional "garbage collector" */
