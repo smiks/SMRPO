@@ -33,6 +33,7 @@ Router::make('deletegroup', 'app/controllers/DeleteGroup.php');
 Router::make('editgroup', 'app/controllers/EditGroup.php');
 Router::make('createproject', 'app/controllers/CreateProject.php');
 Router::make('projects', 'app/controllers/Projects.php');
+Router::make('editgroup', 'app/controllers/Editgroup.php');
 Router::route();
 /* optional "garbage collector" */
 $variables = array('route'); /* You can put name of variables that you want to unset in this array. */

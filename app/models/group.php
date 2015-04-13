@@ -36,28 +36,49 @@ class group extends Model{
 	}
 
 
-	//dodajanje clanov skupini
+	//dodajanje skupine
 	public function addGroup($groupName, $developers, $owner)
 	{
 		global $db;
+		
+		$date = Functions::dateDB();
 
 		$sql = "INSERT INTO Groups (group_name) VALUES ('{$groupName}');";
 		$groupID = $this->insertID($sql);
-		$insertToUsers_Groups = "INSERT INTO Users_Groups (user_id, group_id, permission) VALUES <MULTIINESRT>;";
+		$insertToUsers_Groups = "INSERT INTO Users_Groups (user_id, group_id, permission active_start) VALUES <MULTIINESRT>;";
 		$multiInsert = "";
 		foreach($developers as $key => $value){
-			$multiInsert .= "('{$value}', '{$groupID}', '001'), ";
+			$multiInsert .= "('{$value}', '{$groupID}', '001', '{$date}'), ";
 		}
 		$multiInsert = substr($multiInsert, 0, strlen($multiInsert)-2);
 		$insertToUsers_Groups = str_replace("<MULTIINESRT>", $multiInsert, $insertToUsers_Groups);
 		$db -> query($insertToUsers_Groups);
-		$db -> query("INSERT INTO Users_Groups (user_id, group_id, permission) VALUES ('{$owner}', '{$groupID}', '100'), ('{$_SESSION['userid']}', '{$groupID}', '010');");
+		$db -> query("INSERT INTO Users_Groups (user_id, group_id, permission, active_start) VALUES ('{$owner}', '{$groupID}', '100', '{$date}'), ('{$_SESSION['userid']}', '{$groupID}', '010', '{$date}');");
 		#$db -> query("INSERT INTO Users_Groups (user_id, group_id, permission) VALUES ('{$_SESSION['userid']}', '{$groupID}', '010');");
 
 
 		return true;
 	}
 	
+	//brisanje skupine
+	 public function deleteGroup($groupid){
+		  global $db;
+		  $db -> query("DELETE FROM Users_Groups WHERE group_id='{$groupid}';");
+		  $db -> query("DELETE FROM Groups WHERE group_id='{$groupid}';");
+		  
+		  return true;
+	
+	 }
+	 
+	 public function getGroupName($groupid)
+	 {
+		global $db;
+		  
+		$q = $db -> query ("SELECT group_name FROM Groups WHERE group_id='{$groupid}';");
+		$groupname = $db -> fetch_single($q);
+		
+		return ($groupname);
+ 	}
 
-	//brisanje clanov skupine
+
 }
