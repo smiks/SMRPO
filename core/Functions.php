@@ -16,6 +16,17 @@ class Functions {
 		return $outputVal;
 	}
 
+	/* returns date in SQL format yyyy-mm-dd */
+	public static function dateDB(){
+		$day = date('d');
+		$month = date('m');
+		$year  = date('Y');
+
+		$date = $year."-".$month."-".$day;
+
+		return ($date);
+	}
+
 	public static function dateTime(){
 		return (date("H:i, d/M, Y"));
 	}
