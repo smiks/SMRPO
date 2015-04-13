@@ -30,13 +30,17 @@ Router::make('adduser', 'app/controllers/AddUser.php');
 Router::make('deleteuser', 'app/controllers/Deleteuser.php');
 Router::make('creategroup', 'app/controllers/CreateGroup.php');
 Router::make('deletegroup', 'app/controllers/DeleteGroup.php');
-Router::make('editgroup', 'app/controllers/EditGroup.php');
+Router::make('groups', 'app/controllers/Groups.php');
 Router::make('createproject', 'app/controllers/CreateProject.php');
 Router::make('projects', 'app/controllers/Projects.php');
+<<<<<<< HEAD
+=======
+Router::make('editproject', 'app/controllers/EditProject.php');
+>>>>>>> b99c90f6670d8c05ebd9ed6d51533ca394a51c5d
 Router::make('editgroup', 'app/controllers/Editgroup.php');
 Router::route();
 /* optional "garbage collector" */
-$variables = array('route'); /* You can put name of variables that you want to unset in this array. */
+$variables = array('user', 'group'); /* You can put name of variables that you want to unset in this array. */
 foreach ($variables as $value) {
 	unset($$value);
 }
