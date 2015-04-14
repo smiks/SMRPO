@@ -33,6 +33,21 @@
 	max-width: 50%;
 }
 
+
+#bigField {
+	 border-radius: 18px; 
+	-moz-border-radius: 18px; 
+	-webkit-border-radius: 18px; 
+	border: 0px inset #1D805F;
+	background-color: #fff;
+	padding: 6px;
+	margin-top: 10px;
+	margin-bottom: 5px;	
+	margin-left: 20px;
+	margin-right: 20px;
+	overflow: auto;
+}
+
 #toCenter {
 	text-align: center;
 	margin-left:33%;
