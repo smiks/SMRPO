@@ -12,6 +12,7 @@ class Adduser extends Controller{
 	public function post() {
 		$user = new user();
 		$isAdministrator = $user->isAdmin($_SESSION['userid']);
+		$allowAdd = true;
 		if($isAdministrator){		
 			$log  = new log();
 			$input 	 = Functions::input("POST");
@@ -42,54 +43,59 @@ class Adduser extends Controller{
 			}
 
 			$abilities = "".$pOwner.$kMaster.$develop."";
-			if($passwd != $rpasswd)
+			if($passwd != $rpasswd && $allowAdd)
 			{
 				$error = "Passwords do not match! Account was not modified.";
 				$errorCode = "401";
 				$data = array("error" => $error, "errorCode" => $errorCode);
 				$this->show("error.view.php", $data);
+				$allowAdd = false;
 			}
-			if(empty($passwd))
+			if(empty($passwd) && $allowAdd)
 			{
 				$error = "Password field is empty";
 				$errorCode = "401";
 				$data = array("error" => $error, "errorCode" => $errorCode);
 				$this->show("error.view.php", $data);
+				$allowAdd = false;
 			}
 
-			if(strlen($passwd) < 8)
+			if(strlen($passwd) < 8 && $allowAdd)
 			{
 				$error = "Password is shorter than 8 characters.";
 				$errorCode = "401";
 				$data = array("error" => $error, "errorCode" => $errorCode);
 				$this->show("error.view.php", $data);
+				$allowAdd = false;
 			}
 
-			if($passwd == $name || $passwd == $surname || $passwd == $email || $passwd == $nsCombo || $passwd == $snCombo)
+			if(strtoupper($passwd) == strtoupper($name) || strtoupper($passwd) == strtoupper($surname) || strtoupper($passwd) == strtoupper($email) || strtoupper($passwd) == strtoupper($nsCombo) || strtoupper($passwd) == strtoupper($snCombo) && $allowAdd)
 			{
 				$error = "Password must not consist of name, surname or email.";
 				$errorCode = "401";
 				$data = array("error" => $error, "errorCode" => $errorCode);
 				$this->show("error.view.php", $data);
+				$allowAdd = false;
 			}
 
-			if($user->exists(array("email", $email), "User"))
+			if($user->exists(array("email", $email), "User") && $allowAdd)
 			{
 				$error = "This email is already in use.";
 				$errorCode = "401";
 				$data = array("error" => $error, "errorCode" => $errorCode);
 				$this->show("error.view.php", $data);
+				$allowAdd = false;
 			}
 
-			else
+			if($allowAdd)
 			{
 				$hpassword = Functions::hashing($passwd);
 				$insertData	= array("name" => $name, "surname" => $surname, "email" => $email, "abilities" => $abilities, "administrator" => $admin, "password" => $hpassword, "locked" => '0', "max_num_invalid_login" => '3');
 
 				if($user->insertUser($userid, $insertData))
 				{
-					$log->insertLog(1, "Added user with ID {$userid}");
-					$message = "Successfully added user with ID {$userid}";
+					$log->insertLog($_SESSION['userid'], "Added user with ID {$userid}");
+					$message = "Successfully added user with ID {$userid}. <br> Email: {$email} <br> Password: {$passwd}";
 					$data = array("message" => $message);
 				}
 				else{
