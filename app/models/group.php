@@ -19,7 +19,6 @@ class group extends Model {
 		$data = array("numberOfOwners" => $numberOfOwners, "numberOfMasters" => $numberOfMasters, "numberOfDevelopers" => $numberOfDevelopers);
 		
 	   return($data);
-
 	}
 
 	//funkcija vrne vse skupine, za katere je userid KM
