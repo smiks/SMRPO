@@ -9,9 +9,10 @@
 			<br>
 			<form action='?page=creategroup' method='post' id="field">
 				<p> 
-					<label>Group name:
-						<input type = "text" id = "groupname" name="groupname" placeholder = "Group name" required style="border-radius:5px; margin-top:5px"/>
-					</label>
+					<label>Group name:</label>
+					<center>
+						<input type = "text" name="groupname" placeholder = "Group name"   id="textinput_200" required/>
+					</center>
 				</p>	
 				<p> 
 
