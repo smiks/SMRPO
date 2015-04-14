@@ -40,15 +40,27 @@
 }
 
 #textinput_100{
-	background-color: #fffedd; 
+	padding-left: 10px;
+	 border-radius: 12px; 
+	-moz-border-radius: 12px; 
+	-webkit-border-radius: 12px; 	
+	background-color: #bde9fd; 
 	width: 100px;
 }
 #textinput_150{
-	background-color: #fffedd; 
+	padding-left: 10px;
+	 border-radius: 12px; 
+	-moz-border-radius: 12px; 
+	-webkit-border-radius: 12px;
+	background-color: #bde9fd; 
 	width: 150px;
 }
 #textinput_200{
-	background-color: #fffedd; 
+	padding-left: 10px;
+	 border-radius: 12px; 
+	-moz-border-radius: 12px; 
+	-webkit-border-radius: 12px;
+	background-color: #bde9fd; 
 	width: 200px;
 }
 

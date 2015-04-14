@@ -9,14 +9,16 @@
 	<br>			
 	<form action='?page=editgroup' method='post' id="field_50">
 		<p> 
-			<label>Group name:
+			<center>
+			<label>Group name:</label>
 				<input type="hidden" value="{{groupid}}" name="groupid">
-				<input type = "text" name="groupname" value="{{groupName}}" style="border-radius:5px; margin-top:5px"/>
-			</label>
+				<input type = "text" name="groupname" value="{{groupName}}"  id="textinput_200"/>
+			</center>
 		</p>	
 		<p> 
 
-			<label>Product owner:<br>
+			<label>Product owner:<br></label>
+			<center>
 				<select name="owners" style="border-radius:5px; margin-top:5px">
 				<?
 				foreach($allOwners as $key => $value){						
@@ -31,7 +33,7 @@
 				}
 				?>
 				</select>
-			</label>
+			</center>
 			<br><br>
 			<label>Product developers:<br>
 				<select name="developers[]" multiple style="border-radius:5px; margin-top:5px">
