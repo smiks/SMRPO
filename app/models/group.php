@@ -79,6 +79,69 @@ class group extends Model{
 		
 		return ($groupname);
  	}
+	
+	//urejanje skupine
+	public function updateGroup($groupid, $dataToUpdate)
+	{
+		global $db;
+		$groupname = $dataToUpdate['gName'];
+		$owner = $dataToUpdate['owner'];
+		$developers = $dataToUpdate['developers'];
+		$date = Functions::dateDB();
+		
+		$db -> query("UPDATE Groups SET group_name='{$groupname}' WHERE group_id='{$groupid}' LIMIT 1;");
+		
+		$members = $this->getMembers($groupid);
+		
+		$toDelete = array();
+		$toAdd = array();
+		
+		foreach($members as $key => $value)
+		{
+			$member = $members[$key];
+			if ($member['permission'] == "100")
+			{
+				if ($member['user_id'] != $owner)
+				{
+					$toDelete[$member['user_id']] = "100";
+					$toAdd[$owner] = "100";
+				}
+			}
+			else if($member['permission'] == "001")
+			{
+				foreach($developers as $k => $val)
+				{
+					$developer = $developers[$k];
+					if ($developer != $member['user_id'])
+					{
+						$toDelete[$member['user_id']] = "001";
+						$toAdd[$developer] = "001";
+					}
+				}
+			}
+		}
+		
+		
+		$insertToUsers_Groups = "INSERT INTO Users_Groups (user_id, group_id, permission active_start) VALUES <MULTIINESRT>;";
+		$multiInsert = "";
+		foreach($toAdd as $key => $value){
+			$multiInsert .= "('{$key}', '{$groupid}', '{$toAdd[$key]}', '{$date}'), ";
+		}
+		$multiInsert = substr($multiInsert, 0, strlen($multiInsert)-2);
+		$insertToUsers_Groups = str_replace("<MULTIINESRT>", $multiInsert, $insertToUsers_Groups);
+		echo"<li>{$insertToUsers_Groups}</li>";
+		#$db -> query($insertToUsers_Groups);
+		
+		foreach ($toDelete as $key => $value)
+		{
+			$sql = "UPDATE Users_Groups SET active_end='{$date}' WHERE user_id='{$key}' LIMIT 1;";
+			#$db -> query($sql);
+			echo("<li>{$sql}</li>");
+		}
+
+		
+		return true;
+	}
 
 
 }

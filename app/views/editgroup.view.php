@@ -2,7 +2,7 @@
 [include]app/views/menu.view.php[/include]
 
 	<div style="margin-left:40%;">
-		<form action='?page=groups' method='post' style = "float:left; padding-top:30px">
+		<form action='?page=editgroup' method='post' style = "float:left; padding-top:30px">
 			<p> 
 				<label>Group name:
 					<input type="hidden" value="{{groupid}}" name="groupid">

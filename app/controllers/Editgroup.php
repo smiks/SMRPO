@@ -39,12 +39,38 @@ class Editgroup extends Controller{
 	
 	}
 	
+	public function post()
+	{
+		$input = Functions::input("POST");
+		$log = new log();
+
+		$owner = $input["owners"];
+		$gName = $input["groupname"];
+		$developers = $input["developers"];
+		$groupid = $input["groupid"];
+		
+		$dataToUpdate = array("owner" => $owner, "gName" => $gName, "developers" => $developers);
+		
+		$group = new group();
+		if($group -> updateGroup($groupid, $dataToUpdate))
+		{
+			$log->insertLog($_SESSION['userid'], "Modified group with ID {$groupid}");
+			$message = "Successfully modified group with ID {$groupid}";
+			$data = array("message" => $message);
+		}
+		else{
+			$data = array("error" => "User was not modified!");
+		}
+		
+		$this->show("editgroupsub.view.php", $data);
+	}
+	
 	public function __construct() {
-		//if($_SERVER['REQUEST_METHOD'] == 'POST') {
-		//	$this->post();
-		//}
-		if($_SERVER['REQUEST_METHOD'] == 'GET') {
-			$this->get();
-		}			
+	if($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$this->post();
+	}
+	elseif($_SERVER['REQUEST_METHOD'] == 'GET') {
+		$this->get();
+	}			
 	}
 }
