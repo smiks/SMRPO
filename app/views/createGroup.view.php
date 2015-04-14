@@ -1,8 +1,13 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
-<div style="width:50%" id="toCenter">
+<div style="width:30%" id="toCenter">
 		<div style="margin-left:40%;">
-			<form action='?page=creategroup' method='post' style = "float:left; padding-top:30px" id="field">
+			<br>
+			<div id="field">
+				<h3>Create Group</h3>
+			</div>
+			<br>
+			<form action='?page=creategroup' method='post' id="field">
 				<p> 
 					<label>Group name:
 						<input type = "text" id = "groupname" name="groupname" placeholder = "Group name" required style="border-radius:5px; margin-top:5px"/>

@@ -1,8 +1,13 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
 
-<div style="width:50%" id="toCenter">
-		<table style="width=100%; margin-top: -25%;" id="field_50">
+<div style="width:40%" id="toCenter">
+		<br>
+		<div id="field">
+			<h3>Groups</h3>
+		</div>
+		<br>	
+		<table id="field">
 			<tr>
 				<td style="width:10%;align:center"> <b> Group Id </b></td>
 				<td style="width:30%; align:center"> <b>Group name </b></td>
@@ -69,7 +74,6 @@
 						</div>
 					</td>
 			</tr>
-			<br><br>
 			<?php } ?>
 		</table>
 

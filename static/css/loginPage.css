@@ -49,10 +49,10 @@ input[type=email] {
 
 .btn_signup,
 input[type=submit] {
-	/* Submit button on login page */
+    /* Submit button on login page */
     display: inline-block;
     height: 58px;
-	width:240px;
+    width:240px;
     padding: 0 30px;
     margin: 10px 0 10px 0;
     background-color: #79bbff;
@@ -60,7 +60,22 @@ input[type=submit] {
     font: 30px/30px BryantProBoldAlternateRegular;
     border: 0 none;
     border-radius: 6px;
-    cursor: pointer;	
+    cursor: pointer;    
+}
+
+#submitStyle {
+    /* Submit button on login page */
+    display: inline-block;
+    height: 58px;
+    width:240px;
+    padding: 0 30px;
+    margin: 10px 0 10px 0;
+    background-color: #79bbff;
+    color: #FFF;
+    font: 30px/30px BryantProBoldAlternateRegular;
+    border: 0 none;
+    border-radius: 6px;
+    cursor: pointer;    
 }
 
 textarea {

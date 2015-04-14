@@ -1,8 +1,7 @@
 <?php
-
 require_once 'Model.php';
 
-class group extends Model{	
+class group extends Model {
 	
 	//fnkcija vrne vse člane skupine
 	public function suitableGroup($groupId)
@@ -79,6 +78,16 @@ class group extends Model{
 		
 		return ($groupname);
  	}
+
+
+ 	private static function in($what, $where){
+ 		foreach ($where as $key => $value) {
+ 			if($value == $what){
+ 				return true;
+ 			}
+ 		}
+ 		return false;
+ 	}
 	
 	//urejanje skupine
 	public function updateGroup($groupid, $dataToUpdate)
@@ -96,52 +105,36 @@ class group extends Model{
 		$toDelete = array();
 		$toAdd = array();
 		
-		foreach($members as $key => $value)
-		{
-			$member = $members[$key];
-			if ($member['permission'] == "100")
-			{
-				if ($member['user_id'] != $owner)
-				{
-					$toDelete[$member['user_id']] = "100";
-					$toAdd[$owner] = "100";
-				}
+		$oldOwner = 0;
+		$oldDevs     = array();
+		foreach ($members as $key => $value) {
+			if($value['permission'] == "100"){
+				$oldOwner = $value['user_id'];
 			}
-			else if($member['permission'] == "001")
-			{
-				foreach($developers as $k => $val)
-				{
-					$developer = $developers[$k];
-					if ($developer != $member['user_id'])
-					{
-						$toDelete[$member['user_id']] = "001";
-						$toAdd[$developer] = "001";
-					}
-				}
+			if($value['permission'] == "001"){
+				$oldDevs[$value['user_id']] = $value['user_id'];
 			}
-		}
-		
-		
-		$insertToUsers_Groups = "INSERT INTO Users_Groups (user_id, group_id, permission active_start) VALUES <MULTIINESRT>;";
-		$multiInsert = "";
-		foreach($toAdd as $key => $value){
-			$multiInsert .= "('{$key}', '{$groupid}', '{$toAdd[$key]}', '{$date}'), ";
-		}
-		$multiInsert = substr($multiInsert, 0, strlen($multiInsert)-2);
-		$insertToUsers_Groups = str_replace("<MULTIINESRT>", $multiInsert, $insertToUsers_Groups);
-		echo"<li>{$insertToUsers_Groups}</li>";
-		#$db -> query($insertToUsers_Groups);
-		
-		foreach ($toDelete as $key => $value)
-		{
-			$sql = "UPDATE Users_Groups SET active_end='{$date}' WHERE user_id='{$key}' LIMIT 1;";
-			#$db -> query($sql);
-			echo("<li>{$sql}</li>");
 		}
 
 		
+		if($owner != $oldOwner){
+			$sql = "UPDATE Users_Groups SET active_end='{$date}' WHERE user_id='{$oldOwner}' AND group_id='{$groupid}' AND permission='100' LIMIT 1;";
+			$db -> query("{$sql}");
+			$db -> query("INSERT INTO Users_Groups (user_id, group_id, permission, active_start) VALUES ('{$owner}', '{$groupid}', '100','{$date}')");
+
+		}
+		foreach ($developers as $key => $value) {
+			# value is user_id of new developers
+			if($this->in($value, $oldDevs)){
+				$sql = "UPDATE Users_Groups SET active_end='{$date}' WHERE user_id='{$value}' AND group_id='{$groupid}' AND permission='001' LIMIT 1;";
+				#echo("<br>{$sql}");
+				#$db -> query($sql);
+			}
+			else{
+				$db -> query("INSERT INTO Users_Groups (user_id, group_id, permission, active_start) VALUES ('{$value}', '{$groupid}', '001','{$date}')");
+			}
+			
+		}		
 		return true;
 	}
-
-
 }
