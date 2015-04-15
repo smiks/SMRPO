@@ -46,7 +46,7 @@ class group extends Model {
 		$groupID = $this->insertID($sql);
 
 		/* Prepares multi-insert SQL query. Query is used to add developers to a group. */
-		$insertToUsers_Groups = "INSERT INTO Users_Groups (user_id, group_id, permission active_start) VALUES <MULTIINESRT>;";
+		$insertToUsers_Groups = "INSERT INTO Users_Groups (user_id, group_id, permission, active_start) VALUES <MULTIINESRT>;";
 		$multiInsert = "";
 		foreach($developers as $key => $value){
 			$multiInsert .= "('{$value}', '{$groupID}', '001', '{$date}'), ";
