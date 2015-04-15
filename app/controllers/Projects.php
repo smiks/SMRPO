@@ -30,7 +30,7 @@ class Projects extends Controller{
 			$projects = $this->getProjects();
 
 			$data = array("projects" => $projects);
-                        $this->show("projects.view.php", $data);
+            $this->show("projects.view.php", $data);
 			
 		}
 	}
@@ -39,7 +39,6 @@ class Projects extends Controller{
 		if($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$this->getProjectsToShow();
 		}
-
 	}
 	
 	

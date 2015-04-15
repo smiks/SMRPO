@@ -22,6 +22,20 @@ class project extends Model{
 	   return($data);
 
 	}
+	
+	public function deleteProject($id){
+		global $db;
+		$db -> query("DELETE FROM Project WHERE id_project='{$id}';");
+		$db -> query("DELETE FROM User_Project WHERE project_id='{$id}';");
+		$db -> query("DELETE FROM Groups WHERE project_id='{$id}';");
+		return true;
+	}
+
+
+	//All Groups
+	public function getAllGroupsFromDb(){
+		return $this->sql("SELECT DISTINCT * FROM Groups;", $return = "array", $key ="group_id");
+	}
 
 	public function getAllUsersWithAbilities ($role)
 	{
@@ -46,6 +60,13 @@ class project extends Model{
 		return $this->sql("SELECT * FROM Project;", $return = "array", $key ="id_project");
 	}
 
+	public function getProject($id){
+		global $db;
+		$q = $db -> query("SELECT * FROM Project WHERE id_project = '{$id}';");
+		$data = $db -> fetch_row($q);
+		return($data);
+	}
+
 	public function addProject($projectNumber, $projectName, $productOwner, $startDate, $endDate, $group)
 	{
 		global $db;
@@ -62,6 +83,26 @@ class project extends Model{
 		$db -> query("INSERT INTO Groups (group_name, project_id) VALUES ('{$groupName}', '{$projectID}');");
 
 		return true;
+	}
+
+	public function updateProject($id, $code, $name, $owner, $start, $end, $group)
+	{
+		global $db;
+
+		$db -> query("UPDATE Project SET number='{$code}', name='{$name}', date_start='{$start}', date_end='{$end}' WHERE id_project='{$id}';");
+
+		$db -> query("UPDATE User_Project SET user_id='{$owner}' WHERE project_id='{$id}';");
+
+		$db -> query("DELETE FROM Groups WHERE project_id='{$id}';");
+
+		$gn = $db->query("SELECT group_name FROM Groups WHERE group_id = '{$group}';");
+
+		$groupName = $db -> fetch_single($gn);
+
+		$db -> query("INSERT INTO Groups (group_name, project_id) VALUES ('{$groupName}', '{$id}');");
+
+        return true;
+
 	}
 
 }

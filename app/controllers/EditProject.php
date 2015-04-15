@@ -2,76 +2,90 @@
 
 require_once 'Controller.php';
 require_once 'app/models/user.php';
-require_once 'app/models/group.php';
 require_once 'app/models/project.php';
+require_once 'app/models/group.php';
+require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 
 class EditProject extends Controller{
-	
 
-	private function getAllUsers()
+	
+	public function __construct() {
+		if($_SERVER['REQUEST_METHOD'] == 'GET') {
+			$this->get();
+		}
+		else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->post();
+		}	
+	}
+
+	private function getOwners()
 	{
 		$user = new user();
-		return ($user -> getAllUsers());
+		return ($user -> getAllUsersWithAbilities("100"));
 	}
 
-	public function post() {
-		$input = Functions::input("POST");
-		$userid = $input['userid'];
+	private function getDevelopers()
+	{
 		$user = new user();
-		$info = $user->userInfoByID($userid);
-		$abilities = $info['abilities'];
-
-		$isAdmin = $info['administrator'];
-
-		$isOwner = substr($abilities, 0, 1);  // takes bit that represents owner abilities
-		$isKM    = substr($abilities, 1, 1);  // takes bit that represents kanban master abilities
-		$isDev   = substr($abilities, 2, 1);  // takes bit that represents developer abilities
-
-		/* prepares checked command for checkboxes in view */
-		if($isOwner == 1){
-			$isOwner = " checked ";
-		}
-		if($isKM == 1){
-			$isKM = " checked ";
-		}
-		if($isDev == 1){
-			$isDev = " checked ";
-		}
-
-		$data = array("r" => $info, "isOwner" => $isOwner, "isKM" => $isKM, "isDev" => $isDev, "isAdmin" => $isAdmin);
-		$this->show("edituserform.view.php", $data);
+		return ($user -> getAllUsersWithAbilities("001"));
 	}
 
-	public function get() {
+	private function getGroups()
+	{
+		$p = new project();
+		return ($p -> getAllGroupsFromDb());
+	}
 
-		$allUsers = $this->getAllUsers();
-
-		/* TODO :: get info from database */
-		$isAdministrator = true;
-		if($isAdministrator){
-			$data = array("users" => $allUsers);
-			$this->show("edituser.view.php", $data);
-		}
-		else{
+	public function get()
+	{
+		// TODO: iz baze podatkov
+		$isMaster = true;
+		if(!$isMaster){
 			$error = "Access Denied";
 			$errorCode = "403";
 			$data = array("error" => $error, "errorCode" => $errorCode);
 			$this->show("error.view.php", $data);
 		}
-		
+		else
+		{
+			$projectID = Functions::input("GET")["projectID"];
+
+			$project = new project();
+			$p = $project->getProject($projectID);
+
+			$owners = $this->getOwners();
+			$groups = $this->getGroups();
+
+			$data = array("project" => $p, "owners" => $owners, "groups" => $groups);
+			$this -> show("editProject.view.php", $data);
+		}
 	}
 
-	public function __construct() {
-		if($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$this->post();
+	public function post()
+	{
+		
+		$input = Functions::input("POST");
+
+		$code = $input["projectcode"];
+		$name = $input["projectname"];
+		$owner = $input["owners"];
+		$group = $input["groups"];
+		$start = $input["start"];
+		$end = $input["end"];
+		$id = $input["projectID"];
+
+		$project = new project();
+		
+		if($project->updateProject($id, $code, $name, $owner, $start, $end, $group))
+		{
+			$message = "Successfully updated project {$name}.";
+			$data = array("message" => $message);
 		}
-		elseif($_SERVER['REQUEST_METHOD'] == 'GET') {
-			$this->get();
-		}		
 		else{
-			$this->home();
-		}	
+			$data = array("error" => "Project was not updated.");
+		}
+		$this->show("updateProject.view.php", $data);
 	}
 
 }
