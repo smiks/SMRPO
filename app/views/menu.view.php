@@ -9,7 +9,9 @@
 			$name = strtoupper($info['name']);
 			$surname = strtoupper($info['surname']);
 			echo("Welcome, {$name} {$surname} &nbsp; (<a href='?page=logout' style='color: #cc0000;'>Logout</a>)");
+			$isKM = $_SESSION['isKanbanMaster'];
 			?>
+                        
 		</big>
 	</div>
 
@@ -27,9 +29,11 @@
 			<a href="?page=groups">Groups</a>
 		</div>
 
+		<? if($isKM) { ?>
 		<div id="menu_option" onClick="location.href='?page=createproject'">
 			<a href="?page=createproject">Create project</a>
 		</div>
+		<? } ?>
 
 		<div id="menu_option" onClick="location.href='?page=projects'">
 			<a href="?page=projects">Projects</a>

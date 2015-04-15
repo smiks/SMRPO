@@ -9,6 +9,7 @@
 				$name = strtoupper($project['name']);
 				$code = strtoupper($project['number']);
                 $id = $project['id_project'];
+                $isKM = $_SESSION['isKanbanMaster'];
 			?>
 
 			<tr>
@@ -18,16 +19,18 @@
 					<td>
 						<div style="float:left;"><?php echo $name ?></div>
 					</td>
-					<td>
-						<div id="menu_option" onClick="location.href='?page=deleteproject<? echo"&projectID={$id}"; ?>'" style="float:right;">
-							<? echo"<a href='?page=deleteproject&projectID={$id}'>Delete project</a>"; ?>
-						</div>
-					</td>
-					<td>
-						<div id="menu_option" onClick="location.href='?page=editproject<? echo"&projectID={$id}&projectName={$name}"; ?>'" style="float:right;">
-							<? echo"<a href='?page=editproject&projectID={$id}&projectName={$name}'>Edit project</a>"; ?>
-						</div>
-					</td>
+					<? if($isKM) { ?>
+						<td>
+							<div id="menu_option" onClick="location.href='?page=deleteproject<? echo"&projectID={$id}"; ?>'" style="float:right;">
+								<? echo"<a href='?page=deleteproject&projectID={$id}'>Delete project</a>"; ?>
+							</div>
+						</td>
+						<td>
+							<div id="menu_option" onClick="location.href='?page=editproject<? echo"&projectID={$id}&projectName={$name}"; ?>'" style="float:right;">
+								<? echo"<a href='?page=editproject&projectID={$id}&projectName={$name}'>Edit project</a>"; ?>
+							</div>
+						</td>
+					<? } ?>
 			</tr>
 		<?php } ?>
 	</form>

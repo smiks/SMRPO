@@ -11,7 +11,7 @@ class Login extends Controller{
 		$inputData = Functions::input()["POST"];
 		$email     = $inputData['login_email'];
 		$passwd    = $inputData['login_password'];
-		$hpasswd   = Functions::hashing($passwd);		
+		$hpasswd   = Functions::hashing($passwd);
 
 		$allowLogin = true;
 		$error      = "";
@@ -21,6 +21,8 @@ class Login extends Controller{
 		$mattempts  = $info['max_num_invalid_login'];
 		$locked     = $info['locked'];
 		$active     = $info['active'];
+
+                $isKanbanMaster = $user->isKanbanMAster($info['id_user']);
 
 		if($numAcc != 1){
 			$user->updateFailedLoginAttempt($email);
@@ -48,6 +50,7 @@ class Login extends Controller{
 		else{
 			$_SESSION['loggedin'] = 1;
 			$_SESSION['userid']   = $info['id_user'];
+                        $_SESSION['isKanbanMaster']   = $isKanbanMaster;
 			$user->resetFailedLoginAttempt($email);
 			Functions::redirect(Functions::internalLink("?page=homepage"));
 		}
