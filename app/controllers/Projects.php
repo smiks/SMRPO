@@ -17,22 +17,22 @@ class Projects extends Controller{
 
 	public function getProjectsToShow()
 	{
-		// TODO: iz baze podatkov
-		$isMaster = true;
-		if(!$isMaster){
-			$error = "Access Denied";
-			$errorCode = "403";
-			$data = array("error" => $error, "errorCode" => $errorCode);
-			$this->show("error.view.php", $data);
-		}
-		else
-		{
-			$projects = $this->getProjects();
+		$projects = $this->getProjects();
 
-			$data = array("projects" => $projects);
-            $this->show("projects.view.php", $data);
-			
+		$p = new project();
+
+		foreach ($projects as $key => $value) {
+			$project = $projects[$key];
+			$projectID = $project['id_project'];
+			$owner = $p->getOwner($projectID);
+			$group = $p->getGroupName($projectID);
+            $projects[$key]['group'] = $group;
+            $projects[$key]['ownerName'] = $owner['name'];
+            $projects[$key]['ownerSurname'] = $owner['surname'];
 		}
+
+		$data = array("projects" => $projects);
+        $this->show("projects.view.php", $data);
 	}
 
 	public function __construct() {

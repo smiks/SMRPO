@@ -67,6 +67,22 @@ class project extends Model{
 		return($data);
 	}
 
+	public function getOwner($id){
+		global $db;
+		$q1 = $db -> query("SELECT user_id FROM User_Project WHERE project_id='{$id}';");
+		$user = $db -> fetch_single($q1);
+		$q = $db -> query("SELECT name, surname FROM User WHERE id_user = '{$user}';");
+		$data = $db -> fetch_row($q);
+		return($data);
+	}
+
+	public function getGroupName($id){
+		global $db;
+		$q = $db -> query("SELECT group_name FROM Groups WHERE project_id = '{$id}';");
+		$data = $db -> fetch_single($q);
+		return($data);
+	}
+
 	public function addProject($projectNumber, $projectName, $productOwner, $startDate, $endDate, $group)
 	{
 		global $db;
