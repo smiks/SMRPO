@@ -53,8 +53,8 @@ class Editusersub extends Controller{
 					$this->show("error.view.php", $data);
 				}
 				else{
-					$hpassword = Functions::hashing($password);
-					$updateData	= array("name" => $name, "surname" => $surname, "email" => $email, "abilities" => $abilities, "administrator" => $administrator, "password" => $hpassword);	
+					$hpassword = Functions::hashing($passwd);
+					$updateData	= array("name" => $name, "surname" => $surname, "email" => $email, "abilities" => $abilities, "administrator" => $administrator, "password" => $hpassword, "locked" => '0', "max_num_invalid_login" => '3');	
 				}
 			}
 
