@@ -42,7 +42,7 @@ class Editusersub extends Controller{
 			$abilities = "".$pOwner.$kMaster.$develop."";
 
 			if(empty($passwd) && empty($rpasswd)){
-				$updateData	= array("name" => $name, "surname" => $surname, "email" => $email, "abilities" => $abilities, "administrator" => $admin);
+				$updateData	= array("name" => $name, "surname" => $surname, "email" => $email, "abilities" => $abilities, "administrator" => $admin, "locked" => '0', "max_num_invalid_login" => '3');
 			}
 			else{
 				if($passwd != $rpasswd)
