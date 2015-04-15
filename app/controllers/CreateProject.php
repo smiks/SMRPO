@@ -30,24 +30,12 @@ class CreateProject extends Controller{
 
 	public function getUsersWithAbilities()
 	{
-	
-		// TODO: iz baze podatkov
-		$isMaster = true;
-		if(!$isMaster){
-			$error = "Access Denied";
-			$errorCode = "403";
-			$data = array("error" => $error, "errorCode" => $errorCode);
-			$this->show("error.view.php", $data);
-		}
-		else
-		{
-                        $developers = $this->getDevelopers();
+            $developers = $this->getDevelopers();
 			$owners = $this->getOwners();
 			$groups = $this->getGroups();
 	
 			$data = array("developers" => $developers, "owners" => $owners, "groups" => $groups);
 			$this -> show("createProject.view.php", $data);
-		}
 	}
 
 	public function __construct() {
@@ -72,14 +60,19 @@ class CreateProject extends Controller{
 		$end = $input["end"];
 
 		$project = new project();
-		
-		if($project->addProject($code, $name, $owner, $start, $end, $group))
-		{
-			$message = "Successfully added project {$name}.";
-			$data = array("message" => $message);
+
+		if($start <= $end) {
+			if($project->addProject($code, $name, $owner, $start, $end, $group))
+			{
+				$message = "Successfully added project {$name}.";
+				$data = array("message" => $message);
+			}
+			else{
+				$data = array("error" => "Project was not created.");
+			}
 		}
-		else{
-			$data = array("error" => "Project was not created.");
+		else {
+			$data = array("error" => "End date must be bigger or equal than start date. Go back and try again.");
 		}
 		$this->show("addProject.view.php", $data);
 	}
