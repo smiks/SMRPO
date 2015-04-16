@@ -1,7 +1,7 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
-<div style="width:30%" id="toCenter">
-		<div style="margin-left:40%;">
+<div style="width:40%" id="toCenter">
+		<div style="margin-left:30%;">
 			<br>
 			<div id="field">
 				<h3>Create Group</h3>
