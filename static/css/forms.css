@@ -50,8 +50,9 @@
 
 #toCenter {
 	text-align: center;
-	margin-left:33%;
+	margin-left:auto;
 	margin-right:auto;
+	width: 70%;
 }
 
 #textinput_100{

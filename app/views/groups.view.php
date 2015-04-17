@@ -1,7 +1,7 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
 
-<div style="width:40%" id="toCenter">
+<div id="toCenter">
 		<br>
 		<div id="field">
 			<h3>Groups</h3>
@@ -13,11 +13,11 @@
 				<td style="width:30%; align:center"> <b>Group name </b></td>
 				<td style="width:10%;align:center"> <b> Owner </b></td>
 				<td style="width:10%;align:center"> <b> Developers </b></td>
-				<td colspan="2"> <b> Options </b></td>
+				<td colspan="3"> <b> Options </b></td>
 				
 			</tr>
 			<tr>
-				<td colspan="6"><hr></td>
+				<td colspan="7"><hr></td>
 			</tr>
 	
 			<?php 
