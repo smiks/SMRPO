@@ -9,7 +9,7 @@
 			$name = strtoupper($info['name']);
 			$surname = strtoupper($info['surname']);
 			echo("Welcome, {$name} {$surname} &nbsp; (<a href='?page=logout' style='color: #cc0000;'>Logout</a>)");
-			if($_SESSION['isAdministrator']) {
+			if($_SESSION['isAdministrator'] == 1) {
 				echo"&nbsp;&nbsp;&nbsp;<a href='?page=adminpanel'>Admin Panel</a>";
 			}
 			$isKM = $_SESSION['isKanbanMaster'];
