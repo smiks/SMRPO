@@ -2,6 +2,8 @@
 [include]app/views/menu.view.php[/include]
 
 <div style="width:50%" id="toCenter">
+		<?php $groupName = $data['groupName']; ?>
+		<h2 style="margin-left:-50%; margin-top:5%"> <? echo $groupName; ?> </h2>
 		<table style="width=100%; margin-top: -5%;" id="field_50">
 			<tr>
 				<td style="width:10%;align:center"> <b> Name </b></td>
@@ -16,7 +18,6 @@
 			</tr>
 	
 			<?php 
-				$groupName = $data['groupName'];
 				$mem = $data['members'];
 				foreach ($mem as $userID => $info) {
 					$userName = $info['name'];
