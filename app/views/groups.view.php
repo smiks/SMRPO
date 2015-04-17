@@ -3,11 +3,11 @@
 
 <div id="toCenter">
 		<br>
-		<div id="field">
+		<div id="field"  style="width: 90%;">
 			<h3>Groups</h3>
 		</div>
 		<br>	
-		<table id="field">
+		<table id="field" style="width: 90%;">
 			<tr>
 				<td style="width:10%;align:center"> <b> Group Id </b></td>
 				<td style="width:30%; align:center"> <b>Group name </b></td>
@@ -36,7 +36,7 @@
 					<td>
 						<!-- owners -->
 						<div style="align:center">
-							<div style="width: 100px; overflow: auto;">
+							<div style="width: 105px; overflow: auto;">
 							<?
 								foreach ($info['members'] as $userID => $r) {
 									if($r['permission'] == "100" || $r['permission'] == "110" || $r['permission'] == "101" || $r['permission'] == "111"){
@@ -51,7 +51,7 @@
 					<td>
 						<!-- developers -->
 						<div style="align:center">
-							<div style="width: 100px; overflow: auto;">
+							<div style="width: 105px; overflow: auto;">
 							<?
 								foreach ($info['members'] as $userID => $r) {
 									if($r['permission'] == "001" || $r['permission'] == "011" || $r['permission'] == "111" || $r['permission'] == "101"){
