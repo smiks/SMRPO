@@ -17,10 +17,6 @@
 
 	<div id="menu">
 
-		<div id="menu_option" onClick="location.href='?page=homepage'">
-			<a href="?page=homepage">Home</a>
-		</div>
-		
 		<div id="menu_option" onClick="location.href='?page=creategroup'">
 			<a href="?page=creategroup">Create group</a>
 		</div>

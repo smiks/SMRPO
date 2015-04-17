@@ -2,15 +2,16 @@
 [include]app/views/menu.view.php[/include]
 
 <div style="width:50%" id="toCenter">
+
 		<?php $groupName = $data['groupName']; ?>
 		<h2 style="margin-left:-50%; margin-top:5%"> <? echo $groupName; ?> </h2>
-		<table style="width=100%; margin-top: -5%;" id="field_50">
+		<table style="width=100%; margin-top: -18%;" id="field_50">
 			<tr>
 				<td style="width:10%;align:center"> <b> Name </b></td>
 				<td style="width:30%; align:center"> <b>Surname </b></td>
 				<td style="width:10%;align:center"> <b> Permission </b></td>
 				<td style="width:10%;align:center"> <b> Active start </b></td>
-				<td style="width:10%;align:center"> <b> Active End </b></td>
+				<td style="width:10%;align:center"> <b> Active end </b></td>
 				
 			</tr>
 			<tr>
@@ -18,7 +19,7 @@
 			</tr>
 	
 			<?php 
-				$mem = $data['members'];
+				$mem = $data['active'];
 				foreach ($mem as $userID => $info) {
 					$userName = $info['name'];
 					$userSurname = $info['surname'];
@@ -60,9 +61,56 @@
 					</td>
 			</tr>
 			<br><br>
+			
+			<?php } ?>
+			<tr>
+				<td colspan="5"><hr></td>
+			</tr>
+			<?php 
+				$mem = $data['inactive'];
+				foreach ($mem as $userID => $info) {
+					$userName = $info['name'];
+					$userSurname = $info['surname'];
+					$permission = $info['permission'];
+					$activeStart = $info['active_start'];
+					$activeEnd = $info['active_end'];
+			?>
+			
+			<tr style="height: 80px; vertical-align: middle;">
+					<td>
+						<div style="align:center"><i><?php echo $userName ?></i></div>
+					</td>
+					<td>
+						<div style="align:center"><?php echo $userSurname ?></div>
+					</td>
+					<td>
+						<!-- permissions-->
+						<div style="align:center">
+							<div style="width: 100px; overflow: auto;">
+							<?
+								if($permission == "100" || $permission == "110" || $permission == "101" || $permission == "111"){
+									echo"Owner <br>";
+								}
+								else if($permission == "001" || $permission == "011" || $permission == "111" || $permission == "101"){
+									echo"Developer <br>";
+								}
+								else
+									echo"Kanban Master<br>";
+
+							?>
+							</div>
+						</div>
+					</td>									
+					<td>
+						<div style="align:center"><i><?php echo $activeStart ?></i></div>
+					</td>
+					<td>
+						<div style="align:center"><?php echo $activeEnd ?></div>
+					</td>
+			</tr>
+			<br><br>
 			<?php } ?>
 		</table>
-		
 		<div id="menu_option" onClick="location.href='?page=groups'">
 			<a href='?page=groups'> Back </a>
 		</div>

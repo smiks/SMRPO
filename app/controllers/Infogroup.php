@@ -24,8 +24,18 @@ class Infogroup extends Controller{
 		
 		$group = new group();
 		$members = $group -> getAllMembers($groupid);
+		$active = array();
+		$inactive = array();
 		
-		$data = array("groupName" => $groupName, "members" => $members);
+		foreach ($members as $userid => $info)
+		{
+			if ($info['active_end'] == null)
+				$active[$userid] = $info;
+			else
+				$inactive[$userid] = $info;
+		}
+		
+		$data = array("groupName" => $groupName, "active" => $active, "inactive" => $inactive);
 		
 		
 		$this->show("infogroup.view.php", $data);

@@ -52,7 +52,7 @@ class Login extends Controller{
 			$_SESSION['userid']   = $info['id_user'];
                         $_SESSION['isKanbanMaster']   = $isKanbanMaster;
 			$user->resetFailedLoginAttempt($email);
-			Functions::redirect(Functions::internalLink("?page=homepage"));
+			Functions::redirect(Functions::internalLink("?page=projects"));
 		}
 			
 	}
