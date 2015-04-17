@@ -73,6 +73,11 @@
 							<? echo"<a href='?page=editgroup&groupID={$groupID}&groupName={$groupName}'>Edit group</a>"; ?>
 						</div>
 					</td>
+					<td>
+						<div id="menu_option" onClick="location.href='?page=infogroup<? echo"&groupID={$groupID}&groupName={$groupName}"; ?>'" style="float:right;">
+							<? echo"<a href='?page=infogroup&groupID={$groupID}&groupName={$groupName}'>Info</a>"; ?>
+						</div>
+					</td>
 			</tr>
 			<?php } ?>
 		</table>

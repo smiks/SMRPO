@@ -33,6 +33,11 @@ class group extends Model {
 		return $this->sql("SELECT ug_id, user_id, name, surname, permission FROM Users_Groups LEFT JOIN User ON (Users_Groups.user_id=User.id_user) WHERE group_id = '{$groupid}' AND Users_Groups.active_end IS NULL;", $return = "array", $key ="ug_id");
 	}
 
+	public function getAllMembers($groupid)
+	{
+		return $this->sql("SELECT ug_id, user_id, name, surname, permission, Users_Groups.active_start, Users_Groups.active_end FROM Users_Groups LEFT JOIN User ON (Users_Groups.user_id=User.id_user) WHERE group_id = '{$groupid}';", $return = "array", $key ="ug_id");
+	}
+
 
 	/* Adds group into DB. */
 	public function addGroup($groupName, $developers, $owner)
