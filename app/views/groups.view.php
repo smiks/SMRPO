@@ -3,7 +3,7 @@
 
 <div id="toCenter">
 		<br>
-		<div id="field"  style="width: 90%;">
+		<div id="field"  style="width: 89%;">
 			<h3>Groups</h3>
 		</div>
 		<br>	
@@ -11,8 +11,8 @@
 			<tr>
 				<td style="width:10%;align:center"> <b> Group Id </b></td>
 				<td style="width:30%; align:center"> <b>Group name </b></td>
-				<td style="width:10%;align:center"> <b> Owner </b></td>
-				<td style="width:10%;align:center"> <b> Developers </b></td>
+				<td style="width:15%;align:center"> <b> Owner </b></td>
+				<td style="width:15%;align:center"> <b> Developers </b></td>
 				<td colspan="3"> <b> Options </b></td>
 				
 			</tr>
@@ -74,8 +74,8 @@
 						</div>
 					</td>
 					<td>
-						<div id="menu_option" onClick="location.href='?page=infogroup<? echo"&groupID={$groupID}&groupName={$groupName}"; ?>'" style="float:right;">
-							<? echo"<a href='?page=infogroup&groupID={$groupID}&groupName={$groupName}'>Info</a>"; ?>
+						<div id="menu_option" onClick="location.href='?page=infogroup<? echo"&groupID={$groupID}"; ?>'" style="float:right;">
+							<? echo"<a href='?page=infogroup&groupID={$groupID}'>Info</a>"; ?>
 						</div>
 					</td>
 			</tr>

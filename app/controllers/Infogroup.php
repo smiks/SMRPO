@@ -19,10 +19,10 @@ class Infogroup extends Controller{
 	
 	public function get()
 	{
+		$group = new group();		
 		$groupid = Functions::input("GET")["groupID"];
-		$groupName = Functions::input("GET")["groupName"];
+		$groupName = $group->getGroupName($groupid);
 		
-		$group = new group();
 		$members = $group -> getAllMembers($groupid);
 		$active = array();
 		$inactive = array();
@@ -35,10 +35,18 @@ class Infogroup extends Controller{
 				$inactive[$userid] = $info;
 		}
 		
-		$data = array("groupName" => $groupName, "active" => $active, "inactive" => $inactive);
+		if(empty($groupName)){
+			$error = "Group not found.";
+			$errorCode = "404";
+			$data = array("error" => $error, "errorCode" => $errorCode);
+			$this->show("error.view.php", $data);
+		}
+		else
+		{
+			$data = array("groupName" => $groupName, "active" => $active, "inactive" => $inactive);			
+			$this->show("infogroup.view.php", $data);
+		}
 		
-		
-		$this->show("infogroup.view.php", $data);
 	}
 
 }
