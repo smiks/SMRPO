@@ -75,6 +75,13 @@ class group extends Model {
 		  return true;
 	 }
 	 
+
+	 public function getGroupIDFromProjectID($projectID){
+	 	$sql = "SELECT group_id FROM Group_Project WHERE project_id = '{$projectID}' LIMIT 1;";
+		return ($this->sql($sql, $return="single"));
+	 }
+
+
 	 /* Returns group name. */
 	 public function getGroupName($groupid)
 	 {
