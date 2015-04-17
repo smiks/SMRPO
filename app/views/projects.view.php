@@ -7,7 +7,8 @@
 		<tr>
 			<td style="padding-right:15px;"> <b> Project code </b></td>
 			<td style="padding-right:15px;"> <b> Project name </b></td>
-			<td style="padding-right:15px;"> <b> Owner </b></td>
+			<td style="padding-right:15px;"> <b> Owner Name </b></td>
+			<td style="padding-right:15px;"> <b> Owner Surname </b></td>
 			<td style="padding-right:15px;"> <b> Start date </b></td>
 			<td style="padding-right:15px;"> <b> End date </b></td>
 			<td style="padding-right:15px;"> <b> Development group </b></td>
@@ -60,6 +61,11 @@
 						<td style="padding-right:15px;">
 							<div id="menu_option" onClick="location.href='?page=editproject<? echo"&projectID={$id}&projectName={$name}"; ?>'" style="float:right;">
 								<? echo"<a href='?page=editproject&projectID={$id}&projectName={$name}'>Edit project</a>"; ?>
+							</div>
+						</td>
+						<td style="padding-right:15px;">
+							<div id="menu_option" onClick="location.href='?page=showtable<? echo"&projectID={$id}"; ?>'" style="float:right;">
+								<? echo"<a href='?page=showtable&projectID={$id}'>Show table</a>"; ?>
 							</div>
 						</td>
 					<? } ?>
