@@ -17,6 +17,16 @@ class board extends Model{
 		$sql = "SELECT board_id FROM Board WHERE group_id = '{$groupID}' LIMIT 1;";
 		return ($this->sql($sql, $return="single"));
 	}
+	
+	public function getBoard($projectId)
+	{		
+		global $db;
+		$q = $db-> query("SELECT board_id, group_id, name FROM Board WHERE project_id = '{$projectId}';");
+		
+		$boardInfo= $db -> fetch_row($q);
+		
+		return $boardInfo;
+	}
 
 		
 	public function boardExists($projectId)
@@ -28,5 +38,4 @@ class board extends Model{
 		
 		return $numOfBoard;
 	}
-
 }

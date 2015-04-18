@@ -29,19 +29,18 @@ class Showtable extends Controller{
 	/**/
 	public function get($board, $group){
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
-		$groupID   = $group->getGroupIDFromProjectID($projectID);
-		$boardID   = $board->getBoardID($groupID);
-		$this->projectID = $projectID;
-		$this->groupID   = $groupID;
-		$this->boardID   = $boardID;
-
+		
+		$boardInfo = $board -> getBoard($projectID);	
+		$groupID   = $boardInfo ['group_id'];
+		$boardID   = $boardInfo ['board_id'];
+		$boardName = $boardInfo ['name'];
+		
+		#$this->projectID = $projectID;
+		#$this->groupID   = $groupID;
+		#$this->boardID   = $boardID;
 		#$this->test();
-
-		if(is_null($boardID)){
-			$boardID = 0;
-		}
-
-		$data = array("boardID" => $boardID);
+		
+		$data = array("boardID" => $boardID, "boardName" => $boardName);
 		$this->show("showtable.view.php", $data);
 	}
 

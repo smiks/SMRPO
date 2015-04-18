@@ -66,14 +66,6 @@ class project extends Model{
 		return($data);
 	}
 
-	public function getOwner($id){
-		global $db;
-		$q1 = $db -> query("SELECT owner_id FROM Project WHERE id_project='{$id}';");
-		$user = $db -> fetch_single($q1);
-		$q = $db -> query("SELECT name, surname FROM User WHERE id_user = '{$user}';");
-		$data = $db -> fetch_row($q);
-		return($data);
-	}
 
 	public function getGroupName($id){
 		global $db;
@@ -104,8 +96,19 @@ class project extends Model{
 
 		$db -> query("UPDATE Group_Project SET group_id='{$group}' WHERE project_id='{$id}';");
 
-        return true;
+        	return true;
 
 	}
+	
+	public function activeUserOnProject($userId, $projectId)
+	{
+		global $db;
+	
+		$q = $db -> query("SELECT COUNT(*) FROM Group_Project LEFT JOIN Users_Groups ON (Group_Project.group_id=Users_Groups.group_id) WHERE Users_Groups.user_id='{$userId}' AND Users_Groups.active_end IS NULL AND Group_Project.project_id 	='{$projectId}';");
+		$num = $db -> fetch_single($q);
+		
+		return $num;
+	}
+
 
 }

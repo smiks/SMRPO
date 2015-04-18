@@ -59,7 +59,7 @@ class user extends Model{
 		return $this->sql("SELECT * FROM User WHERE active=1 ORDER BY name ASC, surname ASC", $return = "array", $key ="id_user");
 	}
 
-	//funkcija, ki za vlogo (razvijalec, product owner ali KM) vrne vse uporabnike z želenimi ability-ji
+	//funkcija, ki za vlogo (razvijalec, product owner ali KM) vrne vse uporabnike z 탑elenimi ability-ji
 	public function getAllUsersWithAbilities ($role)
 	{
 		global $db;
