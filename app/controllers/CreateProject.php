@@ -54,7 +54,7 @@ class CreateProject extends Controller{
 
 		$code = $input["projectcode"];
 		$name = $input["projectname"];
-		$owner = $input["owners"];
+		$client = $input["projectclient"];
 		$group = $input["groups"];
 		$start = $input["start"];
 		$end = $input["end"];
@@ -66,7 +66,7 @@ class CreateProject extends Controller{
 		if($start <= $today) {
 			if($end > $today) {
 				if($start <= $end) {
-					if($project->addProject($code, $name, $owner, $start, $end, $group))
+					if($project->addProject($code, $name, $client, $start, $end, $group))
 					{
 						$message = "Successfully added project {$name}.";
 						$data = array("message" => $message);

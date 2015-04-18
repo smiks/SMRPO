@@ -7,8 +7,7 @@
 		<tr>
 			<td style="padding-right:15px;"> <b> Project code </b></td>
 			<td style="padding-right:15px;"> <b> Project name </b></td>
-			<td style="padding-right:15px;"> <b> Owner Name </b></td>
-			<td style="padding-right:15px;"> <b> Owner Surname </b></td>
+			<td style="padding-right:15px;"> <b> Client </b></td>
 			<td style="padding-right:15px;"> <b> Start date </b></td>
 			<td style="padding-right:15px;"> <b> End date </b></td>
 			<td style="padding-right:15px;"> <b> Development group </b></td>
@@ -17,6 +16,7 @@
 		</tr>
 	<form action='?page=projects' method='post' style = "float:left;">
 			<?php 
+			$isAdmin = $data['isAdmin'];
 			foreach ($projects as $key => $value){ 
 				$project = $projects[$key];
 				$name = strtoupper($project['name']);
@@ -26,9 +26,9 @@
 		                $start = date('d.m.Y', strtotime($project['date_start']));
 		                $end = date('d.m.Y', strtotime($project['date_end']));
 		                $group = $project['group'];
-		                $ownerN = strtoupper($project['ownerName']);
-		                $ownerS = strtoupper($project['ownerSurname']);
+		                $client = strtoupper($project['client']);
 		                $boardExists = $project['boardExists'];
+		                $numActive = $project['numActive'];
 			?>
 
 			<tr>
@@ -39,10 +39,7 @@
 						<div style="float:left;"><?php echo $name ?></div>
 					</td>
 					<td style="padding-right:15px;">
-						<div style="float:left;"><?php echo $ownerN ?></div>
-					</td>
-					<td style="padding-right:15px;">
-						<div style="float:left;"><?php echo $ownerS ?></div>
+						<div style="float:left;"><?php echo $client?></div>
 					</td>
 					<td style="padding-right:15px;">
 						<div style="float:left;"><?php echo $start ?></div>
@@ -67,15 +64,15 @@
 						<? if($boardExists == 0) { ?>
 							<td style="padding-right:15px;">
 								<div id="menu_option" onClick="location.href='?page=createtable<? echo"&projectID={$id}"; ?>'" style="float:right;">
-									<? echo"<a href='?page=createtable&projectID={$id}'>Create table</a>"; ?>
+									<? echo"<a href='?page=createtable&projectID={$id}'>Create board</a>"; ?>
 								</div>
 							</td>
 						<? } ?>
 					<? } ?>
-					<? if($boardExists == 1) { ?>
+					<? if($boardExists == 1 && (($numActive > 0) || $isAdmin)) { ?>
 						<td style="padding-right:15px;">
 							<div id="menu_option" onClick="location.href='?page=showtable<? echo"&projectID={$id}"; ?>'" style="float:right;">
-								<? echo"<a href='?page=showtable&projectID={$id}'>Show table</a>"; ?>
+								<? echo"<a href='?page=showtable&projectID={$id}'>Show board</a>"; ?>
 							</div>
 						</td>
 					<? } ?>

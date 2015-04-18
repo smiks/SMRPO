@@ -22,20 +22,24 @@ class Projects extends Controller{
 
 		$p = new project();
 		$board = new board();
+		$user = new user();
+		
+		$userId = $_SESSION['userid'];
+		$isAdmin = $user -> isAdmin($userId);
 
 		foreach ($projects as $key => $value) {
 			$project = $projects[$key];
 			$projectID = $project['id_project'];
-			$owner = $p->getOwner($projectID);
 			$group = $p->getGroupName($projectID);
 			$boardExists = $board -> boardExists($projectID);
-       		$projects[$key]['group'] = $group;
-       		$projects[$key]['ownerName'] = $owner['name'];
-        	$projects[$key]['ownerSurname'] = $owner['surname'];
-        	$projects[$key]['boardExists'] = $boardExists;
+			$numActive = $p -> activeUserOnProject($userId, $projectID);
+	       		$projects[$key]['group'] = $group;
+	       		$projects[$key]['client'] = $project['client'];
+	        	$projects[$key]['boardExists'] = $boardExists;
+	        	$projects[$key]['numActive'] = $numActive;
 		}
 
-		$data = array("projects" => $projects);
+		$data = array("projects" => $projects, "isAdmin" => $isAdmin);
         	$this->show("projects.view.php", $data);
 	}
 

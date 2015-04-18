@@ -39,27 +39,16 @@ class EditProject extends Controller{
 
 	public function get()
 	{
-		// TODO: iz baze podatkov
-		$isMaster = true;
-		if(!$isMaster){
-			$error = "Access Denied";
-			$errorCode = "403";
-			$data = array("error" => $error, "errorCode" => $errorCode);
-			$this->show("error.view.php", $data);
-		}
-		else
-		{
-			$projectID = Functions::input("GET")["projectID"];
+		$projectID = Functions::input("GET")["projectID"];
 
-			$project = new project();
-			$p = $project->getProject($projectID);
+		$project = new project();
+		$p = $project->getProject($projectID);
 
-			$owners = $this->getOwners();
-			$groups = $this->getGroups();
+		$owners = $this->getOwners();
+		$groups = $this->getGroups();
 
-			$data = array("project" => $p, "owners" => $owners, "groups" => $groups);
-			$this -> show("editProject.view.php", $data);
-		}
+		$data = array("project" => $p, "owners" => $owners, "groups" => $groups);
+		$this -> show("editProject.view.php", $data);
 	}
 
 	public function post()
@@ -69,7 +58,7 @@ class EditProject extends Controller{
 
 		$code = $input["projectcode"];
 		$name = $input["projectname"];
-		$owner = $input["owners"];
+		$client = $input["projectclient"];
 		$group = $input["groups"];
 		$start = $input["start"];
 		$end = $input["end"];
@@ -82,7 +71,7 @@ class EditProject extends Controller{
 		if($start <= $today) {
 			if($end > $today) {
 				if($start <= $end) {
-					if($project->updateProject($id, $code, $name, $owner, $start, $end, $group))
+					if($project->updateProject($id, $code, $name, $client, $start, $end, $group))
 					{
 						$message = "Successfully updated project {$name}.";
 						$data = array("message" => $message);

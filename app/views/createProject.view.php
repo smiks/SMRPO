@@ -14,18 +14,8 @@
 			</label>
 		</p>
 		<p> 
-			<label>Product owner:<br>
-				<select name="owners" style="border-radius:5px; margin-top:5px">
-				<?
-				foreach($owners as $key => $value){
-					$owner   = $owners[$key];
-					$name    = strtoupper($owner['name']);
-					$surname = strtoupper($owner['surname']);
-					$uid     = $owner['id_user'];
-					echo"<option value='{$uid}'>{$name} {$surname}</option>";
-				}
-				?>
-				</select>
+			<label>Client:<br>
+				<input type = "text" id = "projectclient" name="projectclient" placeholder = "Project client" required style="border-radius:5px; margin-top:5px"/>
 			</label>
 		</p>
 		<p> 
