@@ -66,21 +66,7 @@ class project extends Model{
 		return($data);
 	}
 
-<<<<<<< HEAD
-=======
-	public function getOwner($id){
-		global $db;
-		$q1 = $db -> query("SELECT group_id FROM Group_Project WHERE project_id='{$id}';");
-		$groupid = $db -> fetch_single($q1);
-		$q2 = $db -> query("SELECT user_id FROM Users_Groups WHERE group_id='{$groupid}' AND permissions LIKE (‘1__’);");
-		$user = $db -> fetch_single($q2);		
-		$q = $db -> query("SELECT name, surname FROM User WHERE id_user = '{$user}';");
-		$data = $db -> fetch_row($q);
-		return($data);
-	}
->>>>>>> 92689cdbf15957c51da689bfc2d9b350b42cd487
-
-	public function getGroupName($id){
+public function getGroupName($id){
 		global $db;
 		$q1 = $db -> query("SELECT group_id FROM Group_Project WHERE project_id='{$id}';");
 		$group = $db -> fetch_single($q1);
@@ -109,8 +95,7 @@ class project extends Model{
 
 		$db -> query("UPDATE Group_Project SET group_id='{$group}' WHERE project_id='{$id}';");
 
-        	return true;
-
+        return true;
 	}
 	
 	public function activeUserOnProject($userId, $projectId)
