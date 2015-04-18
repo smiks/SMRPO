@@ -3,9 +3,11 @@
 
 <div style="width:50%" id="toCenter">
 
-		<?php $groupName = $data['groupName']; ?>
-		<h2 style="margin-left:-50%; margin-top:5%"> <? echo $groupName; ?> </h2>
-		<table style="width=100%; margin-top: -18%;" id="field_50">
+		<div id="field">
+			<h3>{{data['groupName']}}</h3>
+		</div>
+		<br>
+		<table id="field">
 			<tr>
 				<td style="width:10%;align:center"> <b> Name </b></td>
 				<td style="width:30%; align:center"> <b>Surname </b></td>
@@ -60,7 +62,6 @@
 						<div style="align:center"><?php echo $activeEnd ?></div>
 					</td>
 			</tr>
-			<br><br>
 			
 			<?php } ?>
 			<tr>
@@ -108,7 +109,6 @@
 						<div style="align:center"><?php echo $activeEnd ?></div>
 					</td>
 			</tr>
-			<br><br>
 			<?php } ?>
 		</table>
 		<div id="menu_option" onClick="location.href='?page=groups'">
