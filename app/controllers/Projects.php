@@ -26,13 +26,15 @@ class Projects extends Controller{
 			$projectID = $project['id_project'];
 			$owner = $p->getOwner($projectID);
 			$group = $p->getGroupName($projectID);
-            $projects[$key]['group'] = $group;
-            $projects[$key]['ownerName'] = $owner['name'];
-            $projects[$key]['ownerSurname'] = $owner['surname'];
+			$boardExists = $p -> boardExists($projectID);
+	       		$projects[$key]['group'] = $group;
+	       		$projects[$key]['ownerName'] = $owner['name'];
+	        	$projects[$key]['ownerSurname'] = $owner['surname'];
+	        	$projects[$key]['boardExists'] = $boardExists;
 		}
 
 		$data = array("projects" => $projects);
-        $this->show("projects.view.php", $data);
+        	$this->show("projects.view.php", $data);
 	}
 
 	public function __construct() {

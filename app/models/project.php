@@ -107,5 +107,15 @@ class project extends Model{
         return true;
 
 	}
+	
+	public function boardExists($projectId)
+	{
+		global $db;
+		$q = $db-> query("SELECT COUNT(*) FROM Board WHERE project_id='{$projectId}';");
+		
+		$numOfBoard = $db -> fetch_single($q);
+		
+		return $numOfBoard;
+	}
 
 }

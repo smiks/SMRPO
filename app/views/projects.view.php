@@ -21,13 +21,14 @@
 				$project = $projects[$key];
 				$name = strtoupper($project['name']);
 				$code = strtoupper($project['number']);
-                $id = $project['id_project'];
-                $isKM = $_SESSION['isKanbanMaster'];
-                $start = date('d.m.Y', strtotime($project['date_start']));
-                $end = date('d.m.Y', strtotime($project['date_end']));
-                $group = $project['group'];
-                $ownerN = strtoupper($project['ownerName']);
-                $ownerS = strtoupper($project['ownerSurname']);
+		                $id = $project['id_project'];
+		                $isKM = $_SESSION['isKanbanMaster'];
+		                $start = date('d.m.Y', strtotime($project['date_start']));
+		                $end = date('d.m.Y', strtotime($project['date_end']));
+		                $group = $project['group'];
+		                $ownerN = strtoupper($project['ownerName']);
+		                $ownerS = strtoupper($project['ownerSurname']);
+		                $boardExists = $project['boardExists'];
 			?>
 
 			<tr>
@@ -63,6 +64,15 @@
 								<? echo"<a href='?page=editproject&projectID={$id}&projectName={$name}'>Edit project</a>"; ?>
 							</div>
 						</td>
+						<? if($boardExists == 0) { ?>
+							<td style="padding-right:15px;">
+								<div id="menu_option" onClick="location.href='?page=createtable<? echo"&projectID={$id}"; ?>'" style="float:right;">
+									<? echo"<a href='?page=createtable&projectID={$id}'>Create table</a>"; ?>
+								</div>
+							</td>
+						<? } ?>
+					<? } ?>
+					<? if($boardExists == 1) { ?>
 						<td style="padding-right:15px;">
 							<div id="menu_option" onClick="location.href='?page=showtable<? echo"&projectID={$id}"; ?>'" style="float:right;">
 								<? echo"<a href='?page=showtable&projectID={$id}'>Show table</a>"; ?>

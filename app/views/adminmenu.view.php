@@ -15,8 +15,8 @@
 
 	<div id="menu">
 
-		<div id="menu_option" onClick="location.href='?page=homepage'">
-			<a href='?page=homepage'>Home</a>
+		<div id="menu_option" onClick="location.href='?page=projects'">
+			<a href='?page=projects'>Projects</a>
 		</div>
 
 		<div id="menu_option" onClick="location.href='?page=edituser'">
