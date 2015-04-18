@@ -26,8 +26,7 @@ class project extends Model{
 	public function deleteProject($id){
 		global $db;
 		$db -> query("DELETE FROM Project WHERE id_project='{$id}';");
-		$db -> query("DELETE FROM User_Project WHERE project_id='{$id}';");
-		$db -> query("DELETE FROM Groups WHERE project_id='{$id}';");
+		$db -> query("DELETE FROM Group_Project WHERE project_id='{$id}';");
 		return true;
 	}
 
@@ -69,7 +68,7 @@ class project extends Model{
 
 	public function getOwner($id){
 		global $db;
-		$q1 = $db -> query("SELECT user_id FROM User_Project WHERE project_id='{$id}';");
+		$q1 = $db -> query("SELECT owner_id FROM Project WHERE id_project='{$id}';");
 		$user = $db -> fetch_single($q1);
 		$q = $db -> query("SELECT name, surname FROM User WHERE id_user = '{$user}';");
 		$data = $db -> fetch_row($q);
@@ -78,7 +77,9 @@ class project extends Model{
 
 	public function getGroupName($id){
 		global $db;
-		$q = $db -> query("SELECT group_name FROM Groups WHERE project_id = '{$id}';");
+		$q1 = $db -> query("SELECT group_id FROM Group_Project WHERE project_id='{$id}';");
+		$group = $db -> fetch_single($q1);
+		$q = $db -> query("SELECT group_name FROM Groups WHERE group_id = '{$group}';");
 		$data = $db -> fetch_single($q);
 		return($data);
 	}
@@ -87,16 +88,10 @@ class project extends Model{
 	{
 		global $db;
 
-		$sql = "INSERT INTO Project (active, date_end, date_start, name, number) VALUES ('1', '{$endDate}', '{$startDate}', '{$projectName}', '{$projectNumber}');";
+		$sql = "INSERT INTO Project (active, date_end, date_start, name, number, owner_id) VALUES ('1', '{$endDate}', '{$startDate}', '{$projectName}', '{$projectNumber}', '{$productOwner}');";
 		$projectID = $this->insertID($sql);
 
-		$db -> query("INSERT INTO User_Project (project_id, user_id) VALUES ('{$projectID}', '{$productOwner}');");
-
-		$gn = $db->query("SELECT group_name FROM Groups WHERE group_id = '{$group}';");
-
-		$groupName = $db -> fetch_single($gn);
-
-		$db -> query("INSERT INTO Groups (group_name, project_id) VALUES ('{$groupName}', '{$projectID}');");
+		$db -> query("INSERT INTO Group_Project (group_id, project_id) VALUES ('{$group}', '{$projectID}');");
 
 		return true;
 	}
@@ -105,17 +100,9 @@ class project extends Model{
 	{
 		global $db;
 
-		$db -> query("UPDATE Project SET number='{$code}', name='{$name}', date_start='{$start}', date_end='{$end}' WHERE id_project='{$id}';");
+		$db -> query("UPDATE Project SET number='{$code}', name='{$name}', date_start='{$start}', date_end='{$end}', owner_id='{$owner}' WHERE id_project='{$id}';");
 
-		$db -> query("UPDATE User_Project SET user_id='{$owner}' WHERE project_id='{$id}';");
-
-		$db -> query("DELETE FROM Groups WHERE project_id='{$id}';");
-
-		$gn = $db->query("SELECT group_name FROM Groups WHERE group_id = '{$group}';");
-
-		$groupName = $db -> fetch_single($gn);
-
-		$db -> query("INSERT INTO Groups (group_name, project_id) VALUES ('{$groupName}', '{$id}');");
+		$db -> query("UPDATE Group_Project SET group_id='{$group}' WHERE project_id='{$id}';");
 
         return true;
 

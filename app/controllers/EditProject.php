@@ -77,19 +77,30 @@ class EditProject extends Controller{
 
 		$project = new project();
 		
-		if($start <= $end) {
-			if($project->updateProject($id, $code, $name, $owner, $start, $end, $group))
-			{
-				$message = "Successfully updated project {$name}.";
-				$data = array("message" => $message);
+		$today = date("Y-m-d"); 
+
+		if($start <= $today) {
+			if($end > $today) {
+				if($start <= $end) {
+					if($project->updateProject($id, $code, $name, $owner, $start, $end, $group))
+					{
+						$message = "Successfully updated project {$name}.";
+						$data = array("message" => $message);
+					}
+					else{
+						$data = array("error" => "Project was not updated.");
+					}
+				}
+				else {
+					$data = array("error" => "End date must be bigger or equal than start date. Go back and try again.");
+				}
 			}
-			else{
-				$data = array("error" => "Project was not updated.");
+			else {
+				$data = array("error" => "End date must be bigger than today's date. Go back and try again.");
 			}
 		}
-		else
-		{
-			$data = array("error" => "End date must be bigger or equal than start date. Go back and try again.");
+		else {
+			$data = array("error" => "Start date must be smaller or equal than today's date. Go back and try again.");
 		}
 		$this->show("updateProject.view.php", $data);
 	}
