@@ -4,6 +4,7 @@ require_once 'Controller.php';
 require_once 'app/models/user.php';
 require_once 'app/models/project.php';
 require_once 'app/models/group.php';
+require_once 'app/models/board.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 
@@ -20,17 +21,18 @@ class Projects extends Controller{
 		$projects = $this->getProjects();
 
 		$p = new project();
+		$board = new board();
 
 		foreach ($projects as $key => $value) {
 			$project = $projects[$key];
 			$projectID = $project['id_project'];
 			$owner = $p->getOwner($projectID);
 			$group = $p->getGroupName($projectID);
-			$boardExists = $p -> boardExists($projectID);
-	       		$projects[$key]['group'] = $group;
-	       		$projects[$key]['ownerName'] = $owner['name'];
-	        	$projects[$key]['ownerSurname'] = $owner['surname'];
-	        	$projects[$key]['boardExists'] = $boardExists;
+			$boardExists = $board -> boardExists($projectID);
+       		$projects[$key]['group'] = $group;
+       		$projects[$key]['ownerName'] = $owner['name'];
+        	$projects[$key]['ownerSurname'] = $owner['surname'];
+        	$projects[$key]['boardExists'] = $boardExists;
 		}
 
 		$data = array("projects" => $projects);
