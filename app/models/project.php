@@ -68,8 +68,10 @@ class project extends Model{
 
 	public function getOwner($id){
 		global $db;
-		$q1 = $db -> query("SELECT owner_id FROM Project WHERE id_project='{$id}';");
-		$user = $db -> fetch_single($q1);
+		$q1 = $db -> query("SELECT group_id FROM Group_Project WHERE project_id='{$id}';");
+		$groupid = $db -> fetch_single($q1);
+		$q2 = $db -> query("SELECT user_id FROM Users_Groups WHERE group_id='{$groupid}' AND permissions LIKE (‘1__’);");
+		$user = $db -> fetch_single($q2);		
 		$q = $db -> query("SELECT name, surname FROM User WHERE id_user = '{$user}';");
 		$data = $db -> fetch_row($q);
 		return($data);
@@ -84,11 +86,11 @@ class project extends Model{
 		return($data);
 	}
 
-	public function addProject($projectNumber, $projectName, $productOwner, $startDate, $endDate, $group)
+	public function addProject($projectNumber, $projectName, $client, $startDate, $endDate, $group)
 	{
 		global $db;
 
-		$sql = "INSERT INTO Project (active, date_end, date_start, name, number, owner_id) VALUES ('1', '{$endDate}', '{$startDate}', '{$projectName}', '{$projectNumber}', '{$productOwner}');";
+		$sql = "INSERT INTO Project (active, date_end, date_start, name, number, client) VALUES ('1', '{$endDate}', '{$startDate}', '{$projectName}', '{$projectNumber}', '{$client}');";
 		$projectID = $this->insertID($sql);
 
 		$db -> query("INSERT INTO Group_Project (group_id, project_id) VALUES ('{$group}', '{$projectID}');");
@@ -96,11 +98,11 @@ class project extends Model{
 		return true;
 	}
 
-	public function updateProject($id, $code, $name, $owner, $start, $end, $group)
+	public function updateProject($id, $code, $name, $client, $start, $end, $group)
 	{
 		global $db;
 
-		$db -> query("UPDATE Project SET number='{$code}', name='{$name}', date_start='{$start}', date_end='{$end}', owner_id='{$owner}' WHERE id_project='{$id}';");
+		$db -> query("UPDATE Project SET number='{$code}', name='{$name}', date_start='{$start}', date_end='{$end}', client='{$client}' WHERE id_project='{$id}';");
 
 		$db -> query("UPDATE Group_Project SET group_id='{$group}' WHERE project_id='{$id}';");
 
