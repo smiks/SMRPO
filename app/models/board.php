@@ -38,4 +38,11 @@ class board extends Model{
 		
 		return $numOfBoard;
 	}
+	
+	public function getColumnsByParent($boardID, $parentId)
+	{
+		if ($parentId == null)
+			return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id IS NULL;", $return="array", $key="column_id");
+		return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id='{$parentId}';", $return="array", $key="column_id");
+	}
 }

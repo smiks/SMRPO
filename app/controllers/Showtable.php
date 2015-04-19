@@ -24,8 +24,6 @@ class Showtable extends Controller{
 		
 	}
 
-
-
 	/**/
 	public function get($board, $group){
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
@@ -34,14 +32,37 @@ class Showtable extends Controller{
 		$groupID   = $boardInfo ['group_id'];
 		$boardID   = $boardInfo ['board_id'];
 		$boardName = $boardInfo ['name'];
+
+		$cells = array();
+		$cells = $this -> getCells(0, 120, 100, null, $boardID, $cells);
 		
-		#$this->projectID = $projectID;
-		#$this->groupID   = $groupID;
-		#$this->boardID   = $boardID;
-		#$this->test();
-		
-		$data = array("boardID" => $boardID, "boardName" => $boardName);
+		$data = array("boardID" => $boardID, "boardName" => $boardName, "cells" => $cells);
 		$this->show("showtable.view.php", $data);
+	}
+	
+	private function getCells($x, $y, $parentLength, $parentId, $boardId, $cells)
+	{
+		$board = new board();
+		$columns = $board -> getColumnsByParent($boardId, $parentId);
+		$numChildren = count($columns);
+
+		if ($numChildren == 0)
+			return $cells;
+		
+		$childLength = round($parentLength/$numChildren);
+
+		$i = 0;
+		
+		foreach ($columns as $colId => $val)
+		{
+			$newX = $x +  $i * $childLength;
+			$name = $columns[$colId]['name'];
+			$limit= $columns[$colId]['limit'];
+			$cells[$colId] = array("x" => $newX, "y" => $y + 42, "length" => $childLength, "name" => $name, "limit" => $limit);
+			$i = $i + 1;
+			$cells = $this -> getCells($newX, $y + 42, $childLength, $colId, $boardId, $cells);
+		}
+		return $cells;
 	}
 
 
