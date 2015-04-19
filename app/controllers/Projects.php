@@ -8,6 +8,8 @@ require_once 'app/models/board.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 
+Functions::forceLogin();
+
 class Projects extends Controller{
 
 	private function getProjects()

@@ -7,6 +7,8 @@ require_once 'app/models/group.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 
+Functions::forceLogin();
+
 class EditProject extends Controller{
 
 	

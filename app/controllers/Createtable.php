@@ -8,6 +8,8 @@ require_once 'app/models/board.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 
+Functions::forceLogin();
+
 class Createtable extends Controller{
 
 	public function __construct() 
