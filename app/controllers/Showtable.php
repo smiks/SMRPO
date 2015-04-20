@@ -33,8 +33,9 @@ class Showtable extends Controller{
 		$boardID   = $boardInfo ['board_id'];
 		$boardName = $boardInfo ['name'];
 
+
 		$cells = array();
-		$cells = $this -> getCells(0, 120, 100, null, $boardID, $cells);
+		$cells = $this -> getCells(0, 120, 1800, null, $boardID, $cells);
 		
 		$data = array("boardID" => $boardID, "boardName" => $boardName, "cells" => $cells);
 		$this->show("showtable.view.php", $data);
@@ -49,7 +50,7 @@ class Showtable extends Controller{
 		if ($numChildren == 0)
 			return $cells;
 		
-		$childLength = round($parentLength/$numChildren);
+		$childLength = $parentLength/$numChildren;
 
 		$i = 0;
 		
@@ -58,7 +59,8 @@ class Showtable extends Controller{
 			$newX = $x +  $i * $childLength;
 			$name = $columns[$colId]['name'];
 			$limit= $columns[$colId]['limit'];
-			$cells[$colId] = array("x" => $newX, "y" => $y + 42, "length" => $childLength, "name" => $name, "limit" => $limit);
+			$color = $columns[$colId]['color'];
+			$cells[$colId] = array("x" => $newX, "y" => $y + 42, "length" => $childLength, "name" => $name, "limit" => $limit, "color" => $color);
 			$i = $i + 1;
 			$cells = $this -> getCells($newX, $y + 42, $childLength, $colId, $boardId, $cells);
 		}
