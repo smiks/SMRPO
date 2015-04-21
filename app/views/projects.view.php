@@ -15,6 +15,9 @@
 			<td style="padding-right:15px;"> <b> </b></td>
 		</tr>
 	<form action='?page=projects' method='post' style = "float:left;">
+	<script type='text/javascript'>
+		var width = screen.availWidth;
+	</script>
 			<?php 
 			$isAdmin = $data['isAdmin'];
 			foreach ($projects as $key => $value){ 
@@ -72,7 +75,17 @@
 					<? if($boardExists == 1 && (($numActive > 0) || $isAdmin)) { ?>
 						<td style="padding-right:15px;">
 							<div id="menu_option" onClick="location.href='?page=showtable<? echo"&projectID={$id}"; ?>'" style="float:right;">
-								<? echo"<a href='?page=showtable&projectID={$id}'>Show board</a>"; ?>
+								<?
+								echo"
+								<script type='text/javascript'>
+									var link  = '?page=showtable&projectID={$id}&width=';
+									var link  = link+width;
+								</script>
+								";?>
+<script type='text/javascript'>document.write("<a href='"+link+"'>Show Board</a>");</script>
+								<? 
+								#echo"<a href='?page=showtable&projectID={$id}'>Show board</a>";
+								?>
 							</div>
 						</td>
 					<? } ?>

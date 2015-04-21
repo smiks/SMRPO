@@ -4,6 +4,7 @@ require_once 'Controller.php';
 require_once 'app/models/user.php';
 require_once 'app/models/group.php';
 require_once 'app/models/board.php';
+require_once 'app/models/cards.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 
@@ -32,11 +33,16 @@ class Showtable extends Controller{
 		$groupID   = $boardInfo ['group_id'];
 		$boardID   = $boardInfo ['board_id'];
 		$boardName = $boardInfo ['name'];
+		
+		$card = new cards();
+		$cards = $card -> getCards($projectID, $boardID);
 
 		$cells = array();
-		$cells = $this -> getCells(0, 120, 100, null, $boardID, $cells);
+		$screenWidth = (int)($_GET['width'])-5;
+
+		$cells = $this -> getCells(0, 120, $screenWidth, null, $boardID, $cells);
 		
-		$data = array("boardID" => $boardID, "boardName" => $boardName, "cells" => $cells);
+		$data = array("boardID" => $boardID, "boardName" => $boardName, "cells" => $cells, "cards" => $cards);
 		$this->show("showtable.view.php", $data);
 	}
 	
@@ -49,7 +55,7 @@ class Showtable extends Controller{
 		if ($numChildren == 0)
 			return $cells;
 		
-		$childLength = round($parentLength/$numChildren);
+		$childLength = $parentLength/$numChildren;
 
 		$i = 0;
 		
@@ -58,7 +64,8 @@ class Showtable extends Controller{
 			$newX = $x +  $i * $childLength;
 			$name = $columns[$colId]['name'];
 			$limit= $columns[$colId]['limit'];
-			$cells[$colId] = array("x" => $newX, "y" => $y + 42, "length" => $childLength, "name" => $name, "limit" => $limit);
+			$color = $columns[$colId]['color'];
+			$cells[$colId] = array("x" => $newX, "y" => $y + 42, "length" => $childLength, "name" => $name, "limit" => $limit, "color" => $color);
 			$i = $i + 1;
 			$cells = $this -> getCells($newX, $y + 42, $childLength, $colId, $boardId, $cells);
 		}
