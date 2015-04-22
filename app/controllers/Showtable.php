@@ -42,7 +42,7 @@ class Showtable extends Controller{
 
 		$cells = $this -> getCells(0, 120, $screenWidth, null, $boardID, $cells);
 		
-		$data = array("boardID" => $boardID, "boardName" => $boardName, "cells" => $cells, "cards" => $cards);
+		$data = array("boardID" => $boardID, "boardName" => $boardName, "cells" => $cells, "cards" => $cards, "screenWidth" => $screenWidth);
 		$this->show("showtable.view.php", $data);
 	}
 	
