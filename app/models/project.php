@@ -98,6 +98,18 @@ public function getGroupName($id){
         return true;
 	}
 	
+
+	public function getDevelopers($projectID){
+
+		$sql = "SELECT DISTINCT u.name as UserName, u.surname as UserSurname, u.id_user
+				FROM User u
+				INNER JOIN Users_Groups ug on u.id_user = ug.user_id
+				INNER JOIN Group_Project gp on ug.group_id = gp.group_id
+				WHERE ug.permission='001' AND gp.project_id = '{$projectID}' AND ug.active_end IS NULL;";
+		return $this->sql($sql, $return = "array", $key ="id_user");
+
+	}
+
 	public function activeUserOnProject($userId, $projectId)
 	{
 		global $db;
