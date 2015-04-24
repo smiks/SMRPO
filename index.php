@@ -39,6 +39,7 @@ Router::make('deleteproject', 'app/controllers/DeleteProject.php');
 Router::make('infogroup', 'app/controllers/Infogroup.php');
 Router::make('showtable', 'app/controllers/Showtable.php');
 Router::make('createtable', 'app/controllers/Createtable.php');
+Router::make('copytable', 'app/controllers/CopyTable.php');
 Router::route();
 /* optional "garbage collector" */
 $variables = array('user', 'group'); /* You can put name of variables that you want to unset in this array. */

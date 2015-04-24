@@ -71,6 +71,13 @@
 								</div>
 							</td>
 						<? } ?>
+						<? if($boardExists == 1) { //ROK ?> 
+							<td style="padding-right:15px;">
+								<div id="menu_option" onClick="location.href='?page=copytable<? echo"&projectID={$id}"; ?>'" style="float:right;">
+									<? echo"<a href='?page=copytable&projectID={$id}'>Copy board</a>"; ?>
+								</div>
+							</td>
+						<? } // ROK ?> 
 					<? } ?>
 					<? if($boardExists == 1 && (($numActive > 0) || $isAdmin)) { ?>
 						<td style="padding-right:15px;">

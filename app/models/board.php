@@ -18,6 +18,11 @@ class board extends Model{
 		return ($this->sql($sql, $return="single"));
 	}
 	
+	public function getBoardIDByProjectID($projectID){
+		$sql = "SELECT board_id FROM Board WHERE project_id = '{$projectID}' LIMIT 1;";
+		return ($this->sql($sql, $return="single"));
+	}
+	
 	public function getBoard($projectId)
 	{		
 		global $db;
@@ -44,5 +49,10 @@ class board extends Model{
 		if ($parentId == null)
 			return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id IS NULL;", $return="array", $key="column_id");
 		return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id='{$parentId}';", $return="array", $key="column_id");
+	}
+	
+	public function getColumnsByBoardID($boardID)
+	{
+		return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}';", $return="array", $key="column_id");
 	}
 }
