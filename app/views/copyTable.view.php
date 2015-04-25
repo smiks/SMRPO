@@ -12,12 +12,25 @@
 			<input type="hidden" value="<?php echo $id; ?>" name="id">
 			<br>
 			<center>
-			<big>Copy Table of a project <b><?php echo $pname; ?></b>.</big>
+			<big>Copy Table <b><?php echo $pname; ?></b>.</big>
 			<br>
-			Are you sure you want to copy this table? <?php echo $id; ?>
+			Board name: <input type="text" name="boardname" id="textinput_200"><br>
+			
+			Select group: <br>
+			<select name="selectedGroupID">
+				<?php
+				foreach($allGroups as $key => $value){
+					$tmp   = $allGroups[$key];
+					$group_id = $tmp["group_id"];
+					$group_name = $tmp["group_name"];
+					echo "<option value={$group_id}> {$group_name} </option> ";
+				}	
+				?>
+			</select>
+			
 			</center>
 			<br>
-			<input type='submit' value='Yes, copy table!' name='submit'><br>
+			<input type='submit' value='Copy table!' name='submit'><br>
 		</form>
 	</div>
 </div>
