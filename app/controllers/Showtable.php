@@ -29,21 +29,30 @@ class Showtable extends Controller{
 	public function get($board, $group){
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
 		
-		$boardInfo = $board -> getBoard($projectID);	
-		$groupID   = $boardInfo ['group_id'];
-		$boardID   = $boardInfo ['board_id'];
-		$boardName = $boardInfo ['name'];
+		$boardd = $board -> getBoardByProjectID($projectID);
+		$boardId = $boardd['board_id'];
+		$projects = $board -> getAllProjects($boardId);
+		$boardName = $boardd['name'];
+		$groupId = $boardd['group_id'];
 		
-		$card = new cards();
-		$cards = $card -> getCards($projectID, $boardID);
-
-		$cells = array();
+		$data = array();
 		$screenWidth = (int)($_GET['width'])-5;
-
-		$cells = $this -> getCells(0, 120, $screenWidth, null, $boardID, $cells);
 		
-		$data = array("boardID" => $boardID, "boardName" => $boardName, "cells" => $cells, "cards" => $cards, "screenWidth" => $screenWidth);
-		$this->show("showtable.view.php", $data);
+		$cells = array();
+		$cells = $this -> getCells(0, 120, $screenWidth-30, null, $boardId, $cells);
+		
+		foreach($projects as $projectId => $val)
+		{
+			$project = $projects[$projectId];
+			
+			$card = new cards();
+			$cards = $card -> getCards($projectId, $boardId);
+
+			$data[$projectId] = array("cards" => $cards);
+		}
+		
+		$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells);
+		$this->show("showtable.view.php", $dataToShow);
 	}
 	
 	private function getCells($x, $y, $parentLength, $parentId, $boardId, $cells)

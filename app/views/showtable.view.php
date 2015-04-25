@@ -4,17 +4,15 @@
 <div id="toCenter">
 	<br>
 	<div id="field"  style="width: 89%;">
-		<h3> <?php echo $data['boardName']; ?></h3>
+		<h3> <?php echo $boardName; ?></h3>
 	</div>
 	<?php
-		$cells = $data['cells'];
-		$cards = $data['cards'];
-		$screenWidth = $data['screenWidth'];
 		$xy = array();
 		$maxY = 0;
-		$maxX = 0;
-		$maxLength = 0;
-		$colCoor = array();
+		$colCoor = array();		
+		$boardLength = 0;
+		$numSwimLines = count($data);
+		$maxLimit = 0;
 	?>
 	<div style="width: 89%">
 		<?php
@@ -37,48 +35,59 @@
 				
 				$i = $i+1;
 				
+				if($y == 162)
+					$boardLength = $boardLength + $length;
+				
 				if ($y > $maxY)
 					$maxY = $y;
-				if ($x > $maxX)
-				{
-					$maxX= $x;
-					if($length > $maxLength)
-						$maxLength = $length;
-				}
+				if ($maxLimit < $limit)
+					$maxLimit = $limit;
+
 				$echoLimit = "";
 				if ($limit > 0)
 					$echoLimit = "Limit: {$limit}";
 				
 				echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b><br>${echoLimit}</br></div>";
 			}
-			
+			$border = ($numSwimLines-1) * (110*$maxLimit);
 			foreach ($xy as $id => $val)
 			{
 				$x = $xy[$id]['x'];
 				$y = $xy[$id]['y'];
-				echo "<div style='position:absolute;width:5px;left:{$x}px;top:{$y}px;bottom:0px;background-color:white;'></div>";
+				echo "<div style='position:absolute;width:5px;left:{$x}px;top:{$y}px;bottom:-{$border}px;background-color:white;'></div>";
 			}
-			$maxY = $maxY + 42;
-			$right = $screenWidth - $maxX - $maxLength;
-			if ($right < 0)
-				$right = 0;
-			echo "<div style='position:absolute;height:5px;left:0px;top:{$maxY}px;right:{$right}px;background-color:white;'></div>";
 			
-			foreach ($cards as $cardId => $value)
+			$maxY = $maxY + 42;
+			echo "<div style='position:absolute;height:5px;left:0px;top:{$maxY}px;width:{$boardLength}px;background-color:white;'></div>";
+			
+			$i=0;
+			foreach ($data as $projectId => $value)
 			{
-				$card = $cards[$cardId];
-				$color = $card['color'];
-				$colId = $card['column_id'];
-				$name = $card['name'];
+				$cards = $data[$projectId ]['cards'];
+				$maxy = $maxY + $i*(110 * $maxLimit);
 				
-				$coordinates = $colCoor[$colId];
-				$x = $coordinates['x'];
-				$y = $coordinates['y'];
-				if($maxY >= $y)
-					$y = $maxY + 10;
-				$length = $coordinates['length'];
-				echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b></div>";
-				$colCoor[$colId] = array("x" => $x, "y" => $y+110, "length" => $length);
+				foreach ($cards as $cardId => $val)
+				{
+					$card = $cards[$cardId];
+					$color = $card['color'];
+					$colId = $card['column_id'];
+					$name = $card['name'];
+					
+					$coordinates = $colCoor[$colId];
+					$x = $coordinates['x'];
+					$y = $coordinates['y'];
+					
+					if ($maxy >= $y)
+						$y = $maxy + 10;
+					
+					$length = $coordinates['length'];
+					echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b></div>";
+					$colCoor[$colId] = array("x" => $x, "y" => $y+110, "length" => $length);
+				}
+				$i = $i + 1;
+				$maxy = $maxy + (110 * $maxLimit);
+				if ($i < $numSwimLines)
+					echo "<div style='position:absolute;height:5px;left:0px;top:{$maxy}px;width:{$boardLength}px;background-color:white;'></div>";	
 			}
 		?>
 	</div>
