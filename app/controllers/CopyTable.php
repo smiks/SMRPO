@@ -16,33 +16,60 @@ class CopyTable extends Controller{
 
 		
 		$input = Functions::input("POST");
+		// store data from input
 		$projectId = $input['id'];
+		$selectedBoardName = $input['boardname'];
+		$selectedGroupID = $input['selectedGroupID'];
 		
+		// get board_id of board you wish to copy
 		$board = new board();
 		$board_id = $board->getBoardIDByProjectID($projectId);
+		
+		// create new board_id (for inserting into DB)
+		$newBoardID = $board->getLastBoardID();
+		$newBoardID = $newBoardID + 1;
+		
+		// create new id of a board (primary key ... for inserting into DB)
+		$newIDkey = $board->getLastPrimaryKey();
+		$newIDkey = $newIDkey + 1;
+		
+		// get columns for board you wish to copy
 		$col = $board->getColumnsByBoardID($board_id);
 		
-		//var_dump($col);
+		// get last column_id (for inserting into DB) 
+		$lastColID = $board->getLastColumnID();
 		
-		$tmp = $col[1][3];
-		echo " $tmp <br>";
-		
-		
-		echo "Izpis i-jev: <br><br>";
-		for($i = 1; $i <= count($col); $i++) {
-				echo "i = $col[$i] ";
-				echo "<br>";
-				$tempArr = $col[$i];
-			for ($j = 1 ; $j <= count($col[$i]) ; $j++){
-				echo "  $tempArr[$j]";
-				echo "<br>";
+		// write data into Board.sql
+	 	//$board->setNewBoard($newIDkey, $newBoardID, $selectedGroupID, $selectedBoardName, $projectId); //FIXME: can I add projectId for copycat? If not, change Board.sql (project_id null allowed)
+	 	$board->setNewBoard($newIDkey, $newBoardID, 0, $selectedBoardName, 0); //FIXME: can I add projectId for copycat? If not, change Board.sql (project_id null allowed)
+
+		foreach($col as $key => $value){
+			
+			$lastColID = $lastColID + 1;
+
+			$tmpCol = $col[$key];
+			$name = $tmpCol["name"];
+			$limit = $tmpCol["limit"]; 
+			$parent_id = $tmpCol["parent_id"];
+			$color = $tmpCol["color"];
+
+			if($parent_id == NULL){
+				// FIXME: spodnja vrstica ne deluje
+				//$board->setNewColumn($lastColID, $newBoardID, $tmpCol["name"], $tmpCol["limit"], 0, $tmpCol["color"]);
 			}
+			else{
+				// FIXME: spodnja vrstica ne deluje
+				$board->setNewColumn($lastColID, $newBoardID, $tmpCol["name"], $tmpCol["limit"], $tmpCol["parent_id"], $tmpCol["color"]);
+			}
+		
+			
+			
 		}
 		
-		echo "<br>";
-		var_dump($col);
 		
-		
+		$message= "Table copied successfully";
+		$data = array("message" => $message);
+		$this->show("deleteprojectsub.view.php", $data); // TODO
 		
 			
 	}
@@ -52,13 +79,14 @@ class CopyTable extends Controller{
 		$id = Functions::input("GET")["projectID"];
 		
 		$project = new project();
-
 		$p = $project->getProject($id);
-		
 		$pname = $p['name'];
-
-		$data = array("pname" => $pname, "id" => $id);
 		
+		$user_id = $_SESSION['userid'];
+		$group= new group();
+		$allGroups = $group->getArrayOfAllGroups();
+
+		$data = array("pname" => $pname, "id" => $id, "allGroups" => $allGroups);
 		$this->show("copyTable.view.php", $data);
 		
 	}
