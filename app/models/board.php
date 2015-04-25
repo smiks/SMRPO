@@ -23,14 +23,17 @@ class board extends Model{
 		return ($this->sql($sql, $return="single"));
 	}
 	
-	public function getBoard($projectId)
-	{		
+	public function getBoardByProjectID($projectID){
 		global $db;
-		$q = $db-> query("SELECT board_id, group_id, name FROM Board WHERE project_id = '{$projectId}';");
-		
-		$boardInfo= $db -> fetch_row($q);
-		
-		return $boardInfo;
+		$q = $db -> query("SELECT * FROM Board WHERE project_id = '{$projectID}';");
+		$board = $db -> fetch_row($q);
+		return $board;
+	}
+	
+	
+	public function getAllProjects($boardId)
+	{
+		return $this -> sql("SELECT * FROM Board WHERE board_id='{$boardId}';", $return="array", $key="project_id");
 	}
 
 		
@@ -55,4 +58,35 @@ class board extends Model{
 	{
 		return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}';", $return="array", $key="column_id");
 	}
+
+	public function getLastBoardID()
+	{
+		$sql = "SELECT MAX(board_id) FROM Board;";
+		return ($this->sql($sql, $return="single"));
+	}	
+	
+	public function getLastColumnID()
+	{
+		$sql = "SELECT MAX(column_id) FROM Col;";
+		return ($this->sql($sql, $return="single"));
+	}
+	
+	public function getLastPrimaryKey()
+	{
+		$sql = "SELECT MAX(id) FROM Board;";
+		return ($this->sql($sql, $return="single"));
+	}	
+	
+	public function setNewBoard($id, $board_id, $group_id, $name, $project_id){
+		global $db;
+		$sql = "INSERT INTO Board (id, board_id, group_id, name, project_id) VALUES ('{$id}', '{$board_id}', '{$group_id}', '{$name}', '{$project_id}');";
+		$this->insertID($sql);
+	}
+	
+	public function setNewColumn($column_id, $board_id, $name, $limit, $parent_id, $color){
+		global $db;
+		$sql = "INSERT INTO Col (column_id, board_id, name, limit, parent_id, color) VALUES ('{$column_id}', '{$board_id}', '{$name}', '{$limit}', '{$parent_id}', '{$color}');";
+		$this->insertID($sql);
+	}
+	
 }
