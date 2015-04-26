@@ -6,7 +6,7 @@
 		ERROR <br>
 		Error message: {{error}}<br>
 		Error code: {{errorCode}}<br>
-		<a href='?page=homepage'>Go back</a>
+		<a href='?page=projects'>Go back</a>
 	</div>
 </div>
 [include]app/views/footer.view.php[/include]

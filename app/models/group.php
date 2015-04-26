@@ -26,6 +26,22 @@ class group extends Model {
 		return $this->sql("SELECT * FROM Users_Groups LEFT JOIN Groups ON (Users_Groups.group_id=Groups.group_id) WHERE permission LIKE ('_1_') AND user_id='{$userid}' AND Users_Groups.active_end IS NULL ORDER BY group_name ASC;", $return = "array", $key ="group_id");
 		
 	}
+	/* Returns * from Groups */
+	public function getArrayOfAllGroups(){
+		return $this->sql("SELECT * FROM Groups;", $return="array", $key="group_id");
+	}
+	
+	public function isMember($userId, $groupId)
+	{
+		global $db;
+		$q = $db -> query ("SELECT COUNT(*) FROM Users_Groups WHERE group_id='{$groupId}' AND user_id='{$userId}' AND active_end IS NULL;");
+		$isMember = $db -> fetch_single($q);
+		
+		if ($isMember > 0)
+			return true;
+		return false;		
+	}
+	
 
 	/* Returns members of group (selected by group ID) */
 	public function getMembers($groupid)

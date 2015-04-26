@@ -18,7 +18,8 @@ class Showtable extends Controller{
 
 	public function __construct() {
 		$board = new board();
-		$group = new group();
+		$group = new group();		
+		
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$this->get($board, $group);
 		}
@@ -26,33 +27,53 @@ class Showtable extends Controller{
 	}
 
 	/**/
-	public function get($board, $group){
+	private function get($board, $group){
+		
+		$user = new user();
+		$userId = $_SESSION['userid'];
+		$isAdmin = $user -> isAdmin($userId);		
+		
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
 		
 		$boardd = $board -> getBoardByProjectID($projectID);
-		$boardId = $boardd['board_id'];
-		$projects = $board -> getAllProjects($boardId);
-		$boardName = $boardd['name'];
 		$groupId = $boardd['group_id'];
 		
-		$data = array();
-		$screenWidth = (int)($_GET['width'])-5;
+		$isMember = $group -> isMember($userId, $groupId);
 		
-		$cells = array();
-		$cells = $this -> getCells(0, 120, $screenWidth-30, null, $boardId, $cells);
-		
-		foreach($projects as $projectId => $val)
+		if (!$isAdmin && !$isMember)
 		{
-			$project = $projects[$projectId];
-			
-			$card = new cards();
-			$cards = $card -> getCards($projectId, $boardId);
-
-			$data[$projectId] = array("cards" => $cards);
+			$error = "Access Denied";
+			$errorCode = "403";
+			$data = array("error" => $error, "errorCode" => $errorCode);
+			$this->show("error.view.php", $data);	
 		}
+		else
+		{
 		
-		$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells);
-		$this->show("showtable.view.php", $dataToShow);
+			$boardId = $boardd['board_id'];
+			$projects = $board -> getAllProjects($boardId);
+			$boardName = $boardd['name'];
+			
+			
+			$data = array();
+			$screenWidth = (int)($_GET['width'])-5;
+			
+			$cells = array();
+			$cells = $this -> getCells(0, 120, $screenWidth-30, null, $boardId, $cells);
+			
+			foreach($projects as $projectId => $val)
+			{
+				$project = $projects[$projectId];
+				
+				$card = new cards();
+				$cards = $card -> getCards($projectId, $boardId);
+	
+				$data[$projectId] = array("cards" => $cards);
+			}
+			
+			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells);
+			$this->show("showtable.view.php", $dataToShow);
+		}
 	}
 	
 	private function getCells($x, $y, $parentLength, $parentId, $boardId, $cells)
@@ -72,7 +93,7 @@ class Showtable extends Controller{
 		{
 			$newX = $x +  $i * $childLength;
 			$name = $columns[$colId]['name'];
-			$limit= $columns[$colId]['limit'];
+			$limit= $columns[$colId]['cardLimit'];
 			$color = $columns[$colId]['color'];
 			$cells[$colId] = array("x" => $newX, "y" => $y + 42, "length" => $childLength, "name" => $name, "limit" => $limit, "color" => $color);
 			$i = $i + 1;
