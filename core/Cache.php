@@ -66,4 +66,9 @@ class Cache {
 
 		return ($decrypted_value);
 	}
+
+	public static function keyExists($key) {
+		$file = "cache/".$key.".cache";
+		return file_exists($file);
+	}
 }
