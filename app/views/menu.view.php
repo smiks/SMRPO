@@ -4,21 +4,27 @@
 		&nbsp;
 		<big>
 			<?
+			$isKM = $_SESSION['isKanbanMaster'];
 			$user = new user();
 			$info = $user->userInfoByID($_SESSION['userid']);
 			$name = strtoupper($info['name']);
 			$surname = strtoupper($info['surname']);
-			echo("Welcome, {$name} {$surname} &nbsp; (<a href='?page=logout' style='color: #cc0000;'>Logout</a>)");
+			$KM   = "";
+			if($isKM){
+				$KM = "(Kanban master)";
+			}
+			echo("Welcome, {$name} {$surname} {$KM} &nbsp; (<a href='?page=logout' style='color: #cc0000;'>Logout</a>)");
 			if($_SESSION['isAdministrator'] == 1) {
 				echo"&nbsp;&nbsp;&nbsp;<a href='?page=adminpanel'>Admin Panel</a>";
 			}
-			$isKM = $_SESSION['isKanbanMaster'];
 			?>
 		</big>
 	</div>
 
 	<div id="menu">
-
+		<?
+		if($isKM){
+		?>
 		<div id="menu_option" onClick="location.href='?page=creategroup'">
 			<a href="?page=creategroup">Create group</a>
 		</div>
@@ -27,7 +33,6 @@
 			<a href="?page=groups">Groups</a>
 		</div>
 
-		<? if($isKM) { ?>
 		<div id="menu_option" onClick="location.href='?page=createproject'">
 			<a href="?page=createproject">Create project</a>
 		</div>
