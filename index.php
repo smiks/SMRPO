@@ -1,14 +1,14 @@
 <?php
 /******************/
 /* Author: smiks  */
-/* Version: 0.6   */
+/* Version: 0.6.5 */
 /******************/
 /* Latest upgrade */
+/* - Global Funcs */
 /* - Basic ORM    */
 /* - CSRF token   */
 /* - cache        */
 /* - routing      */
-/* - functions    */
 /******************/
 session_start();
 ob_start();
@@ -43,7 +43,7 @@ Router::make('createtablesub', 'app/controllers/Createtablesub.php');
 Router::make('copytable', 'app/controllers/CopyTable.php');
 Router::route();
 /* optional "garbage collector" */
-$variables = array('user', 'group'); /* You can put name of variables that you want to unset in this array. */
+$variables = array('user', 'group', 'board', 'project'); /* You can put name of variables that you want to unset in this array. */
 foreach ($variables as $value) {
 	unset($$value);
 }

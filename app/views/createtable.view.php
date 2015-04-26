@@ -42,6 +42,7 @@
 								<input type='number' name='limitColsOne' style='width: 50px;' value='0' min='0' max='50'><br>
 								Number of columns &nbsp; 
 								<select name='numColsOne'>
+									<option value='0'>0</option>
 									<option value='1'>1</option>
 									<option value='2'>2</option>
 									<option value='3'>3</option>
@@ -58,6 +59,7 @@
 								<input type='number' name='limitColsTwo' style='width: 50px;' value='0' min='0' max='50'><br>
 								Number of columns &nbsp; 
 								<select name='numColsTwo'>
+									<option value='0'>0</option>
 									<option value='1'>1</option>
 									<option value='2'>2</option>
 									<option value='3'>3</option>
@@ -74,6 +76,7 @@
 								<input type='number' name='limitColsThree' style='width: 50px;' value='0' min='0' max='50'><br>
 								Number of columns &nbsp; 
 								<select name='numColsThree'>
+									<option value='0'>0</option>
 									<option value='1'>1</option>
 									<option value='2'>2</option>
 									<option value='3'>3</option>

@@ -34,9 +34,9 @@ class Createtable extends Controller{
 		$colorCol2 = $post['colorColsTwo'];
 		$colorCol3 = $post['colorColsThree'];
 		$totalCols = $nCols1+$nCols2+$nCols3;
-		$wCol1     = 33 / $nCols1;
-		$wCol2     = 33 / $nCols2;
-		$wCol3     = 33 / $nCols3;
+		$wCol1     = $nCols1 > 0 ? 33 / $nCols1 : 33;
+		$wCol2     = $nCols2 > 0 ? 33 / $nCols2 : 33;
+		$wCol3     = $nCols3 > 0 ? 33 / $nCols3 : 33;
 		$limitCol1 = $post['limitColsOne'];
 		$limitCol2 = $post['limitColsTwo'];
 		$limitCol3 = $post['limitColsThree'];
