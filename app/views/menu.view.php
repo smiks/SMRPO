@@ -11,9 +11,9 @@
 			$surname = strtoupper($info['surname']);
 			$KM   = "";
 			if($isKM){
-				$KM = "(Kanban master)";
+				$KM = "<small>(Kanban master)</small>";
 			}
-			echo("Welcome, {$name} {$surname} {$KM} &nbsp; (<a href='?page=logout' style='color: #cc0000;'>Logout</a>)");
+			echo("{$name} {$surname} {$KM} &nbsp; (<a href='?page=logout' style='color: #cc0000;'>Logout</a>)");
 			if($_SESSION['isAdministrator'] == 1) {
 				echo"&nbsp;&nbsp;&nbsp;<a href='?page=adminpanel'>Admin Panel</a>";
 			}
