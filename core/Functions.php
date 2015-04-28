@@ -115,5 +115,37 @@ class Functions {
 
 	public static function reload($toUrl, $time=0) {
 		header("refresh:{$time};url={$toUrl}"); 
-	}	
+	}
+
+	public static function splitText($text, $splitAt)
+	{
+		if(strlen($text) < $splitAt){
+			return ($text);
+		}
+		return self::splitTextHelper($text, $splitAt, "");
+	}
+
+	private static function splitTextHelper($text, $splitAt, $acc)
+	{
+		$textLen = strlen($text);
+		if($textLen > $splitAt){
+			$space = strpos($text, ' ', $splitAt);
+		}
+		else{
+			return $acc.$text;
+		}
+		
+		if($textLen > $splitAt && $space > 0){
+			$partA  = substr($text, 0, $space);
+			$partB .= substr($text, $space);
+			$partA  = $partA."<br>";
+			$acc    = $acc.$partA;
+			return self::splitTextHelper($partB, $splitAt, $acc);
+		}
+		if($textLen > $splitAt && $space == 0){
+			$text  = substr($text, 0, $splitAt);
+			$text .= "...";
+			return ($text);
+		}
+	}
 }

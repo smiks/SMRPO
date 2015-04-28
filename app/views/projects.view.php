@@ -5,12 +5,12 @@
 	</div>
    	<table id="field" style="padding:30px;display:block;">
 		<tr>
-			<td style="padding-right:15px;"> <b> Project code </b></td>
-			<td style="padding-right:15px;"> <b> Project name </b></td>
+			<td style="padding-right:15px;"> <b> Project <br>code </b></td>
+			<td style="padding-right:15px;"> <b> Project <br>name </b></td>
 			<td style="padding-right:15px;"> <b> Client </b></td>
-			<td style="padding-right:15px;"> <b> Start date </b></td>
+			<td style="padding-right:15px;"> <b> Start <br>date </b></td>
 			<td style="padding-right:15px;"> <b> End date </b></td>
-			<td style="padding-right:15px;"> <b> Development group </b></td>
+			<td style="padding-right:15px;"> <b> Development <br>group </b></td>
 			<td style="padding-right:15px;"> <b> </b></td>
 			<td style="padding-right:15px;"> <b> </b></td>
 		</tr>
@@ -24,14 +24,15 @@
 				$project = $projects[$key];
 				$name = strtoupper($project['name']);
 				$code = strtoupper($project['number']);
-		                $id = $project['id_project'];
-		                $isKM = $_SESSION['isKanbanMaster'];
-		                $start = date('d.m.Y', strtotime($project['date_start']));
-		                $end = date('d.m.Y', strtotime($project['date_end']));
-		                $group = $project['group'];
-		                $client = strtoupper($project['client']);
-		                $boardExists = $project['boardExists'];
-		                $numActive = $project['numActive'];
+                $id = $project['id_project'];
+                $isKM = $_SESSION['isKanbanMaster'];
+                $start = date('d.m.Y', strtotime($project['date_start']));
+                $end = date('d.m.Y', strtotime($project['date_end']));
+                $group = $project['group'];
+                $client = strtoupper($project['client']);
+                $boardExists = $project['boardExists'];
+                $numActive = $project['numActive'];
+                $name = Functions::splitText($name, 15);
 			?>
 
 			<tr>
