@@ -53,7 +53,7 @@ class Showtable extends Controller{
 			$boardId = $boardd['board_id'];
 			$projects = $board -> getAllProjects($boardId);
 			$boardName = $boardd['name'];
-			
+			$isEmpty   = $board->isEmpty($boardId);
 			
 			$data = array();
 			$screenWidth = (int)($_GET['width'])-5;
@@ -71,7 +71,7 @@ class Showtable extends Controller{
 				$data[$projectId] = array("cards" => $cards);
 			}
 			
-			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells);
+			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID);
 			$this->show("showtable.view.php", $dataToShow);
 		}
 	}

@@ -141,6 +141,13 @@ class board extends Model{
 		return ($this->sql($sql, $return="single"));
 	}	
 	
+	public function isEmpty($boardID)
+	{
+		$boardID = (int)($boardID);
+		$sql = "SELECT COUNT(*) FROM Card WHERE board_id = '{$boardID}' LIMIT 1;";
+		return 0 == $this->sql($sql, $return="single");
+	}
+
 	public function setNewBoard($id, $board_id, $group_id, $name, $project_id){
 		global $db;
 		$sql = "INSERT INTO Board (id, board_id, group_id, name, project_id) VALUES ('{$id}', '{$board_id}', '{$group_id}', '{$name}', '{$project_id}');";

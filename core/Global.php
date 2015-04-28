@@ -14,7 +14,7 @@ function checkVar($var){
 	if(is_null($var)){
 		echo"Variable is NULL. <br>";
 	}
-	if(is_nan($var)){
+	if(!is_object($var) && is_nan($var)){
 		echo"Variable is NAN. <br>";
 	}
 	if(is_object($var)){

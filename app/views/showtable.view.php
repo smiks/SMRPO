@@ -14,6 +14,15 @@
 		$numSwimLines = count($data);
 		$maxLimit = 0;
 	?>
+	<?
+	if($isEmpty){
+	?>
+	<div id="field" style="width: 89%">
+		This board is empty! You can edit it. <a href="?page=edittable&projectID={{projectID}}">Link</a>
+	</div>
+	<?
+	}
+	?>
 	<div style="width: 89%">
 		<?php
 			$i = 0;

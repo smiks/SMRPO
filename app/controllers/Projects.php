@@ -35,14 +35,14 @@ class Projects extends Controller{
 			$group = $p->getGroupName($projectID);
 			$boardExists = $board -> boardExists($projectID);
 			$numActive = $p -> activeUserOnProject($userId, $projectID);
-	       		$projects[$key]['group'] = $group;
-	       		$projects[$key]['client'] = $project['client'];
-	        	$projects[$key]['boardExists'] = $boardExists;
-	        	$projects[$key]['numActive'] = $numActive;
+       		$projects[$key]['group'] = $group;
+       		$projects[$key]['client'] = $project['client'];
+        	$projects[$key]['boardExists'] = $boardExists;
+        	$projects[$key]['numActive'] = $numActive;
 		}
 
 		$data = array("projects" => $projects, "isAdmin" => $isAdmin);
-        	$this->show("projects.view.php", $data);
+        $this->show("projects.view.php", $data);
 	}
 
 	public function __construct() {
