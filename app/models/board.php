@@ -88,8 +88,13 @@ class board extends Model{
 		return $numOfBoard;
 	}
 
-	public function getBoardID($groupID){
-		$sql = "SELECT board_id FROM Board WHERE group_id = '{$groupID}' LIMIT 1;";
+	public function getBoardID($groupID, $projectID = 0){
+		if($projectID == 0){
+			$sql = "SELECT board_id FROM Board WHERE group_id = '{$groupID}' LIMIT 1;";
+		}
+		elseif($projectID != 0){
+			$sql = "SELECT board_id FROM Board WHERE group_id = '{$groupID}' AND project_id ='{$projectID}' LIMIT 1;";
+		}		
 		return ($this->sql($sql, $return="single"));
 	}
 	
