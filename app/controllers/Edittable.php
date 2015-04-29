@@ -17,10 +17,9 @@ class Edittable extends Controller{
 		$board   = new board();
 		$group   = new group();
 		$project = new project();
-		$userid  = $_SESSION['userid'];
 
 		switch($_SERVER['REQUEST_METHOD']){
-			case "GET": $this->get($board, $group); break;
+			case "GET": $this->get($board, $group, $project); break;
 			case "POST": $this->post($board, $group, $project); break;
 		}
 		
@@ -30,7 +29,7 @@ class Edittable extends Controller{
 	{
 
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
-
+		$userid  = $_SESSION['userid'];
 		$isKM    = $project->isKanbanMaster($projectID, $userid);
 
 		if(!$isKM)
