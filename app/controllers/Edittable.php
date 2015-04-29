@@ -14,25 +14,41 @@ class Edittable extends Controller{
 
 	public function __construct() 
 	{
-		$board = new board();
-		$group = new group();
+		$board   = new board();
+		$group   = new group();
+		$project = new project();
+		$userid  = $_SESSION['userid'];
 
 		switch($_SERVER['REQUEST_METHOD']){
 			case "GET": $this->get($board, $group); break;
-			case "POST": $this->post($board, $group); break;
+			case "POST": $this->post($board, $group, $project); break;
 		}
 		
 	}
 
-	private function get($board, $group)
+	private function get($board, $group, $project)
 	{
 
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
 
-		$error = "Page is not finished.";
-		$errorCode = "404";
-		$data = array("error" => $error, "errorCode" => $errorCode);
-		$this->show("error.view.php", $data);
+		$isKM    = $project->isKanbanMaster($projectID, $userid);
+
+		if(!$isKM)
+		{
+			$error = "Access Denied.";
+			$errorCode = "403";
+			$data = array("error" => $error, "errorCode" => $errorCode);
+			$this->show("error.view.php", $data);		
+		}
+		else
+		{
+			$error = "Page is not finished.";
+			$errorCode = "404";
+			$data = array("error" => $error, "errorCode" => $errorCode);
+			$this->show("error.view.php", $data);			
+		}
+
+
 
 	}
 

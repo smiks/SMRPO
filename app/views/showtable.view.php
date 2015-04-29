@@ -15,7 +15,7 @@
 		$maxLimit = 0;
 	?>
 	<?
-	if($isEmpty){
+	if($isEmpty && $isKM){
 	?>
 	<div id="field" style="width: 89%">
 		This board is empty! You can edit it. <a href="?page=edittable&projectID={{projectID}}">Link</a>

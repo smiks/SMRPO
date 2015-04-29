@@ -5,7 +5,7 @@ require_once 'app/models/user.php';
 require_once 'app/models/group.php';
 require_once 'app/models/board.php';
 require_once 'app/models/cards.php';
-require_once 'core/Cache.php';
+require_once 'app/models/project.php';
 require_once 'core/Functions.php';
 
 Functions::forceLogin();
@@ -17,24 +17,24 @@ class Showtable extends Controller{
 	private $boardID;
 
 	public function __construct() {
-		$board = new board();
-		$group = new group();		
+		$board   = new board();
+		$group   = new group();
+		$project = new project();	
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-			$this->get($board, $group);
+			$this->get($board, $group, $project);
 		}
 		
 	}
 
 	/**/
-	private function get($board, $group){
+	private function get($board, $group, $project){
 		
 		$user = new user();
 		$userId = $_SESSION['userid'];
 		$isAdmin = $user -> isAdmin($userId);		
-		
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
-		
+		$isKM    = $project -> isKanbanMaster($projectID, $userId);
 		$boardd = $board -> getBoardByProjectID($projectID);
 		$groupId = $boardd['group_id'];
 		
@@ -71,7 +71,7 @@ class Showtable extends Controller{
 				$data[$projectId] = array("cards" => $cards);
 			}
 			
-			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID);
+			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM);
 			$this->show("showtable.view.php", $dataToShow);
 		}
 	}

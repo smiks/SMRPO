@@ -1,8 +1,6 @@
 <?php
 
 require_once 'Controller.php';
-require_once 'app/models/user.php';
-require_once 'app/models/project.php';
 require_once 'app/models/group.php';
 require_once 'app/models/board.php';
 require_once 'core/Functions.php';
