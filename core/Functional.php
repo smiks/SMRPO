@@ -24,4 +24,25 @@ class Functional {
 		return (array_slice($array, 1));
 	}
 
+	/* Wrappers for integrated PHP functions (because of consistency and easier usage)*/
+	public static function map($function, $array)
+	{
+		return (array_map($function, $array));
+	}
+
+	public static function reduce($function, $array)
+	{
+		return (array_reduce($array, $function));
+	}
+
+	public static function filter($function, $array)
+	{
+		return (array_filter($array, $function));
+	}
+
+	public static function merge($array1, $array2)
+	{
+		return (array_merge($array1, $array2));
+	}
+
 }
