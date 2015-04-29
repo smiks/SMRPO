@@ -103,9 +103,15 @@ class board extends Model{
 		return ($this->sql($sql, $return="single"));
 	}
 	
-	public function getBoardByProjectID($projectID){
+	public function getBoardByProjectID($projectID, $groupID = 0){
 		global $db;
-		$q = $db -> query("SELECT * FROM Board WHERE project_id = '{$projectID}';");
+		if($groupID == 0){
+			$sql = "SELECT * FROM Board WHERE project_id = '{$projectID}';";
+		}
+		elseif($groupID != 0){
+			$sql = "SELECT * FROM Board WHERE project_id = '{$projectID}' AND group_id = '{$groupID}' LIMIT 1;";
+		}	
+		$q = $db -> query($sql);
 		$board = $db -> fetch_row($q);
 		return $board;
 	}
@@ -126,6 +132,17 @@ class board extends Model{
 	public function getColumnsByBoardID($boardID)
 	{
 		return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}';", $return="array", $key="column_id");
+	}
+
+	public function getColumnsByBoardIDandParentID($boardID, $parentID)
+	{
+		if(is_null($parentID)){
+			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id IS NULL;";
+		}
+		else{
+			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id ='{$parentID}';";
+		}
+		return $this -> sql($sql, $return="array", $key="column_id");
 	}
 
 	public function getLastBoardID()
