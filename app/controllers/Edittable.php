@@ -52,6 +52,32 @@ class Edittable extends Controller{
 		}
 
 
+		/* Adding subcolumns (left or right) */
+		
+		/* add Left */
+		if(isset($_GET['addLeft'])){
+			$position = (int)($_GET['addLeft']);
+
+			/* Parent 1 */
+			if(isset($_GET['P']) && $_GET['P'] == 1){
+				//addBetween
+				$newname = "new".rand(10,99);
+				$values = array("name" => $newname, "cardLimit" => 0);
+				$children[1] = $this->addBetween($children[1], $values, $position);
+				#dbg($children[1]);
+			}
+
+			/* Parent 2 */
+			if(isset($_GET['P']) && $_GET['P'] == 2){
+
+			}
+
+			/* Parent 3 */
+			if(isset($_GET['P']) && $_GET['P'] == 3){
+
+			}
+		}
+
 		/* prepare data for view */
 		$nCols1    = count($children[1]);
 		$nCols2    = count($children[2]);
@@ -163,6 +189,23 @@ class Edittable extends Controller{
 
 
 
+	}
+
+	private function addBetween($array, $values, $position){
+			$cnt = 1;
+			$new = array();
+			foreach ($array as $key => $value) {
+				if($cnt == $position){
+					array_push($new, $values);
+					array_push($new, $value);
+				}
+				else{
+					array_push($new, $value);
+				}
+				$cnt++;
+			}
+			#dbg($new);
+			return $new;
 	}
 
 }

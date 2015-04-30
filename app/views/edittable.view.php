@@ -52,6 +52,7 @@
 								echo"<td style='width: {$wCol1}%; padding: 1px; border-style: dotted; border-width: 1px;'></td>";
 							}
 							for($i=0; $i<$nCols1; $i++){
+								$column = $i+1;
 								$fName = "1_".($i+1);
 								$fLimit = $fName."_limit";
 								$name = $nameC1[$i+1];
@@ -59,13 +60,13 @@
 								$rightAdd = "";
 								$limit = $limitC1[$i+1];
 								if($i == 0){
-									$leftAdd = "<a href='' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+</big></big></big></a>";
+									$leftAdd = "<a href='?page=edittable&projectID=6&addLeft={$column}&P=1' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+</big></big></big></a>";
 								}
 								elseif($i+1 == $nCols1 && $nCols1 > 2){
-									$rightAdd = "<a href='' style='text-decoration: none; color: #000;' title='Add column to right'><big><big><big>+&rArr;</big></big></big></a>";
+									$rightAdd = "<a href='?page=edittable&projectID=6&addRight={$column}&P=1' style='text-decoration: none; color: #000;' title='Add column to right'><big><big><big>+&rArr;</big></big></big></a>";
 								}
 								else{
-									$rightAdd = "<a href='' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+ </a> &nbsp; <a href='' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></big></a>";
+									$rightAdd = "<a href='?page=edittable&projectID=6&addLeft={$column}&P=1' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+ </a> &nbsp; <a href='?page=edittable&projectID=6&addRight={$column}&P=1' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></big></a>";
 								}								
 								echo"
 									<td style='width: {$wCol1}%; padding: 1px; border-style: dotted; border-width: 1px;'>
@@ -87,6 +88,7 @@
 							}
 
 							for($i=0; $i<$nCols2; $i++){
+								$column = $i+1+$nCols1;
 								$fName = "2_".($i+1);
 								$fLimit = $fName."_limit";
 								$name = $nameC2[$i+1+$nCols1];
@@ -94,13 +96,13 @@
 								$leftAdd = "";
 								$rightAdd = "";
 								if($i == 0){
-									$leftAdd = "<a href='' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+</big></big></big></a>";
+									$leftAdd = "<a href='?page=edittable&projectID=6&addLeft={$column}&P=2' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+</big></big></big></a>";
 								}
 								elseif($i+1 == $nCols2 && $nCols2 > 2){
-									$rightAdd = "<a href='' style='text-decoration: none; color: #000;' title='Add column to right'><big><big><big>+&rArr;</big></big></big></a>";
+									$rightAdd = "<a href='?page=edittable&projectID=6&addRight={$column}&P=2' style='text-decoration: none; color: #000;' title='Add column to right'><big><big><big>+&rArr;</big></big></big></a>";
 								}
 								else{
-									$rightAdd = "<a href='' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+ </a> &nbsp; <a href='' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></big></a>";
+									$rightAdd = "<a href='?page=edittable&projectID=6&addLeft={$column}&P=2' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+ </a> &nbsp; <a href='?page=edittable&projectID=6&addRight={$column}&P=2' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></big></a>";
 								}
 								echo"
 									<td style='width: {$wCol2}%; padding: 1px; border-style: dotted; border-width: 1px;'>
@@ -121,6 +123,7 @@
 								echo"<td style='width: {$wCol3}%; padding: 1px; border-style: dotted; border-width: 1px;'></td>";
 							}
 							for($i=0; $i<$nCols3; $i++){
+								$column = $i+1+$nCols1+$nCols2;
 								$fName = "3_".($i+1);
 								$fLimit = $fName."_limit";
 								$name = $nameC3[$i+1+$nCols1+$nCols2];
@@ -128,13 +131,13 @@
 								$leftAdd = "";
 								$rightAdd = "";
 								if($i == 0){
-									$leftAdd = "<a href='' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+</big></big></big></a>";
+									$leftAdd = "<a href='?page=edittable&projectID=6&addLeft={$column}&P=3' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+</big></big></big></a>";
 								}
 								elseif($i+1 == $nCols3 && $nCols3 > 2){
-									$rightAdd = "<a href='' style='text-decoration: none; color: #000;' title='Add column to right'><big><big><big>+&rArr;</big></big></big></a>";
+									$rightAdd = "<a href='?page=edittable&projectID=6&addRight={$column}&P=3' style='text-decoration: none; color: #000;' title='Add column to right'><big><big><big>+&rArr;</big></big></big></a>";
 								}
 								else{
-									$rightAdd = "<a href='' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+ </a> &nbsp; <a href='' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></big></a>";
+									$rightAdd = "<a href='?page=edittable&projectID=6&addLeft={$column}&P=3' style='text-decoration: none; color: #000;' title='Add column to left'><big><big><big>&lArr;+ </a> &nbsp; <a href='?page=edittable&projectID=6&addRight={$column}&P=3' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></big></a>";
 								}
 								echo"
 									<td style='width: {$wCol3}%; padding: 1px; border-style: dotted; border-width: 1px;'>
