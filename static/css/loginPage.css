@@ -48,6 +48,8 @@ input[type=email] {
     line-height: 46px;
     font-size: 16px;
     background-color: #FFF;
+	font: 18px/18px BryantProBoldAlternateRegular; /* NEW */
+	color:gray; /* NEW */
 }
 
 .btn_signup,
@@ -55,7 +57,7 @@ input[type=submit] {
     /* Submit button on login page */
     display: inline-block;
     height: 58px;
-    width:240px;
+    width:250px;
     padding: 0 30px;
     margin: 10px 0 10px 0;
     background-color: #79bbff;
@@ -84,11 +86,14 @@ input[type=submit] {
 textarea {
     height: 140px;
     line-height: 18px;
+	color:gray; /* NEW */
 }
 
 input:focus,
 textarea:focus {
     outline: 0 none;
+	font: 18px/18px BryantProBoldAlternateRegular; /* NEW */
+	color:gray; /* NEW */
 }
 
 #layout_createacc,
@@ -98,6 +103,7 @@ textarea:focus {
     height: 100%;
     min-height: 100%;
     background-color: #067db7;
+	font: 20px/20px BryantProBoldAlternateRegular; /* NEW */
 }
 
 #layout_createacc td,
@@ -110,7 +116,7 @@ textarea:focus {
 .center_block {
     display: inline-block;
     width: 100%;
-    max-width: 	400px;
+    max-width: 	410px;
 }
 
 .center_block > div {
