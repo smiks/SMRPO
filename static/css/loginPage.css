@@ -19,6 +19,9 @@
 html,
 
 body {
+    height: 100%;
+    min-height: 100%;
+    /* XXX: two lines above are new. Might cause view problems on other than loginPage.css */
     background-color: #067db7;
     margin: 0;
     padding: 0;
