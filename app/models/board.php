@@ -22,33 +22,38 @@ class board extends Model{
 		$sql = "INSERT INTO Board (board_id, group_id, name, project_id) VALUES ('{$boardID}','{$groupID}','{$boardName}','{$projectID}');";
 		$db -> query($sql);
 		
+		$colOrder = 1;
 		/* inserting cols */
 			/* insert parent one*/
 			foreach ($parentOne as $key => $value) {
 				$limit = $key;
 				$color1 = $value;
 			}
-			$sql = "INSERT INTO Col (board_id, name, cardLimit, color) VALUES ('{$boardID}', 'BackLog', '{$limit}', '{$color1}')";
+			$sql = "INSERT INTO Col (board_id, name, cardLimit, color, colOrder) VALUES ('{$boardID}', 'BackLog', '{$limit}', '{$color1}', '{$colOrder}')";
 			$db -> query($sql);
-			$parentOneID = $this->getLastColumnID();			
-			
+			$parentOneID = $this->getLastColumnID();
+			$colOrder += 1;
+
+
 			/* insert parent two*/
 			foreach ($parentTwo as $key => $value) {
 				$limit = $key;
 				$color2 = $value;
 			}
-			$sql = "INSERT INTO Col (board_id, name, cardLimit, color) VALUES ('{$boardID}', 'Development', '{$limit}', '{$color2}')";
+			$sql = "INSERT INTO Col (board_id, name, cardLimit, color, colOrder) VALUES ('{$boardID}', 'Development', '{$limit}', '{$color2}', '{$colOrder}')";
 			$db -> query($sql);
-			$parentTwoID = $this->getLastColumnID();			
+			$parentTwoID = $this->getLastColumnID();	
+			$colOrder += 1;		
 
 			/* insert parent three */
 			foreach ($parentThree as $key => $value) {
 				$limit = $key;
 				$color3 = $value;
 			}
-			$sql = "INSERT INTO Col (board_id, name, cardLimit, color) VALUES ('{$boardID}', 'Done', '{$limit}', '{$color3}')";
+			$sql = "INSERT INTO Col (board_id, name, cardLimit, color, colOrder) VALUES ('{$boardID}', 'Done', '{$limit}', '{$color3}', '{$colOrder}')";
 			$db -> query($sql);
-			$parentThreeID = $this->getLastColumnID();			
+			$parentThreeID = $this->getLastColumnID();	
+			$colOrder += 1;		
 
 
 		/* inserting subcolumns */
@@ -56,24 +61,27 @@ class board extends Model{
 			foreach ($subC1 as $key => $value) {
 				$name = $key;
 				$limit = $value;
-				$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color) VALUES ('{$boardID}', '{$name}', '{$limit}', '{$parentOneID}','{$color1}');";
+				$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color, colOrder) VALUES ('{$boardID}', '{$name}', '{$limit}', '{$parentOneID}','{$color1}', '{$colOrder}');";
 				$db -> query($sql);
+				$colOrder += 1;
 			}
 			
 			/* has parent two */
 			foreach ($subC2 as $key => $value) {
 				$name = $key;
 				$limit = $value;
-				$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color) VALUES ('{$boardID}', '{$name}', '{$limit}', '{$parentTwoID}','{$color2}');";
+				$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color, colOrder) VALUES ('{$boardID}', '{$name}', '{$limit}', '{$parentTwoID}','{$color2}', '{$colOrder}');";
 				$db -> query($sql);
+				$colOrder += 1;
 			}
 
 			/* has parent three */
 			foreach ($subC3 as $key => $value) {
 				$name = $key;
 				$limit = $value;
-				$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color) VALUES ('{$boardID}', '{$name}', '{$limit}', '{$parentThreeID}','{$color3}');";
+				$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color, colOrder) VALUES ('{$boardID}', '{$name}', '{$limit}', '{$parentThreeID}','{$color3}', '{$colOrder}');";
 				$db -> query($sql);
+				$colOrder += 1;
 			}
 			
 	}
