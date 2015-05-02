@@ -145,10 +145,10 @@ class board extends Model{
 	public function getColumnsByBoardIDandParentID($boardID, $parentID)
 	{
 		if(is_null($parentID)){
-			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id IS NULL;";
+			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id IS NULL ORDER BY colOrder ASC;";
 		}
 		else{
-			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id ='{$parentID}';";
+			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id ='{$parentID}' ORDER BY colOrder ASC;";
 		}
 		return $this -> sql($sql, $return="array", $key="column_id");
 	}
@@ -181,13 +181,26 @@ class board extends Model{
 	public function setNewBoard($id, $board_id, $group_id, $name, $project_id){
 		global $db;
 		$sql = "INSERT INTO Board (id, board_id, group_id, name, project_id) VALUES ('{$id}', '{$board_id}', '{$group_id}', '{$name}', '{$project_id}');";
-		$this->insertID($sql);
+		$db -> query($sql);
 	}
 	
-	public function setNewColumn($column_id, $board_id, $name, $limit, $parent_id, $color){
+	public function setNewColumn($board_id, $name, $limit, $parent_id, $color, $colOrder){
 		global $db;
-		$sql = "INSERT INTO Col (column_id, board_id, name, cardLimit, parent_id, color) VALUES ('{$column_id}', '{$board_id}', '{$name}', '{$limit}', '{$parent_id}', '{$color}');";
-		$this->insertID($sql);
+		$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color, colOrder) VALUES ('{$board_id}', '{$name}', '{$limit}', '{$parent_id}', '{$color}', '{$colOrder}');";
+		$db -> query($sql);
 	}
 	
+
+	/* shifts column order in board */
+	public function shiftCols($boardID, $startAt, $shift = 1){
+		global $db;
+		$sql = "UPDATE Col SET colOrder = colOrder+{$shift} WHERE board_id = '{$boardID}' AND colOrder >= '{$startAt}';";
+		$db -> query($sql);
+	}
+
+	public function removeCol($boardID, $columnID){
+		global $db;
+		$sql = "DELETE FROM Col WHERE board_id = '{$boardID}' AND column_id = '{$columnID}' LIMIT 1;";
+		$db -> query($sql);	
+	}
 }
