@@ -133,8 +133,8 @@ class board extends Model{
 	public function getColumnsByParent($boardID, $parentId)
 	{
 		if ($parentId == null)
-			return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id IS NULL;", $return="array", $key="column_id");
-		return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id='{$parentId}';", $return="array", $key="column_id");
+			return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id IS NULL ORDER BY colOrder ASC;", $return="array", $key="column_id");
+		return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id='{$parentId}' ORDER BY colOrder ASC;", $return="array", $key="column_id");
 	}
 	
 	public function getColumnsByBoardID($boardID)
