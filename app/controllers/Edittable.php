@@ -48,9 +48,11 @@ class Edittable extends Controller{
 		/* removing subcolumns */
 		if(isset($_GET['remove'])){
 			$cid = (int)($_GET['remove']);
-			$pos = (int)($_GET['pos'])+3;  // First three are always Parents (can't be deleted or extra added)
-			$board->shiftCols($boardID, $pos, $shift = -1);
-			$board->removeCol($boardID, $cid);
+			if($board->columnExists($cid)){
+				$pos = (int)($_GET['pos'])+3;  // First three are always Parents (can't be deleted or extra added)
+				$board->shiftCols($boardID, $pos, $shift = -1);
+				$board->removeCol($boardID, $cid);
+			}
 		}
 
 		/* get info of parents and children */
@@ -80,7 +82,7 @@ class Edittable extends Controller{
 				$limit = $parents[$parent]['cardLimit'];
 				$color = $parents[$parent]['color'];
 				$parID = $parents[$parent]['column_id'];
-				$board->setNewColumn($boardID, ' ', $limit, $parID, $color, $position);
+				$board->setNewColumn($boardID, '', $limit, $parID, $color, $position);
 			}
 		}
 		elseif(isset($_GET['addRight'])){

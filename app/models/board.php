@@ -96,6 +96,16 @@ class board extends Model{
 		return $numOfBoard;
 	}
 
+	public function columnExists($columnID)
+	{
+		global $db;
+		$q = $db-> query("SELECT COUNT(*) FROM Col WHERE column_id='{$columnID}' LIMIT 1;");
+		
+		$numOfCols = $db -> fetch_single($q);
+		
+		return 1 == $numOfCols;
+	}
+
 	public function getBoardID($groupID, $projectID = 0){
 		if($projectID == 0){
 			$sql = "SELECT board_id FROM Board WHERE group_id = '{$groupID}' LIMIT 1;";
