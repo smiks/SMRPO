@@ -66,7 +66,7 @@
 				if ($limit > 0)
 					$echoLimit = "Limit: {$limit}";
 				
-				echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b><br>${echoLimit}</br></div>";
+				echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>Task {$cardId}: {$name}</b><br>${echoLimit}</br></div>";
 			}
 			$border = ($numSwimLines-1) * (110*$maxLimit);
 			foreach ($xy as $id => $val)

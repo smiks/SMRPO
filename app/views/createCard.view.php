@@ -55,7 +55,7 @@
 		</p>
 		<p> 
 			<label>Card size:
-				<input type = "number" id = "cardsize" name="cardsize" placeholder = "Card size" style="border-radius:5px; margin-top:5px"/>
+				<input type = "number" min="0" id = "cardsize" name="cardsize" placeholder = "Card size" style="border-radius:5px; margin-top:5px"/>
 			</label>
 		</p>
 		<p> 
