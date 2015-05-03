@@ -3,12 +3,12 @@
 
 <div id="toCenter">
 	<br>
-	<div id="field"  style="width: 89%;">
-		<h3> <?php echo $boardName; ?></h3>
+	<div id="field"  style="width: 89%; float:left; ">
+		<h3 style="float:left; padding-left:350px;"> <?php echo $boardName; ?></h3>
 		<?
 		if($isKM || $isPO){
 		?>
-		<div id="menu_option" onClick="location.href='?page=createcard<? echo"&projectID={$projectID}"; ?>'" style="float:right;">
+		<div style="float:right;" id="menu_option" onClick="location.href='?page=createcard<? echo"&projectID={$projectID}"; ?>'">
 			<? echo"<a href='?page=createcard&projectID={$projectID}'>Create card</a>"; ?>
 		</div>
 		<?
@@ -32,7 +32,8 @@
 	<?
 	}
 	?>
-	<div style="width: 89%">
+	<br><br>
+	<div style="width: 89%" >
 		<?php
 			$i = 0;
 			foreach ($cells as $cellId => $value)
