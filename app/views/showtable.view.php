@@ -5,6 +5,15 @@
 	<br>
 	<div id="field"  style="width: 89%;">
 		<h3> <?php echo $boardName; ?></h3>
+		<?
+		if($isKM || $isPO){
+		?>
+		<div id="menu_option" onClick="location.href='?page=createcard<? echo"&projectID={$projectID}"; ?>'" style="float:right;">
+			<? echo"<a href='?page=createcard&projectID={$projectID}'>Create card</a>"; ?>
+		</div>
+		<?
+		}
+		?>
 	</div>
 	<?php
 		$xy = array();

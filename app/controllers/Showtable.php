@@ -35,6 +35,7 @@ class Showtable extends Controller{
 		$isAdmin = $user -> isAdmin($userId);		
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
 		$isKM    = $project -> isKanbanMaster($projectID, $userId);
+		$isPO = $project -> isProductOwner($projectID, $userid);
 		$boardd = $board -> getBoardByProjectID($projectID);
 		$groupId = $boardd['group_id'];
 		
@@ -71,7 +72,7 @@ class Showtable extends Controller{
 				$data[$projectId] = array("cards" => $cards);
 			}
 			
-			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM);
+			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM, "isPO" => $isPO);
 			$this->show("showtable.view.php", $dataToShow);
 		}
 	}
