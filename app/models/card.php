@@ -23,4 +23,9 @@ class card extends Model{
 		$data = $db -> fetch_single($q);
 		return($data);
 	}
+	
+	public function getCards($projectId, $boardId)
+	{
+		return $this -> sql("SELECT * FROM Card WHERE board_id='{$boardId}' AND project_id='{$projectId}';", $return="array", $key="card_id");
+	}
 }
