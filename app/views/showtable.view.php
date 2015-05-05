@@ -66,7 +66,7 @@
 				if ($limit > 0)
 					$echoLimit = "Limit: {$limit}";
 				
-				echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>Task {$cardId}: {$name}</b><br>${echoLimit}</br></div>";
+				echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b><br>${echoLimit}</br></div>";
 			}
 			$border = ($numSwimLines-1) * (110*$maxLimit);
 			foreach ($xy as $id => $val)
@@ -91,6 +91,8 @@
 					$color = $card['color'];
 					$colId = $card['column_id'];
 					$name = $card['name'];
+					$description = $card['description'];
+					$size = $card['size'];
 					
 					$coordinates = $colCoor[$colId];
 					$x = $coordinates['x'];
@@ -100,7 +102,9 @@
 						$y = $maxy + 10;
 					
 					$length = $coordinates['length'];
-					echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b></div>";
+					echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>Task {$cardId}: {$name}</b>
+					<img alt='editCard' src='../../static/images/settings.png' style='height:15px; width:15px; float:right; padding-right:5px'/>
+					<br>Size: {$size}</br><br>Description: {$description}</br></div>";
 					$colCoor[$colId] = array("x" => $x, "y" => $y+110, "length" => $length);
 				}
 				$i = $i + 1;
