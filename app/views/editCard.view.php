@@ -1,0 +1,66 @@
+[include]app/views/header.view.php[/include]
+[include]app/views/menu.view.php[/include]
+
+<div style="margin-left:40%;">
+	<form action='?page=editCard' method='post' style = "float:left; padding-top:30px">
+		<?php 
+				$name = $card['name'];
+				$description = $card['description'];
+				$user = $card['assignee'];
+				$size = $card['size'];
+				$deadline = $card['deadline']; 
+                $id = $card['card_id'];
+		?>
+		<p> 
+			<label>Card title:
+				<input type="hidden" value="<?php echo $id; ?>" name="cardID">
+				<input type = "text" value="<?php echo $name; ?>" id = "cardtitle" name="cardtitle" placeholder = "Card title" required style="border-radius:5px; margin-top:5px" required/>
+			</label>
+		</p>
+		<p> 
+			<label>Card description:
+			<br>
+				<textarea id = "carddescription" name="carddescription" placeholder = "Card description" required style="border-radius:5px; margin-top:5px" required; rows=5; cols=60;><?php echo $description;?></textarea>
+			</label>
+		</p>
+		<p> 
+			<label>Card assignee:<br>
+				<select name="developers" style="border-radius:5px; margin-top:5px">
+				<?
+				foreach($developers as $key => $value){
+					$developer = $developers[$key];
+					$name    = strtoupper($developer['UserName']);
+					$surname    = strtoupper($developer['UserSurname']);
+					$uid    = $developer['id_user'];
+					echo"<option value='{$uid}'>{$name} {$surname}</option>";
+				}
+				?>
+				</select>
+			</label>
+		</p>
+		<p> 
+			<label>Card size:
+				<input type = "number" value="<?php echo $size; ?>" min="0" id = "cardsize" name="cardsize" placeholder = "Card size" style="border-radius:5px; margin-top:5px"/>
+			</label>
+		</p>
+		<p> 
+			<label>Card deadline:
+				<input type = "date" value="<?php echo $deadline; ?>" id = "carddeadline" name="carddeadline" placeholder = "Card deadline" style="border-radius:5px; margin-top:5px"/>
+			</label>
+		</p>
+
+		<input type="submit" value="Edit"/>
+		<br>
+			
+		</div>
+		
+		<p>
+			{% if(isset($error)){ %}
+				{{error}}
+			{% } %}
+		</p>
+		
+	</form>
+</div>
+
+[include]app/views/footer.view.php[/include]

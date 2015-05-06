@@ -64,7 +64,7 @@
 
 				$echoLimit = "";
 				if ($limit > 0)
-					$echoLimit = "Limit: {$limit}";
+					$echoLimit = "Limit: ${limit}";
 				
 				echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b><br>${echoLimit}</br></div>";
 			}
@@ -102,7 +102,7 @@
 						$y = $maxy + 10;
 					
 					$length = $coordinates['length'];
-					echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>Task {$cardId}: {$name}</b><img alt='editCard' src='../../static/images/settings_2.png' style='height:15px; width:15px; float:right; padding-top:5px; padding-right:10px;'/><br>Size: {$size}</br><br>Description: {$description}</br></div>";
+					echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>Task {$cardId}: {$name}</b><a href='?page=editcard&cardID={$cardId}'><img alt='editCard' src='../../static/images/settings_2.png' style='height:15px; width:15px; float:right; padding-top:5px; padding-right:10px;'/></a><br>Size: {$size}</br><br>Description: {$description}</br></div>";
 					$colCoor[$colId] = array("x" => $x, "y" => $y+110, "length" => $length);
 				}
 				$i = $i + 1;

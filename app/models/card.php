@@ -28,4 +28,11 @@ class card extends Model{
 		return (0 == $this->sql($sql, $return="single"));
 	}
 	
+	public function getCard($id){
+		global $db;
+		$q = $db -> query("SELECT * FROM Card WHERE card_id = '{$id}';");
+		$data = $db -> fetch_row($q);
+		return($data);
+	}
+	
 }
