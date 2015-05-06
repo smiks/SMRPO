@@ -43,7 +43,7 @@
 					$name    = strtoupper($developer['UserName']);
 					$surname    = strtoupper($developer['UserSurname']);
 					$uid    = $developer['id_user'];
-					echo"<option value='{$gid}'>{$name} {$surname}</option>";
+					echo"<option value='{$uid}'>{$name} {$surname}</option>";
 				}
 				?>
 				</select>

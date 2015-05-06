@@ -91,6 +91,8 @@
 					$color = $card['color'];
 					$colId = $card['column_id'];
 					$name = $card['name'];
+					$size = $card['size'];
+					$description = $card['description'];
 					
 					$coordinates = $colCoor[$colId];
 					$x = $coordinates['x'];

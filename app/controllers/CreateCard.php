@@ -74,6 +74,8 @@ class CreateCard extends Controller{
 			{
 				$columnID = $fristchildColumns;
 			}
+
+			$notExistsSilverBulletInColumn = true;
 		}
 		else
 		{
@@ -90,7 +92,7 @@ class CreateCard extends Controller{
 			$notExistsSilverBulletInColumn = $card -> notExistsSilverBulletInColumn($columnID, $boardID);
 		}
 
-		if($type == 1 && $notExistsSilverBulletInColumn) 
+		if($notExistsSilverBulletInColumn) 
 		{
 			if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline))
 			{
