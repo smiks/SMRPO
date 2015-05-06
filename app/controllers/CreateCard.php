@@ -51,14 +51,15 @@ class CreateCard extends Controller{
 		$projectID = $input["projectID"];
 
 		$card = new card();
+		$board = new board();
 
-		$boardID = $card -> getBoardId($projectID);
+		$boardID = $board -> getBoardIDByProjectID($projectID);
 		
-		$topColumns = $card -> getMinColumnsByBoardIDandParentID($boardID, null);
+		$topColumns = $board -> getMinColumnIDByBoardIDandParentID($boardID, null);
 
-		$fristchildColumns = $card -> getMinColumnsByBoardIDandParentID($boardID, $topColumns);
+		$fristchildColumns = $board -> getMinColumnIDByBoardIDandParentID($boardID, $topColumns);
 		
-		$lastchildColumns = $card -> getMaxColumnsByBoardIDandParentID($boardID, $topColumns);
+		$lastchildColumns = $board -> getMaxColumnIDByBoardIDandParentID($boardID, $topColumns);
 		
 		if($type == 0)
 		{
@@ -75,7 +76,6 @@ class CreateCard extends Controller{
 		else
 		{
 			$color = "red";
-			$color = "green";
 			if($fristchildColumns == NULL)
 			{
 				$columnID = $topColumns;

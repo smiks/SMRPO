@@ -213,4 +213,26 @@ class board extends Model{
 		$sql = "DELETE FROM Col WHERE board_id = '{$boardID}' AND column_id = '{$columnID}' LIMIT 1;";
 		$db -> query($sql);	
 	}
+	
+	public function getMinColumnIDByBoardIDandParentID($boardID, $parentID)
+	{
+		if(is_null($parentID)){
+			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id IS NULL ORDER BY colOrder ASC LIMIT 1;";
+		}
+		else{
+			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id ='{$parentID}' ORDER BY colOrder  ASC LIMIT 1;";
+		}		
+		return ($this->sql($sql, $return="single"));
+	}
+	
+	public function getMaxColumnIDByBoardIDandParentID($boardID, $parentID)
+	{
+		if(is_null($parentID)){
+			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id IS NULL ORDER BY colOrder DESC LIMIT 1;";
+		}
+		else{
+			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id ='{$parentID}' ORDER BY colOrder DESC LIMIT 1;";
+		}		
+		return ($this->sql($sql, $return="single"));
+	}
 }
