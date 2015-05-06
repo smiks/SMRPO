@@ -4,8 +4,10 @@ require_once 'Controller.php';
 require_once 'app/models/user.php';
 require_once 'app/models/project.php';
 require_once 'app/models/card.php';
+require_once 'app/models/board.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
+require_once 'core/Global.php';
 
 Functions::forceLogin();
 
@@ -48,24 +50,41 @@ class CreateCard extends Controller{
 
 		$projectID = $input["projectID"];
 
+		$card = new card();
 
+		$boardID = $card -> getBoardId($projectID);
+		
+		$topColumns = $card -> getMinColumnsByBoardIDandParentID($boardID, null);
+
+		$fristchildColumns = $card -> getMinColumnsByBoardIDandParentID($boardID, $topColumns);
+		
+		$lastchildColumns = $card -> getMaxColumnsByBoardIDandParentID($boardID, $topColumns);
+		
 		if($type == 0)
 		{
 			$color = "green";
+			if($fristchildColumns == NULL)
+			{
+				$columnID = $topColumns;
+			}
+			else
+			{
+				$columnID = $fristchildColumns;
+			}
 		}
 		else
 		{
 			$color = "red";
+			$color = "green";
+			if($fristchildColumns == NULL)
+			{
+				$columnID = $topColumns;
+			}
+			else
+			{
+				$columnID = $lastchildColumns;
+			}
 		}
-
-		$columnID ="1";
-
-		$card = new card();
-
-		$boardID = $card -> getBoardId($projectID);
-
-		//pogledamo če dodajamo silver bullet in če je kanban master
-		//pogledamo če je navadna in če product owner 
 
 		if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline))
 		{
