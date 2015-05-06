@@ -20,4 +20,12 @@ class card extends Model{
 		return $this -> sql("SELECT * FROM Card WHERE board_id='{$boardId}' AND project_id='{$projectId}';", $return="array", $key="card_id");
 	}
 	
+	public function notExistsSilverBulletInColumn($columnID, $boardID)
+	{
+
+		$sql = "SELECT COUNT(*) FROM Card WHERE board_id='{$boardID}' AND column_id ='{$columnID}' AND color='red' LIMIT 1;";
+				
+		return (0 == $this->sql($sql, $return="single"));
+	}
+	
 }

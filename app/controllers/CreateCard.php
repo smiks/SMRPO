@@ -29,9 +29,11 @@ class CreateCard extends Controller{
             $project = new Project();
 
             $developers = $project -> getDevelopers($projectID);
+            
+            $userId = $_SESSION['userid'];
 
-            $isKM = $project -> isKanbanMaster($projectID, $userid);
-            $isPO = $project -> isProductOwner($projectID, $userid);
+            $isKM = $project -> isKanbanMaster($projectID, $userId);
+            $isPO = $project -> isProductOwner($projectID, $userId);
 	
 			$data = array("developers" => $developers, "projectID" => $projectID, "isKM" => $isKM, "isPO" => $isPO);
 			$this -> show("createCard.view.php", $data);
@@ -84,15 +86,24 @@ class CreateCard extends Controller{
 			{
 				$columnID = $lastchildColumns;
 			}
+
+			$notExistsSilverBulletInColumn = $card -> notExistsSilverBulletInColumn($columnID, $boardID);
 		}
 
-		if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline))
+		if($type == 1 && $notExistsSilverBulletInColumn) 
 		{
-			$message = "Successfully added card {$name}.";
-			$data = array("message" => $message);
+			if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline))
+			{
+				$message = "Successfully added card {$name}.";
+				$data = array("message" => $message);
+			}
+			else {
+				$data = array("error" => "Card was not created.");
+			}
 		}
-		else {
-			$data = array("error" => "Card was not created.");
+		else
+		{
+			$data = array("error" => "WIP violation! Silver bullet already exists in this column. Go back and try again.");
 		}
 
 		$this->show("addCard.view.php", $data);
