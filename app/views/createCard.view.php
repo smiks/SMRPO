@@ -15,28 +15,24 @@
 			</label>
 		</p>
 		<p> 
-			<?
-			if($isPO){
-			?>
 			<label>Card type:
 				<select name = "cardtype" id ="cardtype" style="border-radius:5px; margin-top:5px" required>
+					<?
+					if($isPO){
+					?>
 					<option value='0'>New feature</option>
-				</select>
-			</label>
-			<?
-			}
-			?>
-			<?
-			if($isKM){
-			?>
-			<label>Card type:
-				<select name = "cardtype" id ="cardtype" style="border-radius:5px; margin-top:5px" required>
+					<?
+					}
+					?>
+					<?
+					if($isKM){
+					?>
 					<option value='1'>Silver bullet</option>
+					<?
+					}
+					?>
 				</select>
 			</label>
-			<?
-			}
-			?>
 		</p>
 		<p> 
 			<label>Card assignee:<br>

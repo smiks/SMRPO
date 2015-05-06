@@ -28,4 +28,15 @@ class card extends Model{
 	{
 		return $this -> sql("SELECT * FROM Card WHERE board_id='{$boardId}' AND project_id='{$projectId}';", $return="array", $key="card_id");
 	}
+
+	public function getColumnsByBoardIDandParentID($boardID, $parentID)
+	{
+		if(is_null($parentID)){
+			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id IS NULL ORDER BY colOrder ASC;";
+		}
+		else{
+			$sql = "SELECT * FROM Col WHERE board_id='{$boardID}' AND parent_id ='{$parentID}' ORDER BY colOrder ASC;";
+		}
+		return $this -> sql($sql, $return="array", $key="column_id");
+	}
 }
