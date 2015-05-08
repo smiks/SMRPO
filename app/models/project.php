@@ -106,7 +106,7 @@ class project extends Model{
 				FROM User u
 				INNER JOIN Users_Groups ug on u.id_user = ug.user_id
 				INNER JOIN Group_Project gp on ug.group_id = gp.group_id
-				WHERE ug.permission='001' AND gp.project_id = '{$projectID}' AND ug.active_end IS NULL;";
+				WHERE ug.permission LIKE'001' AND gp.project_id = '{$projectID}' AND ug.active_end IS NULL;";
 		return $this->sql($sql, $return = "array", $key ="id_user");
 
 	}
@@ -116,6 +116,13 @@ class project extends Model{
 	{
 		$sql = "SELECT COUNT(*) FROM Group_Project LEFT JOIN Users_Groups ON (Users_Groups.group_id = Group_Project.group_id)
 				WHERE Users_Groups.user_id = '{$userid}' AND Group_Project.project_id = '{$projectID}' AND Users_Groups.permission LIKE ('_1_') LIMIT 1;";
+		return 1 == $this->sql($sql, $return = "single");
+	}
+
+	public function isProductOwner($projectID, $userid)
+	{
+		$sql = "SELECT COUNT(*) FROM Group_Project LEFT JOIN Users_Groups ON (Users_Groups.group_id = Group_Project.group_id)
+				WHERE Users_Groups.user_id = '{$userid}' AND Group_Project.project_id = '{$projectID}' AND Users_Groups.permission LIKE ('1__') LIMIT 1;";
 		return 1 == $this->sql($sql, $return = "single");
 	}
 

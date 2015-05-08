@@ -33,12 +33,27 @@ class Edittable extends Controller{
 		$groupID   = $group->getGroupIDFromProjectID($projectID);
 		$boardInfo = $board->getBoardByProjectID($projectID, $groupID);
 		$boardID   = $boardInfo['board_id'];
+
+		/* ugly thing...redirect if board does not exist */
+		if($boardID == 0){
+			Functions::redirect("?page=projects");
+		}
+
 		$boardName = $boardInfo['name'];
 
 		//$cols      = $board->getColumnsByBoardID($boardID);
 		$userid  = $_SESSION['userid'];
 		$isKM    = $project->isKanbanMaster($projectID, $userid);
 
+		/* removing subcolumns */
+		if(isset($_GET['remove'])){
+			$cid = (int)($_GET['remove']);
+			if($board->columnExists($cid)){
+				$pos = (int)($_GET['pos'])+3;  // First three are always Parents (can't be deleted or extra added)
+				$board->shiftCols($boardID, $pos, $shift = -1);
+				$board->removeCol($boardID, $cid);
+			}
+		}
 
 		/* get info of parents and children */
 		$parentsArray = $board->getColumnsByBoardIDandParentID($boardID, NULL);
@@ -52,31 +67,49 @@ class Edittable extends Controller{
 		}
 
 
-		/* Adding subcolumns (left or right) */
-		
+		/* Adding subcolumns (left or right) and save to database */
+		$addNewCol = false;
 		/* add Left */
+		if(isset($_GET['addLeft']) || isset($_GET['addRight'])){
+			$addNewCol = true;
+		}
+
 		if(isset($_GET['addLeft'])){
-			$position = (int)($_GET['addLeft']);
-
-			/* Parent 1 */
-			if(isset($_GET['P']) && $_GET['P'] == 1){
-				//addBetween
-				$newname = "new".rand(10,99);
-				$values = array("name" => $newname, "cardLimit" => 0);
-				$children[1] = $this->addBetween($children[1], $values, $position);
-				#dbg($children[1]);
-			}
-
-			/* Parent 2 */
-			if(isset($_GET['P']) && $_GET['P'] == 2){
-
-			}
-
-			/* Parent 3 */
-			if(isset($_GET['P']) && $_GET['P'] == 3){
-
+			$position = (int)($_GET['addLeft'])+3;  // First three are always Parents (can't be deleted or extra added)
+			if(isset($_GET['P'])){
+				$parent = (int)($_GET['P']);
+				$board->shiftCols($boardID, $position);
+				$limit = $parents[$parent]['cardLimit'];
+				$color = $parents[$parent]['color'];
+				$parID = $parents[$parent]['column_id'];
+				$board->setNewColumn($boardID, '', $limit, $parID, $color, $position);
 			}
 		}
+		elseif(isset($_GET['addRight'])){
+			$position = (int)($_GET['addRight'])+1+3;  // First three are always Parents (can't be deleted or extra added) +1 because it adds to right
+			if(isset($_GET['P'])){
+				$parent = (int)($_GET['P']);
+				$board->shiftCols($boardID, $position);
+				$limit = $parents[$parent]['cardLimit'];
+				$color = $parents[$parent]['color'];
+				$parID = $parents[$parent]['column_id'];
+				$board->setNewColumn($boardID, '', $limit, $parID, $color, $position);
+			}
+		}		
+
+		if($addNewCol){
+			/* get info of parents and children after adding new columns*/
+			$parentsArray = $board->getColumnsByBoardIDandParentID($boardID, NULL);
+			$cnt = 1;
+			$parents = array();
+			$children = array();
+			foreach ($parentsArray as $key => $value) {
+				$parents[$cnt] = $value;
+				$children[$cnt] = $board->getColumnsByBoardIDandParentID($boardID, $key);
+				$cnt++;
+			}
+		}
+		#dbg($children[1]);
 
 		/* prepare data for view */
 		$nCols1    = count($children[1]);
@@ -101,11 +134,17 @@ class Edittable extends Controller{
 		$nameC1  = array();
 		$nameC2  = array();
 		$nameC3  = array();
+		$colIDC1 = array();
+		$colIDC2 = array();
+		$colIDC3 = array();
 
 		/* increase $cnt by 1 only if $key == cardLimit (name is before cardLimit in array) */
 		foreach($children[1] as $child)
 		{
 			foreach ($child as $key => $value) {
+				if($key == "column_id"){
+					$colIDC1[$cnt] = $value;
+				}
 				if($key == "name"){
 					$nameC1[$cnt] = $value;
 				}				
@@ -121,6 +160,9 @@ class Edittable extends Controller{
 		foreach($children[2] as $child)
 		{
 			foreach ($child as $key => $value) {
+				if($key == "column_id"){
+					$colIDC2[$cnt] = $value;
+				}
 				if($key == "name"){
 					$nameC2[$cnt] = $value;
 				}				
@@ -136,6 +178,9 @@ class Edittable extends Controller{
 		foreach($children[3] as $child)
 		{
 			foreach ($child as $key => $value) {
+				if($key == "column_id"){
+					$colIDC3[$cnt] = $value;
+				}
 				if($key == "name"){
 					$nameC3[$cnt] = $value;
 				}				
@@ -172,7 +217,10 @@ class Edittable extends Controller{
 			"limitC3"   => $limitC3, 
 			"nameC1"    => $nameC1, 
 			"nameC2"    => $nameC2, 
-			"nameC3"    => $nameC3 
+			"nameC3"    => $nameC3,
+			"colIDC1"   => $colIDC1,
+			"colIDC2"   => $colIDC2,
+			"colIDC3"   => $colIDC3
 		);
 
 		if(!$isKM)

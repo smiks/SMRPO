@@ -4,7 +4,7 @@ require_once 'Controller.php';
 require_once 'app/models/user.php';
 require_once 'app/models/group.php';
 require_once 'app/models/board.php';
-require_once 'app/models/cards.php';
+require_once 'app/models/card.php';
 require_once 'app/models/project.php';
 require_once 'core/Functions.php';
 
@@ -35,6 +35,7 @@ class Showtable extends Controller{
 		$isAdmin = $user -> isAdmin($userId);		
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
 		$isKM    = $project -> isKanbanMaster($projectID, $userId);
+		$isPO = $project -> isProductOwner($projectID, $userid);
 		$boardd = $board -> getBoardByProjectID($projectID);
 		$groupId = $boardd['group_id'];
 		
@@ -65,13 +66,13 @@ class Showtable extends Controller{
 			{
 				$project = $projects[$projectId];
 				
-				$card = new cards();
+				$card = new card();
 				$cards = $card -> getCards($projectId, $boardId);
 	
 				$data[$projectId] = array("cards" => $cards);
 			}
 			
-			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM);
+			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM, "isPO" => $isPO);
 			$this->show("showtable.view.php", $dataToShow);
 		}
 	}

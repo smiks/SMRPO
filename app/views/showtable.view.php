@@ -3,9 +3,27 @@
 
 <div id="toCenter">
 	<br>
-	<div id="field"  style="width: 89%;">
-		<h3> <?php echo $boardName; ?></h3>
+	<div id="field"  style="width: 89%; float:left; text-align:center;">
+		<big><b> {{boardName}} <b></big>
 	</div>
+	<?
+	if($isKM || $isPO){
+	?>
+	<div id="field" style="width: 89%">
+		<a href='?page=createcard&projectID={{projectID}}' style="text-decoration: none;">Create card</a>
+	</div>
+	<?
+	}
+	?>
+	<?
+	if($isEmpty && $isKM){
+	?>
+	<div id="field" style="width: 89%">
+		This board is empty! You can edit it. <a href="?page=edittable&projectID={{projectID}}" style="text-decoration: none;">Link</a>
+	</div>
+	<?
+	}
+	?>	
 	<?php
 		$xy = array();
 		$maxY = 0;
@@ -14,16 +32,8 @@
 		$numSwimLines = count($data);
 		$maxLimit = 0;
 	?>
-	<?
-	if($isEmpty && $isKM){
-	?>
-	<div id="field" style="width: 89%">
-		This board is empty! You can edit it. <a href="?page=edittable&projectID={{projectID}}">Link</a>
-	</div>
-	<?
-	}
-	?>
-	<div style="width: 89%">
+	<br><br>
+	<div style="width: 89%" >
 		<?php
 			$i = 0;
 			foreach ($cells as $cellId => $value)
@@ -54,7 +64,7 @@
 
 				$echoLimit = "";
 				if ($limit > 0)
-					$echoLimit = "Limit: {$limit}";
+					$echoLimit = "Limit: ${limit}";
 				
 				echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b><br>${echoLimit}</br></div>";
 			}
@@ -81,6 +91,8 @@
 					$color = $card['color'];
 					$colId = $card['column_id'];
 					$name = $card['name'];
+					$size = $card['size'];
+					$description = $card['description'];
 					
 					$coordinates = $colCoor[$colId];
 					$x = $coordinates['x'];
@@ -90,7 +102,7 @@
 						$y = $maxy + 10;
 					
 					$length = $coordinates['length'];
-					echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b></div>";
+					echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>Task {$cardId}: {$name}</b><a href='?page=editcard&cardID={$cardId}'><img alt='editCard' src='../../static/images/settings_2.png' style='height:15px; width:15px; float:right; padding-top:5px; padding-right:10px;'/></a><br>Size: {$size}</br><br>Description: {$description}</br></div>";
 					$colCoor[$colId] = array("x" => $x, "y" => $y+110, "length" => $length);
 				}
 				$i = $i + 1;

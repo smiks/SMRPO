@@ -1,5 +1,6 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
+
 <center>
 
 <br><div class="center_block_header"> Add Card </div><br>
