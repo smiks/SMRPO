@@ -1,18 +1,18 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/adminmenu.view.php[/include]	
 
-<div id="toCenter">
-	<div id="field_50">
-		<h2>Delete User</h2>
-	</div>
-	<br>
-	<div id="field_50">
-		<? if(isset($error)) { ?>
-		{{error}}
-		<? } else { ?>
-			{{message}}
-		<? } ?>
-	</div>
-</div>
+<center>
+<br><div class="center_block_header"> Delete user </div><br>
 
+<div class="center_block">
+
+	
+	<? if(isset($error)) { ?>
+		{{error}}
+	<? } else { ?>
+		{{message}} 
+	<? } ?>
+	
+</div>
+</center>
 [include]app/views/footer.view.php[/include]
