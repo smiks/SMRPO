@@ -67,7 +67,7 @@
 		<div class="modal" id="info" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-header">
-					<h2>Sign in help: </h2>
+					<br><label class="cool_font" style="font-size:25px;">'Sign in' help: </label><br><br>
 					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
 				</div>
 				<div class="modal-body">
