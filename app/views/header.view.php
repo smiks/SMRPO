@@ -12,6 +12,7 @@
         <link type="text/css" rel="stylesheet" href="../../static/css/menu.css" />
         <link type="text/css" rel="stylesheet" href="../../static/css/forms.css" />
         <link type="text/css" rel="stylesheet" href="../../static/css/myStyle.css" />
+		<link type="text/css" rel="stylesheet" href="../../static/css/openModal.css" />
  
     </head>
     <body>

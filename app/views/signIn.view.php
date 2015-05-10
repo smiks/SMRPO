@@ -12,6 +12,7 @@
         <link type="text/css" rel="stylesheet" href="../../static/css/menu.css" />
         <link type="text/css" rel="stylesheet" href="../../static/css/forms.css" />
         <!--<link type="text/css" rel="stylesheet" href="../../static/css/myStyle.css" />-->
+        <link type="text/css" rel="stylesheet" href="../../static/css/openModal.css" />
  
     </head>
     <body>
@@ -23,7 +24,16 @@
 		<td>
 			<div class="center_block_login" id="page_login">
 				<div>
-					<h1><center><img alt="Logo" src="../../static/images/logo7_1200.png" /></center></h1><br>
+					<h1><center>
+						<img alt="Logo" src="../../static/images/logo7_1200.png" />
+						<a href="http://dev.smrpo.avatar-rpg.net/index.php#info">
+							<img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/>
+						</a>
+					</center></h1><br>
+					
+
+		
+		
 					<div id="login_block">
 						<form id="form_login" action="?page=login" method="post" style="display:block">
 							<fieldset>
@@ -51,5 +61,31 @@
 		</td>
 		</tr>
         </table>
+       
+        <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<h2>Sign in help: </h2>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body">
+					<p>
+						Input Email and Password. <br>
+						You are be locked out after 3 wrong attempts!<br><br>
+						Test accounts (type, email, password):<br>
+						- kanban master: km@km.km ... 123456789<br>
+						- developer: dev@dev.dev ... 123456789
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
 		
 [include]app/views/footer.view.php[/include]
