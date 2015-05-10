@@ -3,7 +3,10 @@
 
 <center>
 
-<br><div class="center_block_header"> Add user </div><br>
+<br><div class="center_block_header"> 
+	Add user 
+	<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>	
+</div><br>
 
 <div class="center_block">
 
@@ -44,4 +47,31 @@
 	
 </div>
 </center>
+
+        <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Add user' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					<p>
+						
+						Input name, surname, email, password, abilities and administrator password 
+						for new user you wish to add. When done, click 'Add' button. You will be 
+						redirected to subpage where you will be informed about (un)successful changes.  
+						
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+	
 [include]app/views/footer.view.php[/include]
