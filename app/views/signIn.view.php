@@ -73,7 +73,7 @@
 				<div class="modal-body">
 					<p>
 						Input Email and Password. <br>
-						You are be locked out after 3 wrong attempts!<br><br>
+						You will be locked out after 3 wrong attempts!<br><br>
 						Test accounts (type, email, password):<br>
 						- kanban master: km@km.km ... 123456789<br>
 						- developer: dev@dev.dev ... 123456789
