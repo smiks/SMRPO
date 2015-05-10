@@ -2,7 +2,10 @@
 [include]app/views/menu.view.php[/include]
 
 <center>
-<br><div class="center_block_header"> Create project </div><br>
+<br><div class="center_block_header"> 
+	Create project 
+	<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>
+</div><br>
 
 <div class="center_block">
 
@@ -47,4 +50,36 @@
 	</form>
 </div>
 </center>
+
+        <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Create project' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					<p>
+						
+						For creating new project, you MUST enter 'Project code', 'Project name', 'Client', 
+						'Start date', 'End date', 'Development group'. Same development group is able to 
+						work on more than one project at the time. Click 'Create' button to confirm. You
+						will be redirect to subpage where you will be informed about (un)successful creation.
+						<br><br>
+						
+						Warning: 'Start date' must be greater or equal to today's date. 'End date' must be greater
+						than 'Start date'. 
+						
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+	
 [include]app/views/footer.view.php[/include]
