@@ -2,9 +2,12 @@
 [include]app/views/menu.view.php[/include]
 <center>
 
-<br><div class="center_block_header" style="width:88%;"> Groups</div><br>
+<br><div class="center_block_header" style="width:88%;"> 
+	Groups
+	<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>
+</div><br>
 
-<div class="center_block" style="max-width:80%;">
+<div class="center_block" style="width:80%;">
 			
 	<table >
 		<tr>
@@ -82,4 +85,34 @@
 
 </div>
 </center>
+
+
+        <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Groups' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					<p>
+						
+						You are able to navigate with buttons to delete or edit groups and view detailed info of selected group,
+						unless no group has been created. Every button will redirect you to the corresponding page.  
+						
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+
+
+
+
 [include]app/views/footer.view.php[/include]

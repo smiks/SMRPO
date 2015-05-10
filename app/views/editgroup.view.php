@@ -2,7 +2,10 @@
 [include]app/views/menu.view.php[/include]
 <center>
 
-<br><div class="center_block_header"> Edit group</div><br>
+<br><div class="center_block_header"> 
+	Edit group
+	<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>
+</div><br>
 
 <div class="center_block">
 			
@@ -69,6 +72,39 @@
 		
 	</form>
 </div>
-
 </center>
+
+        <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Edit group' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					<p>
+						
+						You can change group properties and click 'Edit' to save changes. Click 'Cancel' to
+						go back to page 'Groups'. Read below for detailed description of how groups should be created!
+						<br><br>
+						Each development team has several members, each member may have multiple roles. 
+						Each development team must have one KanbanMaster, one Product Owner and one or 
+						more developers. The composition of the development team can alter during the 
+						project. (adding new members or deleting existing ones). When deleting, the 
+						excluded member is not physically deleted, but only marked as inactive. Time 
+						intervals of active members are necessary to maintain. Inactive members are 
+						no longer able to use the table.
+						
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+	
 [include]app/views/footer.view.php[/include]

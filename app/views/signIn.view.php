@@ -26,7 +26,7 @@
 				<div>
 					<h1><center>
 						<img alt="Logo" src="../../static/images/logo7_1200.png" />
-						<a href="http://dev.smrpo.avatar-rpg.net/index.php#info">
+						<a href="#info">
 							<img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/>
 						</a>
 					</center></h1><br>

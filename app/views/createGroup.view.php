@@ -5,7 +5,7 @@
 	<br>
 	<div class="center_block_header">
 		Create Group
-		<a href="http://dev.smrpo.avatar-rpg.net/?page=creategroup#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>
+		<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>
 	</div><br>
 			
 	<div class="center_block">
