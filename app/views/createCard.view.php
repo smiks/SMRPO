@@ -1,9 +1,11 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
-
 <center>
 
-<br><div class="center_block_header"> Create card </div><br>
+<br><div class="center_block_header"> 
+	Create card 
+	<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>
+</div><br>
 
 <div class="center_block">
 
@@ -64,4 +66,42 @@
 	</form>
 </div>
 </center>
+
+        <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Create card' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					
+						
+						User is able to create a new card within its limits. The card may represent 
+						new functionality to be developed (common card), or urgent request 
+						(silver bullet). Each type of card has its own color. The number of 
+						urgent requests is limited. Card can be created only by Product owner. New 
+						created card will appear in first column of corresponding board. Card size may
+						be left empty, all other data must be entered! <br><br>
+						
+						Urgent request card may be only created by KanbanMaster. This card is automatically placed 
+						in the column with the cards with the highest priority (just before the border column).
+						It is recorded if WIP limit is violated. There can be only one silver bullet at any given 
+						momentin in the column with the cards with the highest priority. <br><br>
+						
+						Click 'Create' button to create new card. You will be redirected to subpage where
+						you will be informed about (un)successful creation. 
+						
+					
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+	
 [include]app/views/footer.view.php[/include]

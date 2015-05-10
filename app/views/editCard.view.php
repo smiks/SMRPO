@@ -1,9 +1,11 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
-
 <center>
 
-<br><div class="center_block_header"> Edit card </div><br>
+<br><div class="center_block_header"> 
+	Edit card 
+	<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>	
+</div><br>
 
 <div class="center_block">
 
@@ -54,4 +56,38 @@
 	</form>
 </div>
 </center>
+
+        <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Edit card' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					<p>
+						
+						User may within its limits update the data recorded on the card. User can only
+						update card data for cards which are part of current user projects. 
+						<br><br>
+						Only Product owner and KanbanMaster can update cards before card enteres in the first (boarder) column.
+						Updates within inner boarder columns may be done only by KanbanMaster and current project
+						developers. 
+						<br><br>
+						After card is in the final column updates are not allowed.<br><br>
+						Click 'Edit' to save changes. You will be informed about (un)successful changes.
+						
+						
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+	
 [include]app/views/footer.view.php[/include]

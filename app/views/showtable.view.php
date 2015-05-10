@@ -1,20 +1,22 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
 
-<div id="toCenter">
-	<br>
-	<div id="field"  style="width: 89%; float:left; text-align:center;">
-		<big><b> {{boardName}} <b></big>
-	</div>
-	<?
-	if($isKM || $isPO){
-	?>
-	<div id="field" style="width: 89%">
-		<a href='?page=createcard&projectID={{projectID}}' style="text-decoration: none;">Create card</a>
-	</div>
-	<?
-	}
-	?>
+
+<div class="center_block_header" style="width:97%;">
+	Table: {{boardName}} 
+	<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a><br><br>
+	<? if($isKM || $isPO){ ?>
+		<a href='?page=createcard&projectID={{projectID}}' style="text-decoration:none; font-size:20px;">Create new card</a>
+	<? } ?>
+</div>
+<br>
+
+
+
+	
+	
+<div id="toCenter" style="margin-top:2%;">
+
 	<?
 	if($isEmpty && $isKM){
 	?>
@@ -114,4 +116,33 @@
 	</div>
 </div>
 
+        <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Table' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					<p>
+						
+						User may view the board. Administrator can view all boards. 
+						Other users (Product Owner, KanbanMaster developer) may view only those 
+						boards that relate to their development team. Only active users may view 
+						the boards. <br><br>
+						To create new card for current board click on 'Create new card' link. 
+
+						
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+	
 [include]app/views/footer.view.php[/include]
