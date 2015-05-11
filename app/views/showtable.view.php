@@ -7,25 +7,22 @@
 	<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a><br><br>
 	<? if($isKM || $isPO){ ?>
 		<a href='?page=createcard&projectID={{projectID}}' style="text-decoration:none; font-size:20px;">Create new card</a>
-	<? } ?>
+	<? }
+
+	if($isEmpty && $isKM){
+	?>
+		&nbsp; &nbsp; <a href="?page=edittable&projectID={{projectID}}" style="text-decoration:none; font-size:20px;">Edit board</a>
+	<?
+	}
+	?>		
 </div>
-<br>
+
 
 
 
 	
 	
 <div id="toCenter" style="margin-top:2%;">
-
-	<?
-	if($isEmpty && $isKM){
-	?>
-	<div id="field" style="width: 89%">
-		This board is empty! You can edit it. <a href="?page=edittable&projectID={{projectID}}" style="text-decoration: none;">Link</a>
-	</div>
-	<?
-	}
-	?>	
 	<?php
 		$xy = array();
 		$maxY = 0;
