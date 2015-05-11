@@ -21,6 +21,7 @@
 		var width = screen.availWidth;
 	</script>
 			<?php 
+			$p = new project();
 			$isAdmin = $data['isAdmin'];
 			foreach ($projects as $key => $value){ 
 				$project = $projects[$key];
@@ -56,7 +57,29 @@
 					<td style="padding-right:15px;">
 						<div style="float:left;"><?php echo $group ?></div>
 					</td>
-					<? if($isKM) { ?>
+					<? 
+						$userid  = $_SESSION['userid'];
+						$isKM    = $p->isKanbanMaster($id, $userid);
+					?>
+						<? if($boardExists == 1 && (($numActive > 0) || $isAdmin)) { ?>
+							<td style="padding-right:15px;">
+								<?
+								echo"
+								<script type='text/javascript'>
+									var link  = '?page=showtable&projectID={$id}&width=';
+									link  = link+width;
+									var divlink = '<div id=\"menu_option\" onClick=\"location.href=\'';
+									var enddivlink = '\'\" style=\"float:right;\">';
+									divlink = divlink+link+enddivlink;
+								</script>
+								";?>
+							<script type='text/javascript'>document.write(divlink);</script>
+									<script type='text/javascript'>document.write("<a href='"+link+"'>Show Board</a>");</script>
+								</div>
+							</td>
+						<? } ?>
+						<?
+						if($isKM) { ?>
 						<td style="padding-right:15px;">
 							<div id="menu_option" onClick="location.href='?page=deleteproject<? echo"&projectID={$id}"; ?>'" style="float:right;">
 								<? echo"<a href='?page=deleteproject&projectID={$id}'>Delete project</a>"; ?>
@@ -81,23 +104,6 @@
 								</div>
 							</td>
 						<? } // ROK ?> 
-					<? } ?>
-					<? if($boardExists == 1 && (($numActive > 0) || $isAdmin)) { ?>
-						<td style="padding-right:15px;">
-							<?
-							echo"
-							<script type='text/javascript'>
-								var link  = '?page=showtable&projectID={$id}&width=';
-								link  = link+width;
-								var divlink = '<div id=\"menu_option\" onClick=\"location.href=\'';
-								var enddivlink = '\'\" style=\"float:right;\">';
-								divlink = divlink+link+enddivlink;
-							</script>
-							";?>
-						<script type='text/javascript'>document.write(divlink);</script>
-								<script type='text/javascript'>document.write("<a href='"+link+"'>Show Board</a>");</script>
-							</div>
-						</td>
 					<? } ?>
 			</tr>
 		<?php } ?>
