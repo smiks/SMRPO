@@ -92,30 +92,20 @@ class CreateCard extends Controller{
 			$notExistsSilverBulletInColumn = $card -> notExistsSilverBulletInColumn($columnID, $boardID);
 		}
 
-		$today = date("Y-m-d"); 
-
-		if($deadline >= $today)
+		if($notExistsSilverBulletInColumn) 
 		{
-			if($notExistsSilverBulletInColumn) 
+			if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline))
 			{
-				if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline))
-				{
-					$message = "Successfully added card {$name}.";
-					$data = array("message" => $message);
-				}
-				else {
-					$data = array("error" => "Card was not created.");
-				}
+				$message = "Successfully added card {$name}.";
+				$data = array("message" => $message);
 			}
-			else
-			{
-				$data = array("error" => "WIP violation! Silver bullet already exists in this column. Go back and try again.");
+			else {
+				$data = array("error" => "Card was not created.");
 			}
 		}
-		else 
+		else
 		{
-			$data = array("error" => "Deadline must be bigger or equal than today. Go back and try again.");
-
+			$data = array("error" => "Silver bullet already exists in this column. Go back and try again.");
 		}
 
 		$this->show("addCard.view.php", $data);
