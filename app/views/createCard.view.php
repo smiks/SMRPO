@@ -33,6 +33,7 @@
 		
 		<label class="cool_font"> Card assignee </label><br>
 		<select name="developers">
+			<option value='null'></option>
 			<?
 			foreach($developers as $key => $value){
 				$developer = $developers[$key];
