@@ -235,4 +235,16 @@ class board extends Model{
 		}		
 		return ($this->sql($sql, $return="single"));
 	}
+
+	public function getColumnLimit($columnID)
+	{
+		$sql = "SELECT cardLimit FROM Col WHERE column_id='{$columnID}';";
+		return ($this->sql($sql, $return="single"));
+	}
+
+	public function getNumberOfCardsInColumn($columnID)
+	{
+		$sql = "SELECT COUNT(*) FROM Card WHERE column_id = '{$columnID}';";
+		return $this->sql($sql, $return="single");
+	}
 }

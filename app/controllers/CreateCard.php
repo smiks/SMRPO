@@ -92,12 +92,34 @@ class CreateCard extends Controller{
 			$notExistsSilverBulletInColumn = $card -> notExistsSilverBulletInColumn($columnID, $boardID);
 		}
 
+		//Get limit for column
+
+		$limit = $board -> getColumnLimit($columnID);
+
+		$noOfCards = $board -> getNumberOfCardsInColumn($columnID);
+		
+		if ($limit == $noOfCards)
+		{
+			$WIPViolation = true;
+		}
+		else
+		{
+			$WIPViolation = false;
+		}
+		
 		if($notExistsSilverBulletInColumn) 
 		{
 			if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline))
 			{
-				$message = "Successfully added card {$name}.";
-				$data = array("message" => $message);
+				if($WIPViolation)
+				{
+					$message = "WIP limit violation, but successfully added card {$name}.";
+					$data = array("message" => $message);
+				}
+				else {
+					$message = "Successfully added card {$name}.";
+					$data = array("message" => $message);
+				}
 			}
 			else {
 				$data = array("error" => "Card was not created.");
@@ -105,9 +127,9 @@ class CreateCard extends Controller{
 		}
 		else
 		{
-			$data = array("error" => "Silver bullet already exists in this column. Go back and try again.");
+			$data = array("error" => "Silver bullet already exists in this column, you can't create it. Go back and try again.");
 		}
-
+	
 		$this->show("addCard.view.php", $data);
 	
 	}
