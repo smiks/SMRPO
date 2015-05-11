@@ -98,7 +98,7 @@ class CreateCard extends Controller{
 
 		$noOfCards = $board -> getNumberOfCardsInColumn($columnID);
 		
-		if ($limit == $noOfCards)
+		if ($limit == $noOfCards && $limit != 0)
 		{
 			$WIPViolation = true;
 		}
