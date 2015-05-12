@@ -26,7 +26,7 @@ class Edittable extends Controller{
 		
 	}
 
-	private function get($board, $group, $project)
+	private function get(&$board, &$group, &$project)
 	{
 
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
@@ -125,6 +125,9 @@ class Edittable extends Controller{
 		$limitP1   = $parents[1]['cardLimit'];
 		$limitP2   = $parents[2]['cardLimit'];
 		$limitP3   = $parents[3]['cardLimit'];
+		$pID1      = $parents[1]['column_id'];
+		$pID2      = $parents[2]['column_id'];
+		$pID3      = $parents[3]['column_id'];
 
 		/* get limits of children */
 		$cnt = 1;
@@ -220,7 +223,10 @@ class Edittable extends Controller{
 			"nameC3"    => $nameC3,
 			"colIDC1"   => $colIDC1,
 			"colIDC2"   => $colIDC2,
-			"colIDC3"   => $colIDC3
+			"colIDC3"   => $colIDC3, 
+			"pID1"		=> $pID1, 
+			"pID2"		=> $pID2, 
+			"pID3"		=> $pID3
 		);
 
 		if(!$isKM)
@@ -239,21 +245,101 @@ class Edittable extends Controller{
 
 	}
 
-	private function addBetween($array, $values, $position){
-			$cnt = 1;
-			$new = array();
-			foreach ($array as $key => $value) {
-				if($cnt == $position){
-					array_push($new, $values);
-					array_push($new, $value);
-				}
-				else{
-					array_push($new, $value);
-				}
-				$cnt++;
-			}
-			#dbg($new);
-			return $new;
+	private function post(&$board, &$group, &$project)
+	{
+		$projectID = (int)(Functions::input()["GET"]["projectID"]);
+		$groupID   = $group->getGroupIDFromProjectID($projectID);
+		$boardInfo = $board->getBoardByProjectID($projectID, $groupID);
+		$boardID   = $boardInfo['board_id'];
+
+		/* ugly thing...redirect if board does not exist */
+		if($boardID == 0){
+			Functions::redirect("?page=projects");
+		}
+
+		//$cols      = $board->getColumnsByBoardID($boardID);
+		$userid  = $_SESSION['userid'];
+		$isKM    = $project->isKanbanMaster($projectID, $userid);
+
+		$post    = Functions::input("POST");
+
+		$boardName = $post['boardName'];
+
+		$nCols1    = $post['nCols1'];
+		$nCols2    = $post['nCols2'];
+		$nCols3    = $post['nCols3'];
+
+		/* info about parent columns */
+		$limitCol1 = $post['limitP1'];
+		$limitCol2 = $post['limitP2'];
+		$limitCol3 = $post['limitP3'];
+
+		$colorCol1 = $post['colorCol1'];
+		$colorCol2 = $post['colorCol2'];
+		$colorCol3 = $post['colorCol3'];
+
+		$namePC1   = "BackLog";
+		$namePC2   = "Development";
+		$namePC3   = "Done";
+
+		// TODO :: fix, add editing subcolumns (don't forget to add subcolumn ID (column_id))
+		/* info about first subcolumns */
+		$subC1 = array();
+		for($i=1; $i<=$nCols1; $i++){
+			$cName  = "1_".($i);
+			$cLimit = $cName."_limit";
+			$cID    = $cName."_id";
+			$name   = $post[$cName];
+			$limit  = $post[$cLimit];
+			$cID 	= $post[$cID];
+			$subC1[$name] = $limit;
+		}
+		
+		/* info about second subcolumns */
+		$subC2 = array();
+		for($i=1; $i<=$nCols2; $i++){
+			$cName  = "2_".($i);
+			$cLimit = $cName."_limit";
+			$cID    = $cName."_id";
+			$name   = $post[$cName];
+			$limit  = $post[$cLimit];
+			$subC2[$name] = $limit;
+		}
+
+		/* info about third subcolumns */
+		$subC3 = array();
+		for($i=1; $i<=$nCols3; $i++){
+			$cName  = "3_".($i);
+			$cLimit = $cName."_limit";
+			$cID    = $cName."_id";
+			$name   = $post[$cName];
+			$limit  = $post[$cLimit];
+			$subC3[$name] = $limit;
+		}
+
+		$parentOne   = array($limitCol1 => $colorCol1);
+		$parentTwo   = array($limitCol2 => $colorCol2);
+		$parentThree = array($limitCol3 => $colorCol3);
+		$parentIDs   = array(1 => $post['pID1'], 2 => $post['pID2'], 3 => $post['pID3']);
+
+		dbg($post);
+
+		$board -> updateBoard($boardName, $groupID, $projectID, $parentOne, $parentTwo, $parentThree, $subC1, $subC2, $subC3, $parentIDs);
+
+
+
+		if(!$isKM)
+		{
+			$error = "Access Denied.";
+			$errorCode = "403";
+			$data = array("error" => $error, "errorCode" => $errorCode);
+			$this->show("error.view.php", $data);		
+		}
+		else
+		{
+
+		}
+
 	}
 
 }

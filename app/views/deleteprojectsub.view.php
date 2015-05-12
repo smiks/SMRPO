@@ -1,18 +1,17 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]	
+<center>
 
-<div id="toCenter">
-	<div id="field_50">
-		<h2>Delete Project</h2>
-	</div>
-	<br>
-	<div id="field_50">
-		<? if(isset($error)) { ?>
+<br><div class="center_block_header"> Delete project </div><br>
+
+<div class="center_block" style="max-width:20%;">
+	
+	<? if(isset($error)) { ?>
 		{{error}}
-		<? } else { ?>
-			{{message}}
-		<? } ?>
-	</div>
+	<? } else { ?>
+		{{message}}
+	<? } ?>
+	
 </div>
-
+</center>
 [include]app/views/footer.view.php[/include]

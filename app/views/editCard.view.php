@@ -21,6 +21,7 @@
 		 
 		<label class="cool_font"> Card title </label><br>
 		<input type="hidden" value="<?php echo $id; ?>" name="cardID">
+<<<<<<< HEAD
 		<input type = "text" value="<?php echo $name; ?>" id = "cardtitle" name="cardtitle" placeholder = "Card title" required 
 		<?php if (!$canChange)
 				echo "readonly ";?> /><br>
@@ -33,6 +34,15 @@
 		<label class="cool_font"> Card assignee </label><br>
 		<select name="developers" <?php if (!$canChange)
 						echo "disabled";?> >
+=======
+		<input type = "text" value="<?php echo $name; ?>" id = "cardtitle" name="cardtitle" placeholder = "Card title" required /><br>
+			
+		<label class="cool_font"> Card description </label><br>
+		<textarea id = "carddescription" name="carddescription" placeholder = "Card description" required rows="5" cols="1"><?php echo $description;?></textarea><br>
+			
+		<label class="cool_font"> Card assignee </label><br>
+		<select name="developers">
+>>>>>>> a14f9fde4d06514d85e59c8dfcf17fbf2084570f
 			<?
 			foreach($developers as $key => $value){
 				$developer = $developers[$key];
@@ -45,6 +55,7 @@
 		</select><br>
 			
 		<label class="cool_font"> Card size </label><br>
+<<<<<<< HEAD
 		<input type = "number" value="<?php echo $size; ?>" min="0" id = "cardsize" name="cardsize" placeholder = "Card size" 
 		<?php if (!$canChange)
 			echo "readonly ";?>/><br>
@@ -52,6 +63,12 @@
 		<label class="cool_font"> Card deadline </label><br>
 		<input type = "date" value="<?php echo $deadline; ?>" id = "carddeadline" name="carddeadline" placeholder = "Card deadline" <?php if (!$canChange)
 																			echo "readonly ";?>/><br>
+=======
+		<input type = "number" value="<?php echo $size; ?>" min="0" id = "cardsize" name="cardsize" placeholder = "Card size" /><br>
+			
+		<label class="cool_font"> Card deadline </label><br>
+		<input type = "date" value="<?php echo $deadline; ?>" id = "carddeadline" name="carddeadline" placeholder = "Card deadline" /><br>
+>>>>>>> a14f9fde4d06514d85e59c8dfcf17fbf2084570f
 			
 		<input type="submit" value="Edit"/><br>
 

@@ -4,8 +4,10 @@ require_once 'Controller.php';
 require_once 'app/models/user.php';
 require_once 'app/models/project.php';
 require_once 'app/models/card.php';
+require_once 'app/models/board.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
+require_once 'core/Global.php';
 
 Functions::forceLogin();
 
@@ -27,9 +29,11 @@ class CreateCard extends Controller{
             $project = new Project();
 
             $developers = $project -> getDevelopers($projectID);
+            
+            $userId = $_SESSION['userid'];
 
-            $isKM = $project -> isKanbanMaster($projectID, $userid);
-            $isPO = $project -> isProductOwner($projectID, $userid);
+            $isKM = $project -> isKanbanMaster($projectID, $userId);
+            $isPO = $project -> isProductOwner($projectID, $userId);
 	
 			$data = array("developers" => $developers, "projectID" => $projectID, "isKM" => $isKM, "isPO" => $isPO);
 			$this -> show("createCard.view.php", $data);
@@ -48,34 +52,84 @@ class CreateCard extends Controller{
 
 		$projectID = $input["projectID"];
 
+		$card = new card();
+		$board = new board();
 
+		$boardID = $board -> getBoardIDByProjectID($projectID);
+		
+		$topColumns = $board -> getMinColumnIDByBoardIDandParentID($boardID, null);
+
+		$fristchildColumns = $board -> getMinColumnIDByBoardIDandParentID($boardID, $topColumns);
+		
+		$lastchildColumns = $board -> getMaxColumnIDByBoardIDandParentID($boardID, $topColumns);
+		
 		if($type == 0)
 		{
 			$color = "green";
+			if($fristchildColumns == NULL)
+			{
+				$columnID = $topColumns;
+			}
+			else
+			{
+				$columnID = $fristchildColumns;
+			}
+
+			$notExistsSilverBulletInColumn = true;
 		}
 		else
 		{
 			$color = "red";
+			if($fristchildColumns == NULL)
+			{
+				$columnID = $topColumns;
+			}
+			else
+			{
+				$columnID = $lastchildColumns;
+			}
+
+			$notExistsSilverBulletInColumn = $card -> notExistsSilverBulletInColumn($columnID, $boardID);
 		}
 
-		$columnID ="1";
+		//Get limit for column
 
-		$card = new card();
+		$limit = $board -> getColumnLimit($columnID);
 
-		$boardID = $card -> getBoardId($projectID);
-
-		//pogledamo če dodajamo silver bullet in če je kanban master
-		//pogledamo če je navadna in če product owner 
-
-		if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline))
+		$noOfCards = $board -> getNumberOfCardsInColumn($columnID);
+		
+		if ($limit == $noOfCards && $limit != 0)
 		{
-			$message = "Successfully added card {$name}.";
-			$data = array("message" => $message);
+			$WIPViolation = true;
 		}
-		else {
-			$data = array("error" => "Card was not created.");
+		else
+		{
+			$WIPViolation = false;
 		}
-
+		
+		if($notExistsSilverBulletInColumn) 
+		{
+			if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline))
+			{
+				if($WIPViolation)
+				{
+					$message = "WIP limit violation, but successfully added card {$name}.";
+					$data = array("message" => $message);
+				}
+				else {
+					$message = "Successfully added card {$name}.";
+					$data = array("message" => $message);
+				}
+			}
+			else {
+				$data = array("error" => "Card was not created.");
+			}
+		}
+		else
+		{
+			$data = array("error" => "Silver bullet already exists in this column, you can't create it. Go back and try again.");
+		}
+	
 		$this->show("addCard.view.php", $data);
 	
 	}

@@ -17,6 +17,7 @@ require_once 'config/config.php';
 require_once 'config/connect.php';
 require_once 'core/Router.php';
 require_once 'core/Functions.php';
+
 /* routing */
 Router::home('main', 'app/controllers/SignIn.php');
 Router::make('main', 'app/controllers/SignIn.php');

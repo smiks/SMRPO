@@ -1,18 +1,15 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]	
-
-<div id="toCenter">
-	<div id="field_50">
-		<h2>Delete Group</h2>
-	</div>
-	<br>
-	<div id="field_50">
-		<? if(isset($error)) { ?>
+<center>
+<br><div class="center_block_header"> Delete group </div><br>
+<div class="center_block">
+	
+	<? if(isset($error)) { ?>
 		{{error}}
-		<? } else { ?>
-			{{message}}
-		<? } ?>
-	</div>
+	<? } else { ?>
+		{{message}}
+	<? } ?>
+	
 </div>
-
+</center>
 [include]app/views/footer.view.php[/include]

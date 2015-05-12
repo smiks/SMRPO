@@ -1,0 +1,169 @@
+@font-face {
+	font-family: 'BryantProBoldAlternateRegular';
+    	src: url('../fonts/bryantpro/bryantpro-boldalt.eot');
+    	src: url('../fonts/bryantpro/bryantpro-boldalt.eot?#iefix') format('embedded-opentype'),
+    	url('../fonts/bryantpro/bryantpro-boldalt.ttf') format('truetype'),
+    	url('../fonts/bryantpro/bryantpro-boldalt.woff') format('woff');
+    	font-weight: normal;
+    	font-style: normal;
+}
+
+html, body {
+	height: 100%;
+    	min-height: 100%;
+    	background-color: #067db7;
+    	margin: 0;
+    	padding: 0;
+    	color: #333333;
+    	font-size: 13px;
+    	line-height: 20px;
+    	font-family: HelveticaNeueRoman, Verdana, sans-serif;
+}
+
+.center_block_header{
+	display: inline-block;
+    	width: 20%;
+	min-width:28%;
+    	max-width: 100%; /*Tole spremeni za sirino*/
+	
+	margin: 0% 0% 0% 0%;
+    	padding: 2% 1% 2% 1%;
+    	background-color: #FFF;
+	border-radius: 6px;
+	text-align: left;
+    	overflow: hidden;
+	font: 18px/18px BryantProBoldAlternateRegular;
+	font-size:40px;
+	text-align: center;
+	-moz-border-radius: 50px; 
+	-webkit-border-radius: 15px;
+	
+	position: relative;
+	width:auto;
+}
+
+.center_block {
+	display: inline-block;
+    	width: 20%;
+	min-width:20%;
+    	max-width: 100%; /*Tole spremeni za sirino*/
+
+	
+	margin: 1% 0% 0% 0%;
+    	padding: 2% 5% 2% 5%;
+    	background-color: #FFF;
+    	border-radius: 6px;
+    	text-align: left;
+    	overflow: hidden;
+	-moz-border-radius: 50px; 
+	-webkit-border-radius: 15px;
+	
+	position: relative;
+	width:auto;
+}
+
+
+.cool_font{
+	/* Use class="cool_font" for default app font */
+	font: 18px/18px BryantProBoldAlternateRegular;
+	font-size:20px;
+}
+
+input[type=text],
+input[type=date],
+input[type=number],
+input[type=email],
+input[type=password] {
+    	width: 100%;
+    	height: 30px;
+	margin: 5px 0 20px 0;
+    	padding: 0 0px 0 5px;
+
+    	line-height: 40px;
+    	font-size: 16px;
+    	background-color: #FFF;
+	font: 18px/18px BryantProBoldAlternateRegular; 
+	color:gray; 
+
+
+    	border: 1px solid #cfcfcf;
+    	border-radius: 6px;
+    	background-color: #FFF;
+    	outline: 0 none;
+}
+
+textarea {
+    	width: 100%;
+	margin: 5px 0 20px 0;
+	padding: 0px 0px 0px 0px;
+	
+	font: 18px/18px BryantProBoldAlternateRegular; 
+	font-size: 16px;
+	color:gray; 
+
+    	border: 1px solid #cfcfcf;
+    	border-radius: 6px;
+    	background-color: #FFF;
+    	outline: 0 none;
+}
+
+select {
+	height: 33px;
+	width:100%;
+	color:gray; /* NEW */
+	margin: 2% 0% 0% 0%;
+	padding: 0 0 0 10px;
+	font: 18px/18px BryantProBoldAlternateRegular;
+
+	border: 1px solid #cfcfcf;
+    	border-radius: 6px;
+    	background-color: #FFF;
+    	margin: 5px 0 20px 0;
+    	outline: 0 none;
+}
+
+.bigger_select {
+	/* class="bigger_select" is meant to be used for multiple select choices */
+	height:30%;
+}
+
+input[type=submit] {
+    	/* Submit button on login page */
+    	display: inline-block;
+    	height: 58px;
+    	width:100%;
+	
+	padding: 0 10px 0 10px;
+    	margin: 10px 0 10px 0;
+    	background-color: #79bbff;
+    	color: #FFF;
+    	font: 30px/30px BryantProBoldAlternateRegular;
+    	border: 0 none;
+    	border-radius: 6px;
+    	cursor: pointer;
+	outline: 0 none;
+}
+
+.submit_look_like_button{
+	/* Use class="submit_look_like_button" for button which is not submit but has same css */
+    	display: inline-block;
+    	height: 58px;
+    	width:100%;
+	
+	padding: 0 10px 0 10px;
+    	margin: 10px 0 10px 0;
+    	background-color: #79bbff;
+    	color: #FFF;
+    	font: 30px/30px BryantProBoldAlternateRegular;
+    	border: 0 none;
+    	border-radius: 6px;
+    	cursor: pointer;
+	outline: 0 none;
+}
+
+
+
+
+
+
+

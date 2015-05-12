@@ -8,7 +8,7 @@
 	</div>
 	<br>
 	<div id="field" style="overflow: auto;">
-		<form action='?projectID={{projectID}}' method='post'>
+		<form action='?page=edittable&projectID={{projectID}}' method='post'>
 			<input type='hidden' name='groupID' value='{{groupID}}'>
 			<input type='hidden' name='projectID' value='{{projectID}}'>
 			<input type='hidden' name='limitCol1' value='{{limitCol1}}'>
@@ -17,9 +17,9 @@
 			<input type='hidden' name='nCols1' value='{{nCols1}}'>
 			<input type='hidden' name='nCols2' value='{{nCols2}}'>
 			<input type='hidden' name='nCols3' value='{{nCols3}}'>
-			<input type='hidden' name='colorCol1' value='{{colorCol1}}'>
-			<input type='hidden' name='colorCol2' value='{{colorCol2}}'>
-			<input type='hidden' name='colorCol3' value='{{colorCol3}}'>
+			<input type='hidden' name='pID1' value='{{pID1}}'>
+			<input type='hidden' name='pID2' value='{{pID2}}'>
+			<input type='hidden' name='pID3' value='{{pID3}}'>
 
 			<center>
 				<label>Board name</label>
@@ -30,19 +30,19 @@
 						<td colspan='{{nCols1}}' style='background-color: {{colorCol1}}'>
 							<center>
 								BackLog  <br>
-								Limit: <input type='number' name='limitP1' value='{{limitP1}}'>
+								Limit: <input type='number' name='limitP1' value='{{limitP1}}' style='width: 50px;'  min='0' max='50'>
 							</center>
 						</td>
 						<td colspan='{{nCols2}}' style='background-color: {{colorCol2}}'>
 							<center>
 								Development <br>
-								Limit: <input type='number' name='limitP2' value='{{limitP2}}'>
+								Limit: <input type='number' name='limitP2' value='{{limitP2}}' style='width: 50px;'  min='0' max='50'>
 							</center>
 						</td>
 						<td colspan='{{nCols3}}' style='background-color: {{colorCol3}}'>
 							<center>
 								Done <br>
-								Limit: <input type='number' name='limitP3' value='{{limitP3}}'>
+								Limit: <input type='number' name='limitP3' value='{{limitP3}}' style='width: 50px;'  min='0' max='50'>
 							</center>
 						</td>
 					</tr>
@@ -57,6 +57,7 @@
 								$column = $i+1;
 								$fName = "1_".($column);
 								$fLimit = $fName."_limit";
+								$fID    = $fName."_id";
 								$name = $nameC1[$column];
 								$limit = $limitC1[$column];
 								$columnID = $colIDC1[$column];
@@ -74,6 +75,7 @@
 								}								
 								echo"
 									<td style='width: {$wCol1}%; padding: 1px; border-style: dotted; border-width: 1px;'>
+										<input type='hidden' name='{$fID}' value='{$columnID}'>
 										Column Name <br>
 										<input type='text' name='{$fName}' id='textinput_100' value='{$name}' required><br>
 										Column Limit <br>
@@ -96,6 +98,7 @@
 								$column = $i+1+$nCols1;
 								$fName = "2_".($i+1);
 								$fLimit = $fName."_limit";
+								$fID    = $fName."_id";
 								$name = $nameC2[$column];
 								$limit = $limitC2[$column];
 								$columnID = $colIDC2[$column];
@@ -113,6 +116,7 @@
 								}
 								echo"
 									<td style='width: {$wCol2}%; padding: 1px; border-style: dotted; border-width: 1px;'>
+										<input type='hidden' name='{$fID}' value='{$columnID}'>
 										Column Name <br>
 										<input type='text' name='{$fName}' id='textinput_100' value='{$name}' required><br>
 										Column Limit <br>
@@ -134,6 +138,7 @@
 								$column = $i+1+$nCols1+$nCols2;
 								$fName = "3_".($i+1);
 								$fLimit = $fName."_limit";
+								$fID    = $fName."_id";
 								$name = $nameC3[$column];
 								$limit = $limitC3[$column];
 								$columnID = $colIDC3[$column];
@@ -151,6 +156,7 @@
 								}
 								echo"
 									<td style='width: {$wCol3}%; padding: 1px; border-style: dotted; border-width: 1px;'>
+										<input type='hidden' name='{$fID}' value='{$columnID}'>
 										Column Name <br>
 										<input type='text' name='{$fName}' id='textinput_100' value='{$name}' required><br>
 										Column Limit <br>
