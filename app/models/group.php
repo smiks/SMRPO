@@ -160,4 +160,9 @@ class group extends Model {
 		}
 		return true;
 	}
+	
+	public function getMembersFromCard($projectId)
+	{
+		return $this -> sql("SELECT * FROM Users_Groups LEFT JOIN Group_Project ON (Users_Groups.group_id=Group_Project.group_id) WHERE project_id='{$projectId}';", $return = "array", $key = "ug_id");
+	}
 }

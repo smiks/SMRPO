@@ -14,18 +14,25 @@ class card extends Model{
 
 		return true;
 	}	
-
-	public function getBoardId($projectID)
-	{
-		//get board id from Card where project id = $projectId
-		global $db;
-		$q = $db -> query("SELECT board_id FROM Card WHERE project_id = '{$projectID}';");
-		$data = $db -> fetch_single($q);
-		return($data);
-	}
 	
 	public function getCards($projectId, $boardId)
 	{
 		return $this -> sql("SELECT * FROM Card WHERE board_id='{$boardId}' AND project_id='{$projectId}';", $return="array", $key="card_id");
 	}
+	
+	public function notExistsSilverBulletInColumn($columnID, $boardID)
+	{
+
+		$sql = "SELECT COUNT(*) FROM Card WHERE board_id='{$boardID}' AND column_id ='{$columnID}' AND color='red' LIMIT 1;";
+				
+		return (0 == $this->sql($sql, $return="single"));
+	}
+	
+	public function getCard($id){
+		global $db;
+		$q = $db -> query("SELECT * FROM Card WHERE card_id = '{$id}';");
+		$data = $db -> fetch_row($q);
+		return($data);
+	}
+	
 }

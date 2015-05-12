@@ -1,20 +1,28 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
 
-<div id="toCenter">
-	<br>
-	<div id="field"  style="width: 89%; float:left; ">
-		<h3 style="float:left; padding-left:350px;"> <?php echo $boardName; ?></h3>
-		<?
-		if($isKM || $isPO){
-		?>
-		<div style="float:right;" id="menu_option" onClick="location.href='?page=createcard<? echo"&projectID={$projectID}"; ?>'">
-			<? echo"<a href='?page=createcard&projectID={$projectID}'>Create card</a>"; ?>
-		</div>
-		<?
-		}
-		?>
-	</div>
+
+<div class="center_block_header" style="width:97%;">
+	Table: {{boardName}} 
+	<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a><br><br>
+	<? if($isKM || $isPO){ ?>
+		<a href='?page=createcard&projectID={{projectID}}' style="text-decoration:none; font-size:20px;">Create new card</a>
+	<? }
+
+	if($isEmpty && $isKM){
+	?>
+		&nbsp; &nbsp; <a href="?page=edittable&projectID={{projectID}}" style="text-decoration:none; font-size:20px;">Edit board</a>
+	<?
+	}
+	?>		
+</div>
+
+
+
+
+	
+	
+<div id="toCenter" style="margin-top:2%;">
 	<?php
 		$xy = array();
 		$maxY = 0;
@@ -22,15 +30,6 @@
 		$boardLength = 0;
 		$numSwimLines = count($data);
 		$maxLimit = 0;
-	?>
-	<?
-	if($isEmpty && $isKM){
-	?>
-	<div id="field" style="width: 89%">
-		This board is empty! You can edit it. <a href="?page=edittable&projectID={{projectID}}">Link</a>
-	</div>
-	<?
-	}
 	?>
 	<br><br>
 	<div style="width: 89%" >
@@ -64,7 +63,7 @@
 
 				$echoLimit = "";
 				if ($limit > 0)
-					$echoLimit = "Limit: {$limit}";
+					$echoLimit = "Limit: ${limit}";
 				
 				echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b><br>${echoLimit}</br></div>";
 			}
@@ -91,8 +90,8 @@
 					$color = $card['color'];
 					$colId = $card['column_id'];
 					$name = $card['name'];
-					$description = $card['description'];
 					$size = $card['size'];
+					$description = $card['description'];
 					
 					$coordinates = $colCoor[$colId];
 					$x = $coordinates['x'];
@@ -102,7 +101,7 @@
 						$y = $maxy + 10;
 					
 					$length = $coordinates['length'];
-					echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>Task {$cardId}: {$name}</b><img alt='editCard' src='../../static/images/settings.png' style='height:15px; width:15px; float:right; padding-right:5px'/><br>Size: {$size}</br><br>Description: {$description}</br></div>";
+					echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>Task {$cardId}: {$name}</b><a href='?page=editcard&cardID={$cardId}'><img alt='editCard' src='../../static/images/settings_2.png' style='height:15px; width:15px; float:right; padding-top:5px; padding-right:10px;'/></a><br>Size: {$size}</br><br>Description: {$description}</br></div>";
 					$colCoor[$colId] = array("x" => $x, "y" => $y+110, "length" => $length);
 				}
 				$i = $i + 1;
@@ -114,4 +113,33 @@
 	</div>
 </div>
 
+        <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Table' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					<p>
+						
+						User may view the board. Administrator can view all boards. 
+						Other users (Product Owner, KanbanMaster developer) may view only those 
+						boards that relate to their development team. Only active users may view 
+						the boards. <br><br>
+						To create new card for current board click on 'Create new card' link. 
+
+						
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+	
 [include]app/views/footer.view.php[/include]

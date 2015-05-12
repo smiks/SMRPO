@@ -60,7 +60,7 @@ class Showtable extends Controller{
 			$screenWidth = (int)($_GET['width'])-5;
 			
 			$cells = array();
-			$cells = $this -> getCells(0, 120, $screenWidth-30, null, $boardId, $cells);
+			$cells = $this -> getCells(0, 160, $screenWidth-30, null, $boardId, $cells);
 			
 			foreach($projects as $projectId => $val)
 			{

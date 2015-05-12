@@ -43,6 +43,7 @@ Router::make('createtablesub', 'app/controllers/Createtablesub.php');
 Router::make('edittable', 'app/controllers/Edittable.php');
 Router::make('copytable', 'app/controllers/CopyTable.php');
 Router::make('createcard', 'app/controllers/CreateCard.php');
+Router::make('editCard', 'app/controllers/EditCard.php');
 Router::route();
 /* optional "garbage collector" */
 $variables = array('user', 'group', 'board', 'project'); /* You can put name of variables that you want to unset in this array. */
