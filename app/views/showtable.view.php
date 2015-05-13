@@ -11,7 +11,7 @@
 
 	if($isEmpty && $isKM){
 	?>
-		&nbsp; &nbsp; <a href="?page=edittable&projectID={{projectID}}" style="text-decoration:none; font-size:20px;">Edit board</a>
+		&nbsp; &nbsp; <a href="?page=edittable&projectID={{projectID}}&screenwidth={{screenWidth}}" style="text-decoration:none; font-size:20px;">Edit board</a>
 	<?
 	}
 	?>		

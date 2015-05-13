@@ -8,7 +8,7 @@
 	</div>
 	<br>
 	<div id="field" style="overflow: auto;">
-		<form action='?page=edittable&projectID={{projectID}}' method='post'>
+		<form action='?page=edittable&projectID={{projectID}}&screenwidth={{scrWidth}}' method='post'>
 			<input type='hidden' name='groupID' value='{{groupID}}'>
 			<input type='hidden' name='projectID' value='{{projectID}}'>
 			<input type='hidden' name='limitCol1' value='{{limitCol1}}'>
@@ -23,26 +23,32 @@
 
 			<center>
 				<label>Board name</label>
-				<input type="text" name="boardName" id="textinput_200" value='{{boardName}}' readonly><br>
+				<input type="text" name="boardName" id="textinput_200" value='{{boardName}}'><br>
 				<br>
 				<table style='width: 99%;'>
 					<tr>
 						<td colspan='{{nCols1}}' style='background-color: {{colorCol1}}'>
 							<center>
 								BackLog  <br>
-								Limit: <input type='number' name='limitP1' value='{{limitP1}}' style='width: 50px;'  min='0' max='50'>
+								Limit: <input type='number' name='limitP1' value='{{limitP1}}' style='width: 50px;'  min='0' max='50'><br>
+								Column color:  
+								<input type='color' name='colorCols1' value='{{colorCol1}}'>
 							</center>
 						</td>
 						<td colspan='{{nCols2}}' style='background-color: {{colorCol2}}'>
 							<center>
 								Development <br>
-								Limit: <input type='number' name='limitP2' value='{{limitP2}}' style='width: 50px;'  min='0' max='50'>
+								Limit: <input type='number' name='limitP2' value='{{limitP2}}' style='width: 50px;'  min='0' max='50'><br>
+								Column color:  
+								<input type='color' name='colorCols2' value='{{colorCol2}}'>
 							</center>
 						</td>
 						<td colspan='{{nCols3}}' style='background-color: {{colorCol3}}'>
 							<center>
 								Done <br>
-								Limit: <input type='number' name='limitP3' value='{{limitP3}}' style='width: 50px;'  min='0' max='50'>
+								Limit: <input type='number' name='limitP3' value='{{limitP3}}' style='width: 50px;'  min='0' max='50'><br>
+								Column color: 
+								<input type='color' name='colorCols3' value='{{colorCol3}}'>
 							</center>
 						</td>
 					</tr>
@@ -50,7 +56,7 @@
 						<?
 							if($nCols1 == 0){
 								echo"<td style='width: {$wCol1}%; padding: 1px; border-style: dotted; border-width: 1px;'>
-								<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=1' style='text-decoration: none; color: #000;' title='Add column'><big><big>+</big></big></a>
+								<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=1&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column'><big><big>+</big></big></a>
 								</td>";
 							}
 							for($i=0; $i<$nCols1; $i++){
@@ -63,15 +69,15 @@
 								$columnID = $colIDC1[$column];
 								$leftAdd = "";
 								$rightAdd = "";
-								$remove   = "<a href='?page=edittable&projectID={$projectID}&remove={$columnID}&pos={$column}' style='text-decoration: none; color: #000;' title='Remove column'>&#9747;</a>";
+								$remove   = "<a href='?page=edittable&projectID={$projectID}&remove={$columnID}&pos={$column}&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Remove column'>&#9747;</a>";
 								if($i == 0){
-									$leftAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=1' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+</a>{$remove}</big></big>";
+									$leftAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=1&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+</a>{$remove}</big></big>";
 								}
 								elseif($i+1 == $nCols1 && $nCols1 > 2){
-									$rightAdd = "<big><big>{$remove}</big></big><a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=1' style='text-decoration: none; color: #000;' title='Add column to right'><big><big>+&rArr;</big></big></a>";
+									$rightAdd = "<big><big>{$remove}</big></big><a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=1&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to right'><big><big>+&rArr;</big></big></a>";
 								}
 								else{
-									$rightAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=1' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+ </a> {$remove} <a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=1' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></a>";
+									$rightAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=1&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+ </a> {$remove} <a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=1&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></a>";
 								}								
 								echo"
 									<td style='width: {$wCol1}%; padding: 1px; border-style: dotted; border-width: 1px;'>
@@ -91,7 +97,7 @@
 
 							if($nCols2 == 0){
 								echo"<td style='width: {$wCol2}%; padding: 1px; border-style: dotted; border-width: 1px;'>
-								<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=2' style='text-decoration: none; color: #000;' title='Add column'><big><big>+</big></big></a></td>";
+								<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=2&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column'><big><big>+</big></big></a></td>";
 							}
 
 							for($i=0; $i<$nCols2; $i++){
@@ -104,15 +110,15 @@
 								$columnID = $colIDC2[$column];
 								$leftAdd = "";
 								$rightAdd = "";
-								$remove   = "<a href='?page=edittable&projectID={$projectID}&remove={$columnID}&pos={$column}' style='text-decoration: none; color: #000;' title='Remove column'>&#9747;</a>";
+								$remove   = "<a href='?page=edittable&projectID={$projectID}&remove={$columnID}&pos={$column}&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Remove column'>&#9747;</a>";
 								if($i == 0){
-									$leftAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=2' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+</a>{$remove}</big></big>";
+									$leftAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=2&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+</a>{$remove}</big></big>";
 								}
 								elseif($i+1 == $nCols2 && $nCols2 > 2){
-									$rightAdd = "<big><big>{$remove}</big></big><a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=2' style='text-decoration: none; color: #000;' title='Add column to right'><big><big>+&rArr;</big></big></a>";
+									$rightAdd = "<big><big>{$remove}</big></big><a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=2&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to right'><big><big>+&rArr;</big></big></a>";
 								}
 								else{
-									$rightAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=2' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+ </a> {$remove} <a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=2' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></a>";
+									$rightAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=2&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+ </a> {$remove} <a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=2&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></a>";
 								}
 								echo"
 									<td style='width: {$wCol2}%; padding: 1px; border-style: dotted; border-width: 1px;'>
@@ -132,7 +138,7 @@
 
 							if($nCols3 == 0){
 								echo"<td style='width: {$wCol3}%; padding: 1px; border-style: dotted; border-width: 1px;'>
-								<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=3' style='text-decoration: none; color: #000;' title='Add column'><big><big>+</big></big></a></td>";
+								<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=3&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column'><big><big>+</big></big></a></td>";
 							}
 							for($i=0; $i<$nCols3; $i++){
 								$column = $i+1+$nCols1+$nCols2;
@@ -144,15 +150,15 @@
 								$columnID = $colIDC3[$column];
 								$leftAdd = "";
 								$rightAdd = "";
-								$remove   = "<a href='?page=edittable&projectID={$projectID}&remove={$columnID}&pos={$column}' style='text-decoration: none; color: #000;' title='Remove column'>&#9747;</a>";
+								$remove   = "<a href='?page=edittable&projectID={$projectID}&remove={$columnID}&pos={$column}&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Remove column'>&#9747;</a>";
 								if($i == 0){
-									$leftAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=3' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+</a>{$remove}</big></big>";
+									$leftAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=3&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+</a>{$remove}</big></big>";
 								}
 								elseif($i+1 == $nCols3 && $nCols3 > 2){
-									$rightAdd = "<big><big>{$remove}</big></big><a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=3' style='text-decoration: none; color: #000;' title='Add column to right'><big><big>+&rArr;</big></big></a>";
+									$rightAdd = "<big><big>{$remove}</big></big><a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=3&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to right'><big><big>+&rArr;</big></big></a>";
 								}
 								else{
-									$rightAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=3' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+ </a> {$remove} <a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=3' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></a>";
+									$rightAdd = "<a href='?page=edittable&projectID={$projectID}&addLeft={$column}&P=3&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to left'><big><big>&lArr;+ </a> {$remove} <a href='?page=edittable&projectID={$projectID}&addRight={$column}&P=3&screenwidth={$scrWidth}' style='text-decoration: none; color: #000;' title='Add column to right'>+&rArr;</big></big></a>";
 								}
 								echo"
 									<td style='width: {$wCol3}%; padding: 1px; border-style: dotted; border-width: 1px;'>

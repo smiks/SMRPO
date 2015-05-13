@@ -249,70 +249,70 @@ class board extends Model{
 	}
 
 	# not finished
-	public function updateBoard($boardName, $groupID, $projectID, $parentOne, $parentTwo, $parentThree, $subC1, $subC2, $subC3, $parentIDs){
+	public function updateBoard($boardName, $groupID, $projectID, $parentOne, $parentTwo, $parentThree, $subC1, $subC2, $subC3, $parentIDs, $boardID){
 		global $db;
-		$boardID = $this->getLastBoardID()+1;
+
+		/* update board name */
+		$sql = "UPDATE Board SET name = '{$boardName}' WHERE board_id = '{$boardID}' LIMIT 1;";
+		$db -> query($sql);
 
 		$pID1 = $parentIDs[1];
 		$pID2 = $parentIDs[2];
 		$pID3 = $parentIDs[3];
-		$colOrder = 1;
-		/* inserting cols */
-			/* insert parent one*/
+
+		/* updating cols */
+			/* update parent one*/
 			foreach ($parentOne as $key => $value) {
 				$limit = $key;
 				$color1 = $value;
 			}
 			$sql = "UPDATE Col SET color = '{$color1}', cardLimit = '{$limit}' WHERE column_id = '{$pID1}' LIMIT 1;";
-			#$db -> query($sql);
-			$colOrder += 1;
+			$db -> query($sql);
 
 
-			/* insert parent two*/
+			/* update parent two*/
 			foreach ($parentTwo as $key => $value) {
 				$limit = $key;
 				$color2 = $value;
 			}
 			$sql = "UPDATE Col SET color = '{$color2}', cardLimit = '{$limit}' WHERE column_id = '{$pID2}' LIMIT 1;";
-			#$db -> query($sql);
-			$colOrder += 1;		
+			$db -> query($sql);	
 
-			/* insert parent three */
+			/* update parent three */
 			foreach ($parentThree as $key => $value) {
 				$limit = $key;
 				$color3 = $value;
 			}
 			$sql = "UPDATE Col SET color = '{$color3}', cardLimit = '{$limit}' WHERE column_id = '{$pID3}' LIMIT 1;";
-			#$db -> query($sql);
-			$colOrder += 1;		
+			$db -> query($sql);
 
 
-		/* inserting subcolumns */
+		/* updating subcolumns */
 			/* has parent one */
 			foreach ($subC1 as $key => $value) {
-				$name = $key;
-				$limit = $value;
-				$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color, colOrder) VALUES ('{$boardID}', '{$name}', '{$limit}', '{$parentOneID}','{$color1}', '{$colOrder}');";
+				$cID   = $key;
+				$limit = $value["limit"];
+				$name  = $value["name"];
+				$sql   = "UPDATE Col SET name='{$name}', cardLimit='{$limit}', color='{$color1}' WHERE column_id = '{$cID}' LIMIT 1;";
 				$db -> query($sql);
-				$colOrder += 1;
 			}
 			
 			/* has parent two */
 			foreach ($subC2 as $key => $value) {
-				$name = $key;
-				$limit = $value;
-				$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color, colOrder) VALUES ('{$boardID}', '{$name}', '{$limit}', '{$parentTwoID}','{$color2}', '{$colOrder}');";
+				$cID   = $key;
+				$limit = $value["limit"];
+				$name  = $value["name"];
+				$sql   = "UPDATE Col SET name='{$name}', cardLimit='{$limit}', color='{$color2}' WHERE column_id = '{$cID}' LIMIT 1;";
 				$db -> query($sql);
-				$colOrder += 1;
 			}
 
 			/* has parent three */
 			foreach ($subC3 as $key => $value) {
-				$name = $key;
-				$limit = $value;
-				$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color, colOrder) VALUES ('{$boardID}', '{$name}', '{$limit}', '{$parentThreeID}','{$color3}', '{$colOrder}');";
+				$cID   = $key;
+				$limit = $value["limit"];
+				$name  = $value["name"];
+				$sql   = "UPDATE Col SET name='{$name}', cardLimit='{$limit}', color='{$color3}' WHERE column_id = '{$cID}' LIMIT 1;";
 				$db -> query($sql);
-				$colOrder += 1;
 			}
 			
 	}	

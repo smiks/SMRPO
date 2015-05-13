@@ -29,10 +29,11 @@ class Edittable extends Controller{
 	private function get(&$board, &$group, &$project)
 	{
 
-		$projectID = (int)(Functions::input()["GET"]["projectID"]);
-		$groupID   = $group->getGroupIDFromProjectID($projectID);
-		$boardInfo = $board->getBoardByProjectID($projectID, $groupID);
-		$boardID   = $boardInfo['board_id'];
+		$projectID   = (int)(Functions::input()["GET"]["projectID"]);
+		$screenWidth = (int)(Functions::input()["GET"]["screenwidth"]);
+		$groupID     = $group->getGroupIDFromProjectID($projectID);
+		$boardInfo   = $board->getBoardByProjectID($projectID, $groupID);
+		$boardID     = $boardInfo['board_id'];
 
 		/* ugly thing...redirect if board does not exist */
 		if($boardID == 0){
@@ -226,7 +227,8 @@ class Edittable extends Controller{
 			"colIDC3"   => $colIDC3, 
 			"pID1"		=> $pID1, 
 			"pID2"		=> $pID2, 
-			"pID3"		=> $pID3
+			"pID3"		=> $pID3,
+			"scrWidth"  => $screenWidth
 		);
 
 		if(!$isKM)
@@ -247,10 +249,11 @@ class Edittable extends Controller{
 
 	private function post(&$board, &$group, &$project)
 	{
-		$projectID = (int)(Functions::input()["GET"]["projectID"]);
-		$groupID   = $group->getGroupIDFromProjectID($projectID);
-		$boardInfo = $board->getBoardByProjectID($projectID, $groupID);
-		$boardID   = $boardInfo['board_id'];
+		$projectID   = (int)(Functions::input()["GET"]["projectID"]);
+		$screenWidth = (int)(Functions::input()["GET"]["screenwidth"])+5;
+		$groupID     = $group->getGroupIDFromProjectID($projectID);
+		$boardInfo   = $board->getBoardByProjectID($projectID, $groupID);
+		$boardID     = $boardInfo['board_id'];
 
 		/* ugly thing...redirect if board does not exist */
 		if($boardID == 0){
@@ -274,9 +277,9 @@ class Edittable extends Controller{
 		$limitCol2 = $post['limitP2'];
 		$limitCol3 = $post['limitP3'];
 
-		$colorCol1 = $post['colorCol1'];
-		$colorCol2 = $post['colorCol2'];
-		$colorCol3 = $post['colorCol3'];
+		$colorCol1 = $post['colorCols1'];
+		$colorCol2 = $post['colorCols2'];
+		$colorCol3 = $post['colorCols3'];
 
 		$namePC1   = "BackLog";
 		$namePC2   = "Development";
@@ -292,7 +295,7 @@ class Edittable extends Controller{
 			$name   = $post[$cName];
 			$limit  = $post[$cLimit];
 			$cID 	= $post[$cID];
-			$subC1[$name] = $limit;
+			$subC1[$cID]  = ["name" => $name, "limit" => $limit];
 		}
 		
 		/* info about second subcolumns */
@@ -303,7 +306,8 @@ class Edittable extends Controller{
 			$cID    = $cName."_id";
 			$name   = $post[$cName];
 			$limit  = $post[$cLimit];
-			$subC2[$name] = $limit;
+			$cID 	= $post[$cID];
+			$subC2[$cID]  = ["name" => $name, "limit" => $limit];
 		}
 
 		/* info about third subcolumns */
@@ -314,7 +318,8 @@ class Edittable extends Controller{
 			$cID    = $cName."_id";
 			$name   = $post[$cName];
 			$limit  = $post[$cLimit];
-			$subC3[$name] = $limit;
+			$cID 	= $post[$cID];
+			$subC3[$cID]  = ["name" => $name, "limit" => $limit];
 		}
 
 		$parentOne   = array($limitCol1 => $colorCol1);
@@ -322,11 +327,7 @@ class Edittable extends Controller{
 		$parentThree = array($limitCol3 => $colorCol3);
 		$parentIDs   = array(1 => $post['pID1'], 2 => $post['pID2'], 3 => $post['pID3']);
 
-		dbg($post);
-
-		$board -> updateBoard($boardName, $groupID, $projectID, $parentOne, $parentTwo, $parentThree, $subC1, $subC2, $subC3, $parentIDs);
-
-
+		#dbg($post);
 
 		if(!$isKM)
 		{
@@ -337,7 +338,10 @@ class Edittable extends Controller{
 		}
 		else
 		{
-
+			$board -> updateBoard($boardName, $groupID, $projectID, $parentOne, $parentTwo, $parentThree, $subC1, $subC2, $subC3, $parentIDs, $boardID);
+			$url = "?page=showtable&projectID={$projectID}&width={$screenWidth}";
+			echo"<br>Redirecting to: {$url}<br>";
+			Functions::redirect($url);
 		}
 
 	}
