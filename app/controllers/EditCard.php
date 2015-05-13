@@ -28,6 +28,8 @@ class EditCard extends Controller{
 	public function get()
 	{
 		$cardID = Functions::input("GET")["cardID"];
+		$projectID = (int)(Functions::input()["GET"]["projectID"]);
+		$screenWidth= (int)(Functions::input()["GET"]["width"]);
 		$userId = $_SESSION['userid'];
 		
 		$user = new user();
@@ -70,7 +72,7 @@ class EditCard extends Controller{
 
 		$developers = $project -> getDevelopers($projectID);
 
-		$data = array("developers" => $developers, "cardID" => $cardID, "card" => $card, "canChange" => $canChange);
+		$data = array("developers" => $developers, "cardID" => $cardID, "card" => $card, "canChange" => $canChange, "projectID" => $projectID, "screenWidth" => $screenWidth);
 		$this -> show("editCard.view.php", $data);
 	}
 	
@@ -92,9 +94,17 @@ class EditCard extends Controller{
 		$cardId = $input["cardID"];
 		$cardTitle = $input["cardtitle"];
 		$cardDesc = $input["carddescription"];
-		$developers = $input["developers"];
+		$developer = $input["developers"];
 		$cardSize = $input["cardsize"];
 		$cardDeadLine = $input["carddeadline"];
+		$width = $input["screenWidth"] + 5;
+		$projectID = $input["projectID"];
+		
+		$card = new card();
+		$card -> updateCard($cardId, $cardTitle, $cardDesc, $developer, $cardSize, $cardDeadLine);
+		
+		$link = "?page=showtable&projectID={$projectID}&width={$width}";
+		Functions::redirect($link);
 		
 	}
 

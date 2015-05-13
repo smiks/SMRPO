@@ -7,6 +7,7 @@ require_once 'app/models/board.php';
 require_once 'app/models/card.php';
 require_once 'app/models/project.php';
 require_once 'core/Functions.php';
+require_once 'core/Global.php';
 
 Functions::forceLogin();
 
@@ -31,11 +32,12 @@ class Showtable extends Controller{
 	private function get($board, $group, $project){
 		
 		$user = new user();
-		$userId = $_SESSION['userid'];
+		$userId = (int)($_SESSION['userid']);
 		$isAdmin = $user -> isAdmin($userId);		
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
+		$screenWidth= (int)(Functions::input()["GET"]["width"]);
 		$isKM    = $project -> isKanbanMaster($projectID, $userId);
-		$isPO = $project -> isProductOwner($projectID, $userid);
+		$isPO = $project -> isProductOwner($projectID, $userId);
 		$boardd = $board -> getBoardByProjectID($projectID);
 		$groupId = $boardd['group_id'];
 		
@@ -72,7 +74,7 @@ class Showtable extends Controller{
 				$data[$projectId] = array("cards" => $cards);
 			}
 			
-			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM, "isPO" => $isPO);
+			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM, "isPO" => $isPO, "screenWidth" => $screenWidth);
 			$this->show("showtable.view.php", $dataToShow);
 		}
 	}

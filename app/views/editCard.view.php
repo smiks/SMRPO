@@ -52,6 +52,8 @@
 		<label class="cool_font"> Card deadline </label><br>
 		<input type = "date" value="<?php echo $deadline; ?>" id = "carddeadline" name="carddeadline" placeholder = "Card deadline" <?php if (!$canChange)
 																			echo "readonly ";?>/><br>
+		<input type="hidden" value="<?php echo $projectID; ?>" name="projectID" id="projectID">
+		<input type="hidden" value="<?php echo $screenWidth; ?>" name="screenWidth" id="screenWidth">
 			
 		<input type="submit" value="Edit"/><br>
 
