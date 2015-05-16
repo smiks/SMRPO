@@ -98,9 +98,11 @@ class Showtable extends Controller{
 			$name = $columns[$colId]['name'];
 			$limit= $columns[$colId]['cardLimit'];
 			$color = $columns[$colId]['color'];
-			$cells[$colId] = array("x" => $newX, "y" => $y + 42, "length" => $childLength, "name" => $name, "limit" => $limit, "color" => $color);
+			$parent_id = $columns[$colId]['parent_id']; 
+			$column_id = $columns[$colId]['column_id'];
+			$cells[$colId] = array("x" => $newX, "y" => $y + 42, "length" => $childLength, "name" => $name, "limit" => $limit, "color" => $color, "parent_id" => $parent_id, "column_id" => $column_id);
 			$i = $i + 1;
-			$cells = $this -> getCells($newX, $y + 42, $childLength, $colId, $boardId, $cells);
+			$cells = $this -> getCells($newX, $y + 42, $childLength, $colId, $boardId, $cells, $parent_id, $column_id);
 		}
 		return $cells;
 	}
