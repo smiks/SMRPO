@@ -1,119 +1,203 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
+<!-- Dont copy next 3 lines to header!! -->
+<script type="text/javascript" src="../../static/js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="../../static/js/dynamic_columns.js"></script>
+<link type="text/css" rel="stylesheet" href="../../static/css/dynamic_columns.css" />
 
+<br><br>
 
-<div class="center_block_header" style="width:97%;">
-	Table: {{boardName}} 
-	<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a><br><br>
-	<? if($isKM || $isPO){ ?>
-		<a href='?page=createcard&projectID={{projectID}}' style="text-decoration:none; font-size:20px;">Create new card</a>
-	<? }
-
-	if($isEmpty && $isKM){
-	?>
-		&nbsp; &nbsp; <a href="?page=edittable&projectID={{projectID}}&screenwidth={{screenWidth}}" style="text-decoration:none; font-size:20px;">Edit board</a>
-	<?
-	}
-	?>		
-</div>
-
-
-
-
+<?php
 	
+	foreach ($data as $projectId => $value){
+		$swimline= $data[$projectId];
+		//var_dump($swimline);
+		$swimline_name = reset($swimline['cards'])['project_id'];	
+		$swimline_name = str_replace(' ', '', $swimline_name); // this is actually projectID
+		
+		// draw swimlines
+		echo "
+		<div id='swl_{$swimline_name}_1' style='height:135%;width:150%;'>
+		<br><div class='center_block_header2' style='margin:2px 0 1px 0;line-height:40px;'>
+			Project: {$boardName} (ID#{$swimline_name}) 
+			<a href='#info'><img src='../../static/images/info-icon.svg' style='width:20px;height:20px'/></a>
+			<a href='?page=copyTable&blabla=333'style='text-decoration:none;'>
+				<img src='../../static/images/copy_icon.png' style='width:20px;height:20px;text-decoration:none;' />
+			</a>
+		";
+			if($isKM || $isPO){ ?>
+				<br>
+				<a href='?page=createcard&projectID={{swimline_name}}' style='text-decoration:none;'>
+					<font size='5'>Create new card</font>
+				</a>
+			<?php	
+			}
+		
+			if($isEmpty && $isKM){ ?>
+			
+			&nbsp; &nbsp; 
+				<a href="?page=edittable&projectID={{swimline_name}}&screenwidth={{screenWidth}}" style="text-decoration:none; font-size:20px;">
+					Edit board
+				</a>
+			<? }
 	
-<div id="toCenter" style="margin-top:2%;">
-	<?php
-		$xy = array();
-		$maxY = 0;
-		$colCoor = array();		
-		$boardLength = 0;
-		$numSwimLines = count($data);
-		$maxLimit = 0;
-	?>
-	<br><br>
-	<div style="width: 89%" >
-		<?php
-			$i = 0;
-			foreach ($cells as $cellId => $value)
-			{
-				$cell = $cells[$cellId];
-				$x = $cell['x'];
-				$y = $cell['y'];
-				$length = $cell['length'];
-				$name = $cell['name'];
-				$limit = $cell['limit'];
-				$color = $cell['color'];
-				$xy[$cellId] = array("x" => $x, "y" => $y);
-				
-				$colCoor[$cellId] = array ("x" => $x, "y" => $y+42, "length" => $length);
-				
-				if(count($cells) == $i+1)
-					$xy[$cellId+1] = array("x" => $x+$length, "y" => $y);
-				
-				$i = $i+1;
-				
-				if($y == 162)
-					$boardLength = $boardLength + $length;
-				
-				if ($y > $maxY)
-					$maxY = $y;
-				if ($maxLimit < $limit)
-					$maxLimit = $limit;
+		echo "	
+		</div>
+		";
 
-				$echoLimit = "";
-				if ($limit > 0)
-					$echoLimit = "Limit: ${limit}";
+	foreach ($cells as $cellId => $value)
+	{
+		
+		$cell = $cells[$cellId];
+		$name = $cell['name'];
+		$limit = $cell['limit'];
+		$color = $cell['color'];
+		$echoLimit = "";
+		$parent_id = $cell['parent_id'];
+		$column_id  = $cell['column_id'];
 				
-				echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>{$name}</b><br>${echoLimit}</br></div>";
-			}
-			$border = ($numSwimLines-1) * (110*$maxLimit);
-			foreach ($xy as $id => $val)
-			{
-				$x = $xy[$id]['x'];
-				$y = $xy[$id]['y'];
-				echo "<div style='position:absolute;width:5px;left:{$x}px;top:{$y}px;bottom:-{$border}px;background-color:white;'></div>";
-			}
+		// MAIN COLUMNS .... id_1 == extended column ... id_2 == shrinked column
+		$number_of_sub_columns = 0; //var is needed for dynamic extension of column
+		$name_no_whitespace = str_replace(' ', '', $name);
+		
+		if(is_null($parent_id)){
+		
+			echo "	
+			<div id='div_{$name_no_whitespace}_{$swimline_name}_1' class='mainPanelBig outline'>
+				<center><b><p> {$name} </p></b></center>
+				<div class='fake_underline' style='background-color:{$color};'></div>
+				<div >
+			";
+			// <div style='display:flex;justify-content:center;'> to je bil zgornji prazni div, ampak ne delajo pozicije kartic in 
 			
-			$maxY = $maxY + 42;
-			echo "<div style='position:absolute;height:5px;left:0px;top:{$maxY}px;width:{$boardLength}px;background-color:white;'></div>";
-			
-			$i=0;
-			foreach ($data as $projectId => $value)
-			{
-				$cards = $data[$projectId ]['cards'];
-				$maxy = $maxY + $i*(110 * $maxLimit);
+			//ADDING CARDS TO COLUMNS WITHOUT SUBCOLUMNS:
+			$cards = $data[$projectId ]['cards'];
+			foreach($cards as $cellId => $value){
+				$card = $cards[$cellId];
+				$card_column_id = $card['column_id'] ;
 				
-				foreach ($cards as $cardId => $val)
-				{
-					$card = $cards[$cardId];
-					$color = $card['color'];
-					$colId = $card['column_id'];
-					$name = $card['name'];
-					$size = $card['size'];
-					$description = $card['description'];
-					
-					$coordinates = $colCoor[$colId];
-					$x = $coordinates['x'];
-					$y = $coordinates['y'];
-					
-					if ($maxy >= $y)
-						$y = $maxy + 10;
-					
-					$length = $coordinates['length'];
-					echo "<div style='position:absolute;top:{$y}px;left:{$x}px;width:{$length}px;height:100px;border-radius:0px;border:2px solid white; border-top-color: {$color};'><b>Task {$cardId}: {$name}</b><a href='?page=editcard&cardID={$cardId}&projectID={$projectID}&width={$screenWidth}'><img alt='editCard' src='../../static/images/settings_2.png' style='height:15px; width:15px; float:right; padding-top:5px; padding-right:10px;'/></a><br>Size: {$size}</br><br>Description: {$description}</br></div>";
-					$colCoor[$colId] = array("x" => $x, "y" => $y+110, "length" => $length);
+				if ($card_column_id == $column_id){
+					$card_name = $card['name'];
+					$card_size = $card['size'];
+					$card_description = $card['description'];
+					$card_id = $card['card_id'];
+					$card_color = $card['color'];
+
+					echo "
+					<div id='card_div' class='card_div' style='border-color:{$card_color};'>
+						<b>{$card_name}</b>
+						<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}'>
+							<img alt='editCard' src='../../static/images/settings_icon.png' 
+							style='height:22px; width:25px; float:right; padding-top:-8px; padding-right:2px;'/>
+						</a>
+						Size: {$card_size}<br><br>
+						Description: {$card_description}
+					</div>";
 				}
-				$i = $i + 1;
-				$maxy = $maxy + (110 * $maxLimit);
-				if ($i < $numSwimLines)
-					echo "<div style='position:absolute;height:5px;left:0px;top:{$maxy}px;width:{$boardLength}px;background-color:white;'></div>";	
 			}
-		?>
-	</div>
-</div>
+				// ADDING SUBCOLUMNS TO MAIN COLUMNS
+				foreach ($cells as $cellId => $value){
+					$sub_cell = $cells[$cellId];
+					$sub_name = $sub_cell['name'];
+					$sub_parent_id = $sub_cell['parent_id'];
+					$sub_limit = $sub_cell['limit'];
+					$sub_color = $sub_cell['color'];
+					$sub_column_id = $sub_cell['column_id'];
+					
+						
+					if (!is_null($sub_parent_id) && ($sub_parent_id == $column_id) ){
+						$number_of_sub_columns = $number_of_sub_columns + 1;
+						
+						$sub_name_no_whitespace = str_replace(' ', '', $sub_name);
+						
+						echo "
+						<center>
+						<div id='sub_{$sub_name_no_whitespace}_{$swimline_name}_1' class='child_column_big outline' 
+						style='display:inline-block;'>
+							<center><b><p> {$sub_name} </p></b></center>
+							<div class='fake_underline_thin' style='background-color:{$color};'></div>
+						";	
+							
+							//ADDING CARDS TO SUBCOLUMNS:
+							$cards = $data[$projectId ]['cards'];
+							foreach($cards as $cellId => $value){
+								$card = $cards[$cellId];
+								$card_column_id = $card['column_id'] ;
 
-        <!-- Modal -->
+								if ($card_column_id == $sub_column_id){
+									$card_name = $card['name'];
+									$card_size = $card['size'];
+									$card_description = $card['description'];
+									$card_id = $card['card_id'];
+									$card_color = $card['color'];
+				
+									
+									echo "<div id='card_div' class='card_div' style='border-color:{$card_color};'>
+									
+									<b>{$card_name}</b>
+									
+									<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}'>
+										<img alt='editCard' src='../../static/images/settings_icon.png' 
+										style='height:22px; width:25px; float:right; padding-top:-8px; padding-right:2px;'/>
+									</a>
+									
+									
+									Size: {$card_size}<br><br>
+									Description: {$card_description}
+									
+									</div>";
+								}
+							}		
+							
+						echo "		
+						</div>
+							
+						<div id='sub_{$sub_name_no_whitespace}_{$swimline_name}_2' class='child_column_small outline' 	
+						style='display:none;background-color:{$color};'>
+							<center><b><p class='vertical_text'> {$sub_name} </p></b></center>
+						</div> 
+						</center>
+						"; //end echo
+						
+					}
+				}
+				
+				echo " <script> extend_function( '{$name_no_whitespace}_{$swimline_name}', '{$number_of_sub_columns}' ); </script>";
+	
+			echo "	
+			</div>	
+			</div>
+			 
+			<div id='div_{$name_no_whitespace}_{$swimline_name}_2' class='mainPanelSmall outline hidden' style='background-color:{$color};'>
+				<center><b><p class='vertical_text'> {$name} </p></b></center>
+			</div>	
+			";
+			
+			// apply function sum_width(divName)
+			echo " <script> sum_width('{$name_no_whitespace}_{$swimline_name}'); </script>";
+			
+		} //end inner for_each
+	} // end outter for_each
+	
+echo "</div>"; //end swimline div
+echo "
+	
+	<div id='swl_{$swimline_name}_2' class='center_block_header hidden' style:'margin:10px 0 10px 0 ;'>
+		Project: {$boardName} (ID#{$swimline_name})
+		<a href='#info'><img src='../../static/images/info-icon.svg' style='width:20px;height:20px'/></a>
+		<a href='?page=copyTable&blabla=333'>
+			<img src='../../static/images/copy_icon.png' style='width:20px;height:20px;text-decoration:none;' />
+		</a>
+	</div>
+	<br>
+";
+echo " <script> apply_width_to_swimline('swl_{$swimline_name}_1'); </script>";
+echo " <script> reset_div_sums(); </script>";
+} // end: swimline for-each
+
+?>
+
+       <!-- Modal -->
 		<div style="margin-left:10%;">
 		<div class="modal" id="info" aria-hidden="true">
 			<div class="modal-dialog">
@@ -123,14 +207,11 @@
 				</div>
 				<div class="modal-body" align="justify">
 					<p>
-						
 						User may view the board. Administrator can view all boards. 
 						Other users (Product Owner, KanbanMaster developer) may view only those 
 						boards that relate to their development team. Only active users may view 
 						the boards. <br><br>
 						To create new card for current board click on 'Create new card' link. 
-
-						
 					</p>
 				</div>
 				<div class="modal-footer">
