@@ -17,7 +17,23 @@ class project extends Model{
 
 		return true;
 	}
-
+	
+	// Function needed in Controller/CopyTable.php (no need for adding group here)
+	public function addNewProject($id_project, $number, $active, $date_start, $date_end, $name, $client){
+		global $db;
+		$db -> query("INSERT INTO Project (id_project, number, active, date_start, date_end, name, client) 
+			VALUES ('{$id_project}', '{$number}', '{$active}', '{$date_start}', '{$date_end}', '{$name}', '{$client}');");
+		return true;
+	}
+	
+	// Function needed in Controller/CopyTable.php 
+	public function addNewGroup_Project($gp_id, $project_id, $group_id){
+		global $db;
+		$db -> query("INSERT INTO Group_Project (gp_id, project_id, group_id) 
+			VALUES ('{$gp_id}', '{$project_id}', '{$group_id}');");
+		return true;
+	}
+	
 	public function activeUserOnProject($userId, $projectId)
 	{
 		global $db;
@@ -28,7 +44,7 @@ class project extends Model{
 		return $num;
 	}
 
-	//fnkcija vrne vse člane skupine
+	//funkcija vrne vse člane skupine
 	public function suitableGroup($groupId)
 	{
 		global $db;
@@ -82,6 +98,11 @@ class project extends Model{
 	public function getAllProjects(){
 		return $this->sql("SELECT * FROM Project;", $return = "array", $key ="id_project");
 	}
+	
+	public function getLastProjectID(){
+		$sql = "SELECT MAX(id_project) FROM Project;";
+		return ($this->sql($sql, $return="single"));
+	}
 
 	public function getProject($id){
 		global $db;
@@ -109,6 +130,9 @@ class project extends Model{
 				WHERE ug.permission LIKE'001' AND gp.project_id = '{$projectID}' AND ug.active_end IS NULL;";
 		return $this->sql($sql, $return = "array", $key ="id_user");
 
+	}
+	public function getGroupProjectByProjectID($projectID){
+		return $this->sql("SELECT * FROM Group_Project WHERE project_id='{$projectID}';", $return = "array", $key ="project_id");
 	}
 
 	/* checks if user with given user ID is kanban master in project with giver project ID */
