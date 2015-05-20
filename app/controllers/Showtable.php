@@ -74,7 +74,7 @@ class Showtable extends Controller{
 				$data[$projectId] = array("cards" => $cards);
 			}
 			
-			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM, "isPO" => $isPO, "screenWidth" => $screenWidth);
+			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM, "isPO" => $isPO, "screenWidth" => $screenWidth, "boardId" => $boardId);
 			$this->show("showtable.view.php", $dataToShow);
 		}
 	}

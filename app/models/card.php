@@ -20,6 +20,11 @@ class card extends Model{
 		return $this -> sql("SELECT * FROM Card WHERE board_id='{$boardId}' AND project_id='{$projectId}';", $return="array", $key="card_id");
 	}
 	
+	public function getCardsFromBoard($boardId)
+	{
+		return $this -> sql("SELECT * FROM Card WHERE board_id='{$boardId}';", $return="array", $key="card_id");
+	}
+	
 	public function notExistsSilverBulletInColumn($columnID, $boardID)
 	{
 
@@ -33,6 +38,16 @@ class card extends Model{
 		$q = $db -> query("SELECT * FROM Card WHERE card_id = '{$id}';");
 		$data = $db -> fetch_row($q);
 		return($data);
+	}
+	
+	public function updateCard($cardId, $cardTitle, $cardDesc, $developer, $cardSize, $cardDeadLine)
+	{
+		global $db;
+		
+		$db -> query("UPDATE Card SET name='{$cardTitle}', description='{$cardDesc}', user_id='{$developer}', size='{$cardSize}', deadline='{$cardDeadLine}' WHERE card_id='{$cardId}';");
+
+		return true;
+		
 	}
 	
 }

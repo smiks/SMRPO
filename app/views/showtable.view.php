@@ -86,8 +86,8 @@
 			
 			if($isKM)
 			{ ?>
-				&nbsp; &nbsp; 
-				<a href="?page=cumulativeFlow" style="text-decoration:none; 
+				&nbsp; &nbsp; 				
+				<a href="?page=cumulativeFlow&boardId={{boardId}}" style="text-decoration:none; 
 				font-size:20px;">
 					Cumulative Flow
 				</a>
