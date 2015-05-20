@@ -6,43 +6,94 @@
 <link type="text/css" rel="stylesheet" href="../../static/css/dynamic_columns.css" />
 
 <br><br>
-
+<center>
 <?php
 	
 	foreach ($data as $projectId => $value){
+	
+		
 		$swimline= $data[$projectId];
 		//var_dump($swimline);
 		$swimline_name = reset($swimline['cards'])['project_id'];	
 		$swimline_name = str_replace(' ', '', $swimline_name); // this is actually projectID
-		
-		// draw swimlines
 		echo "
-		<div id='swl_{$swimline_name}_1' style='height:135%;width:150%;'>
-		<br><div class='center_block_header2' style='margin:2px 0 1px 0;line-height:40px;'>
-			Project: {$boardName} (ID#{$swimline_name}) 
-			<a href='#info'><img src='../../static/images/info-icon.svg' style='width:20px;height:20px'/></a>
-			<a href='?page=copyTable&blabla=333'style='text-decoration:none;'>
-				<img src='../../static/images/copy_icon.png' style='width:20px;height:20px;text-decoration:none;' />
-			</a>
+			<div id='swl_{$swimline_name}_1' style='height:135%;width:150%;min-width:15%;'>
+			<br><div class='center_block_header2' style='margin:2px 0 1px 0;line-height:40px;'>		
 		";
-			if($isKM || $isPO){ ?>
-				<br>
-				<a href='?page=createcard&projectID={{swimline_name}}' style='text-decoration:none;'>
-					<font size='5'>Create new card</font>
-				</a>
-			<?php	
+			if($swimline_name != ""){
+				echo "Project: {$boardName} (ID#{$swimline_name})";
+			}
+			else{
+				echo "Project: {$boardName} (ID#{$projectID})";
+			}
+			echo "<a href='#info'><img src='../../static/images/info-icon.svg' style='width:20px;height:20px'/></a>";
+		
+			if($isKM){ 
+				if($swimline_name != ""){
+					echo "
+					<a href='?page=copyTable&projectID={$swimline_name}'style='text-decoration:none;'>
+						<img src='../../static/images/copy_icon.png' style='width:20px;height:20px;text-decoration:none;' />
+					</a>
+					";
+				}
+				else{
+					echo "
+					<a href='?page=copyTable&projectID={$projectID}'style='text-decoration:none;'>
+						<img src='../../static/images/copy_icon.png' style='width:20px;height:20px;text-decoration:none;' />
+					</a>
+					";
+				}
+				
+				 
+			}
+			if($isKM || $isPO){ 
+				if($swimline_name != ""){ ?>
+					<br>
+					<a href='?page=createcard&projectID={{swimline_name}}' style='text-decoration:none;'>
+						<font size='5'>Create new card</font>
+					</a>
+				<?php
+				}
+				else{ ?>
+					<br>
+					<a href='?page=createcard&projectID={{projectID}}' style='text-decoration:none;'>
+						<font size='5'>Create new card</font>
+					</a>
+				<?php
+				}	
+			
 			}
 		
-			if($isEmpty && $isKM){ ?>
+			if($isEmpty && $isKM){ 
+				if($swimline_name != ""){?>
+					&nbsp; &nbsp; 
+					<a href="?page=edittable&projectID={{swimline_name}}&screenwidth={{screenWidth}}" style="text-decoration:none; 
+					font-size:20px;">
+						Edit board
+					</a>
+				<?php
+				}
+				else{ ?>
+					&nbsp; &nbsp; 
+					<a href="?page=edittable&projectID={{projectID}}&screenwidth={{screenWidth}}" style="text-decoration:none; 
+					font-size:20px;">
+						Edit board
+					</a>
+				<?php 
+				}
 			
-			&nbsp; &nbsp; 
-				<a href="?page=edittable&projectID={{swimline_name}}&screenwidth={{screenWidth}}" style="text-decoration:none; font-size:20px;">
-					Edit board
+			}
+			
+			if($isKM)
+			{ ?>
+				&nbsp; &nbsp; 
+				<a href="?page=cumulativeFlow" style="text-decoration:none; 
+				font-size:20px;">
+					Cumulative Flow
 				</a>
-			<? }
-	
+			<?php }
 		echo "	
-		</div>
+			</div>
 		";
 
 	foreach ($cells as $cellId => $value)
@@ -64,7 +115,7 @@
 		
 			echo "	
 			<div id='div_{$name_no_whitespace}_{$swimline_name}_1' class='mainPanelBig outline'>
-				<center><b><p> {$name} </p></b></center>
+				<center><p><b> {$name}</b><br> Limit:{$limit} </p></center>
 				<div class='fake_underline' style='background-color:{$color};'></div>
 				<div >
 			";
@@ -82,14 +133,16 @@
 					$card_description = $card['description'];
 					$card_id = $card['card_id'];
 					$card_color = $card['color'];
+					$card_limit = $card['limit'];
+					
 
 					echo "
 					<div id='card_div' class='card_div' style='border-color:{$card_color};'>
 						<b>{$card_name}</b>
-						<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}'>
+						<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
 							<img alt='editCard' src='../../static/images/settings_icon.png' 
-							style='height:22px; width:25px; float:right; padding-top:-8px; padding-right:2px;'/>
-						</a>
+							style='height:22px; width:25px;'/>
+						</a><br>
 						Size: {$card_size}<br><br>
 						Description: {$card_description}
 					</div>";
@@ -114,7 +167,7 @@
 						<center>
 						<div id='sub_{$sub_name_no_whitespace}_{$swimline_name}_1' class='child_column_big outline' 
 						style='display:inline-block;'>
-							<center><b><p> {$sub_name} </p></b></center>
+							<center><p><b> {$sub_name}</b><br> Limit: {$sub_limit} </p></center>
 							<div class='fake_underline_thin' style='background-color:{$color};'></div>
 						";	
 							
@@ -132,18 +185,17 @@
 									$card_color = $card['color'];
 				
 									
-									echo "<div id='card_div' class='card_div' style='border-color:{$card_color};'>
+									echo "
+									<div id='card_div' class='card_div' style='border-color:{$card_color};'>
 									
-									<b>{$card_name}</b>
-									
-									<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}'>
-										<img alt='editCard' src='../../static/images/settings_icon.png' 
-										style='height:22px; width:25px; float:right; padding-top:-8px; padding-right:2px;'/>
-									</a>
-									
-									
-									Size: {$card_size}<br><br>
-									Description: {$card_description}
+										<b>{$card_name}</b>
+										<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
+											<img alt='editCard' src='../../static/images/settings_icon.png' 
+											style='height:22px; width:25px;'/>
+										</a><br>
+
+										Size: {$card_size}<br><br>
+										Description: {$card_description}
 									
 									</div>";
 								}
@@ -180,6 +232,7 @@
 	} // end outter for_each
 	
 echo "</div>"; //end swimline div
+//echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"; 
 echo "
 	
 	<div id='swl_{$swimline_name}_2' class='center_block_header hidden' style:'margin:10px 0 10px 0 ;'>
@@ -196,7 +249,7 @@ echo " <script> reset_div_sums(); </script>";
 } // end: swimline for-each
 
 ?>
-
+</center>
        <!-- Modal -->
 		<div style="margin-left:10%;">
 		<div class="modal" id="info" aria-hidden="true">
