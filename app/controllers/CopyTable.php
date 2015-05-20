@@ -15,66 +15,103 @@ class CopyTable extends Controller{
 	public function post() {
 
 		
+		
 		$input = Functions::input("POST");
 		// store data from input
 		$projectId = $input['id'];
-		$selectedBoardName = $input['boardname'];
-		$selectedGroupID = $input['selectedGroupID'];
+		$newBoardName = $input['boardname'];
 		
+		
+		// GET BOARD
 		// get board_id of board you wish to copy
 		$board = new board();
-		$board_id = $board->getBoardIDByProjectID($projectId);
+		$board_id = $board->getBoardIDByProjectID($projectId); // XXX: TO RABM ZA COLUMNS
 		
-		// create new board_id (for inserting into DB)
-		$newBoardID = $board->getLastBoardID();
-		$newBoardID = $newBoardID + 1;
+		// get next avaliable 'DB_board/id' (primary key ... for inserting into DB)
+		$new_board_pk = $board->getLastPrimaryKey();
+		$new_board_pk = $new_board_pk + 1;
 		
-		// create new id of a board (primary key ... for inserting into DB)
-		$newIDkey = $board->getLastPrimaryKey();
-		$newIDkey = $newIDkey + 1;
+		// get next avaliable 'DB_board/board_id' (for inserting into DB)
+		$new_board_id = $board->getLastBoardID();
+		$new_board_id = $new_board_id + 1;
+
+	
+		// CREATE NEW PROJECT
+		// get next avaliable 'DB_Project/id_project' (for inserting into DB)
+		$project = new project();
+		$new_id_project = $project->getLastProjectID();
+		$new_id_project = $new_id_project + 1;
+		$new_project_number= "NA";
+		$new_project_active = 0;
+		$new_project_start_date = "0000-00-00"; // $today = date('Y-m-j'); 
+		$new_project_end_date = "0000-00-00";
+		$new_project_name = "NA";
+		$new_project_client = "NA";
 		
-		// get columns for board you wish to copy
+		
+		// CREATE NEW GROUP_PROJECT
+		//get DB/Group_Project by id_project
+		$groupProject = $project->getGroupProjectByProjectID($projectId);
+		$gp_id = $groupProject[$projectId]["gp_id"];
+		$gp_id = $gp_id + 1;
+		$group_id = $groupProject[$projectId]["group_id"]; 
+		
+		// INSERT INTO DATABASE: new row into "DB/Group_Project" and "DB/Project" and "DB/Board" and "DB/Col"
+		/*
+		$project->addNewGroup_Project(intval($gp_id), intval($new_id_project), intval($group_id));
+		$project->addNewProject($new_id_project , $new_project_number, $new_project_active , 
+			$new_project_start_date , $new_project_end_date , $new_project_name , $new_project_client );
+		$board->setNewBoard($new_board_pk, $new_board_id, $group_id, $newBoardName, $new_id_project);
+		*/
+		
+	
+		// CREATE NEW COLUMNS IN "DB/COL"
+		// get columns for board you wish to copy 
+		// FIXME: should select which projectID on board should be copied. Can't be done right now since all projects on one board have same layout
 		$col = $board->getColumnsByBoardID($board_id);
-		
+			
 		// get last column_id (for inserting into DB) 
-		$lastColID = $board->getLastColumnID();
-		
-		// write data into Board.sql
-	 	//$board->setNewBoard($newIDkey, $newBoardID, $selectedGroupID, $selectedBoardName, $projectId); //FIXME: can I add projectId for copycat? If not, change Board.sql (project_id null allowed)
-	 	$board->setNewBoard($newIDkey, $newBoardID, 0, $selectedBoardName, 0); //FIXME: can I add projectId for copycat? If not, change Board.sql (project_id null allowed)
+		$new_column_id = $board->getLastColumnID();
 
 		foreach($col as $key => $value){
 			
-			$lastColID = $lastColID + 1;
-
 			$tmpCol = $col[$key];
+			
+			//$new_column_id = $new_column_id + 1;
 			$name = $tmpCol["name"];
-			$limit = $tmpCol["limit"]; 
+			$cardLimit = $tmpCol["cardLimit"]; 
 			$parent_id = $tmpCol["parent_id"];
 			$color = $tmpCol["color"];
+			$colOrder = $tmpCol["colOrder"];
+			//$new_project_id = $tmpCol["project_id"]; // FIXME: DATABASE NEEDS TO BE CHANGE BEFORE IMPLEMENTING THIS!
+
+			//$board->setNewColumn($new_column_id, $new_board_id, $name, $cardLimit, $parent_id, $color, $colOrder);
 
 			if($parent_id == NULL){
 				// FIXME: spodnja vrstica ne deluje
 				//$board->setNewColumn($lastColID, $newBoardID, $tmpCol["name"], $tmpCol["limit"], 0, $tmpCol["color"]);
+				$board->setNewColumn($new_board_id, $name, $cardLimit, NULL, $color, $colOrder);
+				
 			}
 			else{
-				// FIXME: spodnja vrstica ne deluje
-				$board->setNewColumn($lastColID, $newBoardID, $tmpCol["name"], $tmpCol["limit"], $tmpCol["parent_id"], $tmpCol["color"]);
+				$board->setNewColumn($new_board_id, $name, $cardLimit, $parent_id, $color, $colOrder);
 			}
 		
 			
 			
 		}
 		
-		
-		$message= "Table copied successfully";
+		//exit("<br><br>CopyTable.php ... POST");
+		$message= "Table copied successfully. To change project parameters and group, go to Projects --> Edit project.";
 		$data = array("message" => $message);
-		$this->show("deleteprojectsub.view.php", $data); // TODO
+		$this->show("copyTableSub.view.php", $data); // TODO
 		
 			
 	}
 
 	public function get() {
+	
+		//exit("CopyTable.php ... GET");
 
 		$id = Functions::input("GET")["projectID"];
 		
