@@ -168,6 +168,10 @@ class board extends Model{
 		$sql = "SELECT MAX(board_id) FROM Board;";
 		return ($this->sql($sql, $return="single"));
 	}	
+	public function getLastGroupProjectID(){
+		$sql = "SELECT MAX(gp_id) FROM Group_Project;";
+		return ($this->sql($sql, $return="single"));
+	}	
 	
 	public function getLastColumnID()
 	{
@@ -200,6 +204,23 @@ class board extends Model{
 		$db -> query($sql);
 		
 	}
+	public function setNewColumnWithoutParent($column_id, $board_id, $name, $limit, $color, $colOrder){
+		global $db;
+		$sql = "INSERT INTO Col (column_id, board_id, name, cardLimit, color, colOrder) 
+		VALUES ('{$column_id}', '{$board_id}', '{$name}', '{$limit}', '{$color}', '{$colOrder}');";
+		$db -> query($sql);	
+	}
+	public function setNewColumnWithParent($column_id, $board_id, $name, $limit, $parent_id, $color, $colOrder){
+		global $db;
+		$sql = "INSERT INTO Col (column_id, board_id, name, cardLimit, parent_id, color, colOrder) 
+		VALUES ('{$column_id}', '{$board_id}', '{$name}', '{$limit}', '{$parent_id}', '{$color}', '{$colOrder}');";
+		$db -> query($sql);	
+	}
+	public function getParentIDByColumnID($column_id){
+		$sql = "SELECT parent_id FROM Col WHERE column_id='{$column_id}';";
+		return ($this->sql($sql, $return="single"));
+	}
+
 	
 
 	/* shifts column order in board */

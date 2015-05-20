@@ -52,17 +52,18 @@ class CopyTable extends Controller{
 		// CREATE NEW GROUP_PROJECT
 		//get DB/Group_Project by id_project
 		$groupProject = $project->getGroupProjectByProjectID($projectId);
-		$gp_id = $groupProject[$projectId]["gp_id"];
+		//$gp_id = $groupProject[$projectId]["gp_id"];
+		$gp_id = $board->getLastGroupProjectID();
 		$gp_id = $gp_id + 1;
 		$group_id = $groupProject[$projectId]["group_id"]; 
 		
 		// INSERT INTO DATABASE: new row into "DB/Group_Project" and "DB/Project" and "DB/Board" and "DB/Col"
-		/*
+		
 		$project->addNewGroup_Project(intval($gp_id), intval($new_id_project), intval($group_id));
 		$project->addNewProject($new_id_project , $new_project_number, $new_project_active , 
 			$new_project_start_date , $new_project_end_date , $new_project_name , $new_project_client );
 		$board->setNewBoard($new_board_pk, $new_board_id, $group_id, $newBoardName, $new_id_project);
-		*/
+		
 		
 	
 		// CREATE NEW COLUMNS IN "DB/COL"
@@ -72,34 +73,42 @@ class CopyTable extends Controller{
 			
 		// get last column_id (for inserting into DB) 
 		$new_column_id = $board->getLastColumnID();
+		
+		// array for converting old column IDs to new
+		$convert_old_new_id = [];
+
 
 		foreach($col as $key => $value){
 			
 			$tmpCol = $col[$key];
 			
-			//$new_column_id = $new_column_id + 1;
+			//var_dump($tmpCol);
+			//echo "<br><br>";
+			
+			$new_column_id = $new_column_id + 1;
+			$old_column_id = $tmpCol["column_id"];
 			$name = $tmpCol["name"];
 			$cardLimit = $tmpCol["cardLimit"]; 
 			$parent_id = $tmpCol["parent_id"];
 			$color = $tmpCol["color"];
 			$colOrder = $tmpCol["colOrder"];
 			//$new_project_id = $tmpCol["project_id"]; // FIXME: DATABASE NEEDS TO BE CHANGE BEFORE IMPLEMENTING THIS!
-
-			//$board->setNewColumn($new_column_id, $new_board_id, $name, $cardLimit, $parent_id, $color, $colOrder);
+			//var_dump($parent_id);
 
 			if($parent_id == NULL){
-				// FIXME: spodnja vrstica ne deluje
-				//$board->setNewColumn($lastColID, $newBoardID, $tmpCol["name"], $tmpCol["limit"], 0, $tmpCol["color"]);
-				$board->setNewColumn($new_board_id, $name, $cardLimit, NULL, $color, $colOrder);
+				$convert_old_new_id[$old_column_id] = $new_column_id;
+				$board->setNewColumnWithoutParent($new_column_id, $new_board_id, $name, $cardLimit, $color, $colOrder);
 				
 			}
 			else{
-				$board->setNewColumn($new_board_id, $name, $cardLimit, $parent_id, $color, $colOrder);
+				$old_parent_id = $board->getParentIDByColumnID($old_column_id);
+				$parent_id = $convert_old_new_id[$old_parent_id];			
+				$board->setNewColumnWithParent($new_column_id, $new_board_id, $name, $cardLimit, $parent_id, $color, $colOrder);
 			}
-		
-			
-			
+
 		}
+		
+		//var_dump($convert_old_new_id);
 		
 		//exit("<br><br>CopyTable.php ... POST");
 		$message= "Table copied successfully. To change project parameters and group, go to Projects --> Edit project.";
