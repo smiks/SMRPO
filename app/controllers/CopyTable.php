@@ -20,7 +20,7 @@ class CopyTable extends Controller{
 		// store data from input
 		$projectId = $input['id'];
 		$newBoardName = $input['boardname'];
-		
+		$selectedGroup = $input['selectedGroupID'];
 		
 		// GET BOARD
 		// get board_id of board you wish to copy
@@ -55,7 +55,8 @@ class CopyTable extends Controller{
 		//$gp_id = $groupProject[$projectId]["gp_id"];
 		$gp_id = $board->getLastGroupProjectID();
 		$gp_id = $gp_id + 1;
-		$group_id = $groupProject[$projectId]["group_id"]; 
+		//$group_id = $groupProject[$projectId]["group_id"]; 
+		$group_id = $selectedGroup;
 		
 		// INSERT INTO DATABASE: new row into "DB/Group_Project" and "DB/Project" and "DB/Board" and "DB/Col"
 		
@@ -82,9 +83,6 @@ class CopyTable extends Controller{
 			
 			$tmpCol = $col[$key];
 			
-			//var_dump($tmpCol);
-			//echo "<br><br>";
-			
 			$new_column_id = $new_column_id + 1;
 			$old_column_id = $tmpCol["column_id"];
 			$name = $tmpCol["name"];
@@ -93,7 +91,6 @@ class CopyTable extends Controller{
 			$color = $tmpCol["color"];
 			$colOrder = $tmpCol["colOrder"];
 			//$new_project_id = $tmpCol["project_id"]; // FIXME: DATABASE NEEDS TO BE CHANGE BEFORE IMPLEMENTING THIS!
-			//var_dump($parent_id);
 
 			if($parent_id == NULL){
 				$convert_old_new_id[$old_column_id] = $new_column_id;
@@ -108,9 +105,6 @@ class CopyTable extends Controller{
 
 		}
 		
-		//var_dump($convert_old_new_id);
-		
-		//exit("<br><br>CopyTable.php ... POST");
 		$message= "Table copied successfully. To change project parameters and group, go to Projects --> Edit project.";
 		$data = array("message" => $message);
 		$this->show("copyTableSub.view.php", $data); // TODO
@@ -119,8 +113,7 @@ class CopyTable extends Controller{
 	}
 
 	public function get() {
-	
-		//exit("CopyTable.php ... GET");
+		//exit("<br><br>CopyTable.php ... GET");
 
 		$id = Functions::input("GET")["projectID"];
 		
@@ -130,7 +123,7 @@ class CopyTable extends Controller{
 		
 		$user_id = $_SESSION['userid'];
 		$group= new group();
-		$allGroups = $group->getArrayOfAllGroups();
+		$allGroups = $group->getAllGroups($user_id );
 
 		$data = array("pname" => $pname, "id" => $id, "allGroups" => $allGroups);
 		$this->show("copyTable.view.php", $data);
