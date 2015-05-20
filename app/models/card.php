@@ -4,16 +4,26 @@ require_once 'Model.php';
 
 class card extends Model{	
 	
-	public function addCard($projectID, $boardID, $color, $name, $columnID, $description, $type, $userID, $size, $deadline)
+public function addCard($projectID, $boardID, $color, $name, $columnID, $description, $type, $userID, $size, $deadline, $WIPViolation)
 	{
 		global $db;
 
-		$db -> query("INSERT INTO Card (project_id, board_id, color, name, column_id, description, type, user_id, size, deadline) VALUES ('{$projectID}', '{$boardID}', '{$color}', '{$name}', '{$columnID}', '{$description}', '{$type}', '{$userID}', '{$size}', '{$deadline}');");
+		$cardSql = "INSERT INTO Card (project_id, board_id, color, name, column_id, description, type, user_id, size, deadline) VALUES ('{$projectID}', '{$boardID}', '{$color}', '{$name}', '{$columnID}', '{$description}', '{$type}', '{$userID}', '{$size}', '{$deadline}');";
+		$cardID = $this->insertID($cardSql);
 
 		$db -> query("UPDATE Project SET active='0' WHERE id_project='{$projectID}';");
 
+		$date = date("Y-m-d"); 
+
+		$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'create', 'Card Created', '{$userID}', CONCAT('Card ','{$name}'), '{$date}');");
+
+		if($WIPViolation)
+		{
+			$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'WIPViolation', 'WIP Violation', '{$userID}', 'WIP Violation happened.', '{$date}');");
+		}
+
 		return true;
-	}	
+	}
 	
 	public function getCards($projectId, $boardId)
 	{
