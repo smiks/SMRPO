@@ -198,6 +198,7 @@ class board extends Model{
 		global $db;
 		$sql = "INSERT INTO Col (board_id, name, cardLimit, parent_id, color, colOrder) VALUES ('{$board_id}', '{$name}', '{$limit}', '{$parent_id}', '{$color}', '{$colOrder}');";
 		$db -> query($sql);
+		
 	}
 	
 
