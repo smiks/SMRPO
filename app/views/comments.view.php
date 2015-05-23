@@ -15,11 +15,11 @@
 		<?
 			foreach($comments as $key => $value) {
 				$comm = $comments[$key];
-				$date = $comm['date'];
+				$date = date('d.m.Y', strtotime($comm['date']));
 				$userName = strtoupper($comm['userName']);
 				$userSurname = strtoupper($comm['userSurname']);
 				$c = $comm['comment'];
-				echo"<div>{$date} {$userName} {$userSurname}: <br>{$c}</div>";
+				echo"<div>{$date} {$userName} {$userSurname}: <br>{$c}</div><br>";
 			}
 		?>
 		
