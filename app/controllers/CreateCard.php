@@ -109,7 +109,7 @@ class CreateCard extends Controller{
 		
 		if($notExistsSilverBulletInColumn) 
 		{
-			if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline))
+			if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline, $WIPViolation))
 			{
 				if($WIPViolation)
 				{

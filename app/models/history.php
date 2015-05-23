@@ -15,8 +15,8 @@ class history extends Model{
 
 	public function getHistoryForCardID($cardID)
 	{
-		return $this -> sql("SELECT * FROM History WHERE card_id='{$cardID}';", $return="array", $key="card_id");
+		return $this -> sql("SELECT * FROM History WHERE card_id='{$cardID}';", $return="array", $key="history_id");
 	}
 	
 	
-}
+}his
