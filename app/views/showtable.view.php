@@ -143,8 +143,8 @@
 							<img alt='editCard' src='../../static/images/settings_icon.png' 
 							style='height:22px; width:25px;'/>
 						</a><br>
-						Size: {$card_size}<br><br>
-						Description: {$card_description}
+						<a href='?page=comments&cardID={$card_id}'>Comments</a></br><br>
+						<a href='?page=history&cardID={$card_id}'>History</a></br>
 					</div>";
 				}
 			}
