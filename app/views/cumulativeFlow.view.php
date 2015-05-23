@@ -42,6 +42,10 @@
 				}
 			?>
 		</div>
+		<input type="submit" value="Show cumulative flow" style = "width: 400px; margin-top:80px"/><br>
+		<?php echo "<a href='?page=showtable&projectID={$projectID}&width={$width}' class='btn_signup'>Back</a>" ?>
+		
+		
 	</form>
 	
 	

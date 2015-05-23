@@ -87,7 +87,7 @@
 			if($isKM)
 			{ ?>
 				&nbsp; &nbsp; 				
-				<a href="?page=cumulativeFlow&boardId={{boardId}}" style="text-decoration:none; 
+				<a href="?page=cumulativeFlow&boardId={{boardId}}&projectID={{projectID}}&width={{screenWidth}}" style="text-decoration:none; 
 				font-size:20px;">
 					Cumulative Flow
 				</a>
@@ -185,19 +185,16 @@
 									$card_color = $card['color'];
 				
 									
-									echo "
-									<div id='card_div' class='card_div' style='border-color:{$card_color};'>
-									
-										<b>{$card_name}</b>
-										<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
-											<img alt='editCard' src='../../static/images/settings_icon.png' 
-											style='height:22px; width:25px;'/>
-										</a><br>
-
-										Size: {$card_size}<br><br>
-										Description: {$card_description}
-									
-									</div>";
+													echo "
+					<div id='card_div' class='card_div' style='border-color:{$card_color};'>
+						<b>{$card_name}</b>
+						<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
+							<img alt='editCard' src='../../static/images/settings_icon.png' 
+							style='height:22px; width:25px;'/>
+						</a><br>
+						<a href='?page=comments&cardID={$card_id}'>Comments</a></br><br>
+						<a href='?page=history&cardID={$card_id}'>History</a></br>
+					</div>";
 								}
 							}		
 							

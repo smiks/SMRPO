@@ -24,6 +24,9 @@ class CumulativeFlow extends Controller{
 		$columns = $column -> getAllColumns($boardId);
 		$cards = $card -> getCardsFromBoard($boardId);
 		
+		$projectID = (int)(Functions::input()["GET"]["projectID"]);
+		$width= (int)(Functions::input()["GET"]["width"]);
+		
 		$cols = array();
 		$crds = array();
 		
@@ -40,10 +43,15 @@ class CumulativeFlow extends Controller{
 			$crds[$cardId] = array("name" => $crd['name'], "columnId" => $col['column_id']);
 		}
 		
-		$data = array("cols" => $cols, "crds" => $crds);
+		var_dump($projectID);
+		
+		$data = array("cols" => $cols, "crds" => $crds, "width" => $width, "projectID" => $projectID);
 		
 		$this -> show("cumulativeFlow.view.php", $data);
 	}
 
-
+	public function getCumulativeFlow()
+	{
+		
+	}
 }
