@@ -107,9 +107,11 @@ class CreateCard extends Controller{
 			$WIPViolation = false;
 		}
 		
+		$userId = $_SESSION['userid'];
+		
 		if($notExistsSilverBulletInColumn) 
 		{
-			if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline, $WIPViolation))
+			if($card->addCard($projectID, $boardID, $color, $name, $columnID, $desc, $type, $user, $size, $deadline, $WIPViolation, $userId))
 			{
 				if($WIPViolation)
 				{

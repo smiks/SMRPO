@@ -4,7 +4,7 @@ require_once 'Model.php';
 
 class card extends Model{	
 	
-public function addCard($projectID, $boardID, $color, $name, $columnID, $description, $type, $userID, $size, $deadline, $WIPViolation)
+public function addCard($projectID, $boardID, $color, $name, $columnID, $description, $type, $userID, $size, $deadline, $WIPViolation, $currentUser)
 	{
 		global $db;
 
@@ -15,11 +15,11 @@ public function addCard($projectID, $boardID, $color, $name, $columnID, $descrip
 
 		$date = date("Y-m-d"); 
 
-		$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'create', 'Card Created', '{$userID}', CONCAT('Card ','{$name}'), '{$date}');");
+		$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'create', 'Card Created', '{$currentUser}', CONCAT('Card : ','{$name}'), '{$date}');");
 
 		if($WIPViolation)
 		{
-			$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'WIPViolation', 'WIP Violation', '{$userID}', 'WIP Violation happened.', '{$date}');");
+			$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'WIPViolation', 'WIP Violation', '{$currentUser}', 'WIP Violation happened.', '{$date}');");
 		}
 
 		return true;
