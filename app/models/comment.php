@@ -19,7 +19,9 @@ class comment extends Model{
 
 	public function getCommentsForCardID($cardID)
 	{
-		return $this -> sql("SELECT * FROM Comment WHERE card_id='{$cardID}';", $return="array", $key="card_id");
+		
+		return $this -> sql("SELECT * FROM Comment WHERE card_id='{$cardID}';", $return="array", $key="comment_id");
+		
 	}
 	
 }
