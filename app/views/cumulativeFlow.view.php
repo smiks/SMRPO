@@ -1,54 +1,120 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]
+<head>
+	<script type="text/javascript" src="../../static/js/canvasjs.min.js"></script>
+	<script type="text/javascript">
+		  window.onload = function () {
+		  var chart = new CanvasJS.Chart("cumulative",
+		    {
+		      title:{
+		        text: "   "   
+		      },
+		      animationEnabled: true,
+		      axisY:{
+		        title:"Number of cards"      
+		      },
+		      axisX:{
+		        title: "Days"      
+		      },
+		      toolTip:{
+		        shared: true
+		      },
+		      data: [
+		      
+		      <?php foreach($cols as $colId => $value)
+		      	{
+		      		if ($cols[$colId]['checked'])
+		      		{
+		      		
+			      		?> 
+			      		{        
+				        type: "stackedArea100",
+				        name: "<?php echo $cols[$colId]['name']; ?>",
+				        showInLegend: "true",
+				        dataPoints: [
+				        {  y: 93450 , label: "spring"},
+				        {  y: 51240, label: "summer" },
+				        {  y: 64120, label: "fall" },
+				        {  y: 71450, label: "winter" }
+				        
+				        ]
+				      }, 
+			      <?php
+			      }
+			} ?>      		               
+		        
+		      ]
+		    });
+		
+		    chart.render();
+		  }
+		  </script>
+</head>	  
 
 <br><div class="center_block_header" style="width:97%">
 		Cumulative flow
 </div><br>
-
-<div style="width:500px; height: 700px; margin-top: 20px; margin-left:10px; background-color:white; border-radius: 6px; font: 18px/18px BryantProBoldAlternateRegular">
-	Filter data
-	<form action='?page=cumulativeFlow' method='post'>
-		<?php $date = Functions::dateDB(); ?>
-		<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
-		<div style = "float:left; padding-top:10px; padding-left:5px"> From date: </div>
-		<input style="width:130px; float:left; margin-left:5px" type = "date" id = "fromDate" name="fromDate" />
-		<div style = "float:left; padding-left:10px; padding-top:10px;"> To date: </div>
-		<input style='width:130px; float:left; margin-left:5px' type = 'date' id = 'toDate' name='toDate' placeholder= <?php echo $date; ?> /> <br>
-		<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
-		<div style = "float:left; padding-top:10px; padding-left:5px"> Select columns: </div> <br><br>
-		<div>
-			<?php
-				foreach($cols as $colId => $val)
-				{
-					$col = $cols[$colId];
-					$name = $col['name'];
-					$parentId = $col['parentId'];
-					
-					echo "<input type='checkbox' name=$name value=$name style='margin-left:80px'>$name<br>";
-				}
-			?>
-		</div>
-		<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
-		<div style = "float:left; padding-top:10px; padding-left:5px"> Select cards: </div> <br><br>
-		<div>
-			<?php
-				foreach($crds as $cardId => $val)
-				{
-					$card = $crds[$cardId];
-					$name = $card ['name'];
-					$colId= $card ['columnId'];
-					
-					echo "<input type='checkbox' name=$name value=$name style='margin-left:80px'>$name<br>";
-				}
-			?>
-		</div>
-		<input type="submit" value="Show cumulative flow" style = "width: 400px; margin-top:80px"/><br>
-		<?php echo "<a href='?page=showtable&projectID={$projectID}&width={$width}' class='btn_signup'>Back</a>" ?>
+<div>
+	<div style="width:530px; height: 700px; margin-top: 20px; margin-left:10px; background-color:white; border-radius: 6px; font: 18px/18px BryantProBoldAlternateRegular; float:left">
+		Filter data
+		<form action='?page=cumulativeFlow&width={{width}}&boardId={{boardId}}&projectID={{projectID}}' method='post'>
+			<?php $date = Functions::dateDB(); 
+			$fromDate = date("Y-m-d", strtotime("-1 month")); ?>
+			<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
+			<div style = "float:left; padding-top:10px; padding-left:5px"> From date: </div>
+			<input style="width:165px; float:left; margin-left:5px" type = "date" id = "fromDate" name="fromDate" value= <?php echo $fromDate; ?> />
+			<div style = "float:left; padding-left:10px; padding-top:10px;"> To date: </div>
+			<input style='width:165px; float:left; margin-left:5px' type = 'date' id = 'toDate' name='toDate' value= <?php echo $date; ?> /> <br>
+			<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
+			<div style = "float:left; padding-top:10px; padding-left:5px"> Select columns: </div> <br><br>
+			<div>
+				<?php
+					foreach($cols as $colId => $val)
+					{
+						$col = $cols[$colId];
+						$name = $col['name'];
+						$parentId = $col['parentId'];
+						$checked = $col['checked'];
+						$showCheck = "checked";
+						if(!$checked)
+							$showCheck ="";
+						echo "<input type='checkbox' name='$name' value='$name' style='margin-left:80px' {$showCheck} >$name<br>";
+					}
+				?>
+			</div>
+			<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
+			<div style = "float:left; padding-top:10px; padding-left:5px"> Select cards: </div> <br><br>
+			<div>
+				<?php
+					foreach($crds as $cardId => $val)
+					{
+						$card = $crds[$cardId];
+						$name = $card ['name'];
+						$colId= $card ['columnId'];
+						$checked = $card['checked'];
+						$showCheck = "checked";
+						if(!$checked)
+							$showCheck ="";
+						echo "<input type='checkbox' name='$name' value='$name' style='margin-left:80px' {$showCheck}>$name<br>";
+					}
+				?>
+			</div>
+			<input type="hidden" value=<?php echo $boardId; ?> name="boardId" id="boardId"/>
+			<input type="hidden" value=<?php echo $projectID; ?> name="projectID" id="projectID"/>
+			<input type="hidden" value=<?php echo $width; ?> name="width" id="width"/>
+			<input type="submit" value="Show cumulative flow" style = "width: 400px; margin-top:80px"/><br>
+			<?php echo "<a href='?page=showtable&projectID={$projectID}&width={$width}' class='btn_signup'>Back</a>" ?>
+			
+			
+		</form>
 		
 		
-	</form>
+	</div>
+	
+	<?php $w = $width - 600; echo "<div id='cumulative' style='width:{$w}px; height: 700px; background-color:white; border-radius: 6px; font: 18px/18px BryantProBoldAlternateRegular; float:left; margin-top: 20px; margin-left:10px; overflow:auto;'>"; ?>
 	
 	
+	</div>
 </div>
 
 [include]app/views/footer.view.php[/include]
