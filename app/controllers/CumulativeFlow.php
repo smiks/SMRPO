@@ -27,6 +27,9 @@ class CumulativeFlow extends Controller{
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
 		$width= (int)(Functions::input()["GET"]["width"]);
 		
+		$date = Functions::dateDB();
+		$fromDate = date("Y-m-d", strtotime("-1 month"));
+		
 		$card = new card();
 		$column = new col();
 		$movement = new movements();
@@ -48,12 +51,79 @@ class CumulativeFlow extends Controller{
 		{
 			$col = $columns[$colId];
 			$cols[$colId] = array("name" => $col['name'], "checked" => true);
+		}			
+		
+		
+		$dates = array();
+		$current = $fromDate;
+		$i = 0;
+		while(true)
+		{
+			$dates[$i] = $current;
+			$current = date("Y-m-d", strtotime($current . "+3 days"));
+			
+			if($current > $date)
+				break;
+	
+			$i = $i+1;
 		}
 		
-		
-		$data = array("cols" => $cols, "crds" => $crds, "width" => $width, "projectID" => $projectID, "boardId" => $boardId, "movements" => $movements);
+		$dat= $this -> numOfCards($dates, $movements, $columns);
+
+		$data = array("cols" => $cols, "crds" => $crds, "width" => $width, "projectID" => $projectID, "boardId" => $boardId, "movements" => $movements, "days" => $days, "number" => $dat['number'], "numCards" => $dat['cardsPerDay']);
 		
 		$this -> show("cumulativeFlow.view.php", $data);
+	}
+	
+	public function numOfCards($dates, $movements, $columns)
+	{
+		$num = 0;
+		$cardsPerDay = array();
+		
+		foreach($dates as $i => $val)
+		{
+			$date = $dates[$i];
+			
+			
+			$numberOfCards = array();
+		
+			foreach ($movements as $id => $val)
+			{
+				$number = 0;
+				if($movements[$id]['date_input'] >= $date && ($movements[$id]['date_output'] == null || $movements[$id]['date_output'] <= $date))
+				{
+					$colId = $movements[$id]['column_id'];
+					if(array_key_exists($colId, $numberOfCards))
+						$number = $numberOfCards[$colId] + 1;
+					else
+						$number = 1;
+						
+					$numberOfCards[$colId] = $number;
+				}
+				
+			}
+	
+			foreach ($numberOfCards as $colId => $val)
+			{
+				$column = $columns[$colId];
+				$parentId = $column['parent_id'];
+				if($parentId  != null)
+					if(array_key_exists($parentId , $numberOfCards))
+						$numberOfCards[$parentId] = $numberOfCards[$parentId] + $numberOfCards[$colId];
+					else
+						$numberOfCards[$parentId] = $numberOfCards[$colId];
+			}
+			
+			foreach($numberOfCards as $colId => $val)
+				$num = $num + $numberOfCards[$colId];
+
+			$cardsPerDay[$date] = $numberOfCards;	
+		}
+	
+		
+		
+		$data = array("cardsPerDay" => $cardsPerDay, "number" => $num);
+		return $data;
 	}
 
 

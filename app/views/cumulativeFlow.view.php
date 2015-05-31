@@ -11,7 +11,9 @@
 		      },
 		      animationEnabled: true,
 		      axisY:{
-		        title:"Number of cards"      
+		        title:"Number of cards",
+		        interval: 3,
+		        maximum: <?php echo $number ?>
 		      },
 		      axisX:{
 		        title: "Days"      
@@ -24,18 +26,24 @@
 		      <?php foreach($cols as $colId => $value)
 		      	{
 		      		if ($cols[$colId]['checked'])
-		      		{
-		      		
+		      		{		      			
 			      		?> 
 			      		{        
-				        type: "stackedArea100",
+				        type: "stackedArea",
 				        name: "<?php echo $cols[$colId]['name']; ?>",
 				        showInLegend: "true",
 				        dataPoints: [
-				        {  y: 93450 , label: "spring"},
-				        {  y: 51240, label: "summer" },
-				        {  y: 64120, label: "fall" },
-				        {  y: 71450, label: "winter" }
+				        <?php foreach($numCards as $date => $val)
+				        	{
+				        		$year = date("Y", strtotime($date));
+				        		$month = date("m", strtotime($date));
+				        		$day = date("d", strtotime($date));
+				        		$y = $numCards[$date][$colId];
+				        		?>
+				        		{ y: Number(<?php echo $y; ?>) , x: new Date(Number(<?php echo $year; ?>), Number(<?php echo $month; ?>)-1, Number(<?php echo $day; ?>)) },
+				        		<?php
+				        	}
+				        ?>
 				        
 				        ]
 				      }, 
