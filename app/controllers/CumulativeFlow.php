@@ -53,7 +53,19 @@ class CumulativeFlow extends Controller{
 			$cols[$colId] = array("name" => $col['name'], "checked" => true);
 		}			
 		
+		$dates = $this -> getDates($fromDate, $date);
 		
+		
+		$data= $this -> numOfCards($dates, $movements, $columns, $crds);
+		$numCards = sizeOf($cards);
+
+		$data = array("cols" => $cols, "crds" => $crds, "width" => $width, "projectID" => $projectID, "boardId" => $boardId, "movements" => $movements, "number" => $numCards , "numCards" => $data, "fromDate" => $fromDate, "toDate" => $date);
+		
+		$this -> show("cumulativeFlow.view.php", $data);
+	}
+	
+	public function getDates($fromDate, $date)
+	{
 		$dates = array();
 		$current = $fromDate;
 		$i = 0;
@@ -68,18 +80,12 @@ class CumulativeFlow extends Controller{
 			$i = $i+1;
 		}
 		
-		$dat= $this -> numOfCards($dates, $movements, $columns);
-
-		$data = array("cols" => $cols, "crds" => $crds, "width" => $width, "projectID" => $projectID, "boardId" => $boardId, "movements" => $movements, "days" => $days, "number" => $dat['number'], "numCards" => $dat['cardsPerDay']);
-		
-		$this -> show("cumulativeFlow.view.php", $data);
+		return $dates;
 	}
 	
-	public function numOfCards($dates, $movements, $columns)
+	public function numOfCards($dates, $movements, $columns, $cards)
 	{
-		$num = 0;
 		$cardsPerDay = array();
-		
 		foreach($dates as $i => $val)
 		{
 			$date = $dates[$i];
@@ -90,7 +96,10 @@ class CumulativeFlow extends Controller{
 			foreach ($movements as $id => $val)
 			{
 				$number = 0;
-				if($movements[$id]['date_input'] >= $date && ($movements[$id]['date_output'] == null || $movements[$id]['date_output'] <= $date))
+				$cardId = $movements[$id]['card_id'];
+				if($cards[$cardId]['checked'] == false)
+					continue;
+				if($movements[$id]['date_input'] <= $date && ($movements[$id]['date_output'] == null || $movements[$id]['date_output'] >= $date))
 				{
 					$colId = $movements[$id]['column_id'];
 					if(array_key_exists($colId, $numberOfCards))
@@ -100,9 +109,8 @@ class CumulativeFlow extends Controller{
 						
 					$numberOfCards[$colId] = $number;
 				}
-				
-			}
-	
+			}			
+
 			foreach ($numberOfCards as $colId => $val)
 			{
 				$column = $columns[$colId];
@@ -113,17 +121,10 @@ class CumulativeFlow extends Controller{
 					else
 						$numberOfCards[$parentId] = $numberOfCards[$colId];
 			}
-			
-			foreach($numberOfCards as $colId => $val)
-				$num = $num + $numberOfCards[$colId];
 
 			$cardsPerDay[$date] = $numberOfCards;	
 		}
-	
-		
-		
-		$data = array("cardsPerDay" => $cardsPerDay, "number" => $num);
-		return $data;
+		return $cardsPerDay;
 	}
 
 
@@ -143,7 +144,6 @@ class CumulativeFlow extends Controller{
 		$movements = $movement -> getMovements($boardId);		
 		$cards = $card -> getCardsFromBoard($boardId);
 		$columns = $column -> getAllColumns($boardId);
-		
 		$cols = array();
 		$crds = array();
 		
@@ -164,7 +164,13 @@ class CumulativeFlow extends Controller{
 			else
 				$cols[$colId] = array("name" => $col['name'], "checked" => false);
 		}
-		$data = array("cols" => $cols,"crds" => $crds, "width" => $width, "projectID" => $projectID, "boardId" => $boardId);
+
+		$dates = $this -> getDates($fromDate, $toDate);
+		
+		$data= $this -> numOfCards($dates, $movements, $columns, $crds);
+		$numCards = sizeOf($cards);
+		
+		$data = array("cols" => $cols,"crds" => $crds, "width" => $width, "projectID" => $projectID, "boardId" => $boardId, "movements" => $movements, "number" => $numCards , "numCards" => $data, "fromDate" => $fromDate, "toDate" => $toDate);
 		
 		$this -> show("cumulativeFlow.view.php", $data);
 	}

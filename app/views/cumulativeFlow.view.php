@@ -13,7 +13,7 @@
 		      axisY:{
 		        title:"Number of cards",
 		        interval: 3,
-		        maximum: <?php echo $number ?>
+		        maximum: <?php echo $number ?>*2
 		      },
 		      axisX:{
 		        title: "Days"      
@@ -66,8 +66,6 @@
 	<div style="width:530px; height: 700px; margin-top: 20px; margin-left:10px; background-color:white; border-radius: 6px; font: 18px/18px BryantProBoldAlternateRegular; float:left">
 		Filter data
 		<form action='?page=cumulativeFlow&width={{width}}&boardId={{boardId}}&projectID={{projectID}}' method='post'>
-			<?php $date = Functions::dateDB(); 
-			$fromDate = date("Y-m-d", strtotime("-1 month")); ?>
 			<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
 			<div style = "float:left; padding-top:10px; padding-left:5px"> From date: </div>
 			<input style="width:165px; float:left; margin-left:5px" type = "date" id = "fromDate" name="fromDate" value= <?php echo $fromDate; ?> />
