@@ -138,10 +138,15 @@
 
 					echo "
 					<div id='card_div' class='card_div' style='border-color:{$card_color};'>
-						<b>{$card_name}</b>
+						<b>{$card_name}</b><br>
 						<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
 							<img alt='editCard' src='../../static/images/settings_icon.png' 
-							style='height:22px; width:25px;'/>
+							style='height:20px; width:23px;'/>
+						</a>
+						&nbsp;
+						<a href='?page=movecard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
+							<img alt='editCard' src='../../static/images/move_icon.png' 
+							style='height:20px; width:20px;'/>
 						</a><br>
 						<a href='?page=comments&cardID={$card_id}'>Comments</a></br><br>
 						<a href='?page=history&cardID={$card_id}'>History</a></br>
@@ -187,11 +192,17 @@
 									
 													echo "
 					<div id='card_div' class='card_div' style='border-color:{$card_color};'>
-						<b>{$card_name}</b>
+						<b>{$card_name}</b><br>
 						<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
 							<img alt='editCard' src='../../static/images/settings_icon.png' 
-							style='height:22px; width:25px;'/>
-						</a><br>
+							style='height:20px; width:23px;'/>
+						</a>
+						&nbsp;
+						<a href='?page=movecard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
+							<img alt='editCard' src='../../static/images/move_icon.png' 
+							style='height:20px; width:20px;'/>
+						</a>
+						<br>
 						<a href='?page=comments&cardID={$card_id}'>Comments</a></br><br>
 						<a href='?page=history&cardID={$card_id}'>History</a></br>
 					</div>";

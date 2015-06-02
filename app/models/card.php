@@ -56,8 +56,13 @@ public function addCard($projectID, $boardID, $color, $name, $columnID, $descrip
 		
 		$db -> query("UPDATE Card SET name='{$cardTitle}', description='{$cardDesc}', user_id='{$developer}', size='{$cardSize}', deadline='{$cardDeadLine}' WHERE card_id='{$cardId}';");
 
-		return true;
-		
+		return true;	
 	}
 	
+	public function moveCard($cardID, $colID){
+		global $db;
+		$sql = "UPDATE Card SET column_id='{$colID}' WHERE card_id='{$cardID}' LIMIT 1;";
+		$db->query($sql);
+		return true;
+	}
 }

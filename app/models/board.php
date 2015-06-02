@@ -133,6 +133,11 @@ class board extends Model{
 		$board = $db -> fetch_row($q);
 		return $board;
 	}
+
+	public function getBoardByCardID($cardID){
+		$sql = "SELECT board_id FROM Card WHERE card_id='{$cardID}' LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
 	
 	
 	public function getAllProjects($boardId)

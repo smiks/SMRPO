@@ -1,0 +1,1089 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"resu",
+				"resultArray"
+			],
+			[
+				"res",
+				"resultArray"
+			],
+			[
+				"big",
+				"bigFiveDict"
+			],
+			[
+				"bigF",
+				"bigFiveDict"
+			],
+			[
+				"nu",
+				"numbderOfWords"
+			],
+			[
+				"tw",
+				"tweets"
+			],
+			[
+				"tweet",
+				"tweetuser"
+			],
+			[
+				"json",
+				"json_decode"
+			],
+			[
+				"tes",
+				"testMessage"
+			],
+			[
+				"fiel",
+				"fields_string"
+			],
+			[
+				"t",
+				"testText"
+			],
+			[
+				"base",
+				"base64_encode"
+			],
+			[
+				"url",
+				"urlencode"
+			],
+			[
+				"look",
+				"lookForLen"
+			],
+			[
+				"preg",
+				"preg_replace"
+			],
+			[
+				"l",
+				"lookFor"
+			],
+			[
+				"loo",
+				"lookForPosition"
+			],
+			[
+				"strpos",
+				"strrpos"
+			],
+			[
+				"re",
+				"resultArray"
+			],
+			[
+				"js",
+				"json_decode"
+			],
+			[
+				"cons",
+				"consumer_secret"
+			],
+			[
+				"oa",
+				"oauth_consumer_key"
+			],
+			[
+				"oauth_toke",
+				"oauth_token_secret"
+			],
+			[
+				"oau",
+				"oauth_token"
+			],
+			[
+				"o",
+				"oauth_nonce"
+			],
+			[
+				"oaut",
+				"oauth_signature"
+			],
+			[
+				"file_",
+				"file_get_contents"
+			],
+			[
+				"scree",
+				"screenWidth"
+			],
+			[
+				"col",
+				"column_id"
+			],
+			[
+				"n",
+				"nCols2"
+			],
+			[
+				"limit",
+				"limitC1"
+			],
+			[
+				"li",
+				"limitP1"
+			],
+			[
+				"wC",
+				"wCol1"
+			],
+			[
+				"wc",
+				"wCol1"
+			],
+			[
+				"nC",
+				"nCols1"
+			],
+			[
+				"array_fil",
+				"array_filter"
+			],
+			[
+				"us",
+				"userId"
+			],
+			[
+				"proj",
+				"projectID"
+			],
+			[
+				"User",
+				"Users_Groups"
+			],
+			[
+				"Group",
+				"Group_Project"
+			],
+			[
+				"board",
+				"boardID"
+			],
+			[
+				"spli",
+				"splitAt"
+			],
+			[
+				"splitTe",
+				"splitTextHelper"
+			],
+			[
+				"bas",
+				"base64_decode"
+			],
+			[
+				"en",
+				"encrypted_value"
+			],
+			[
+				"parentOn",
+				"parentOneID"
+			],
+			[
+				"getL",
+				"getLastColumnID"
+			],
+			[
+				"pa",
+				"parentOne"
+			],
+			[
+				"pro",
+				"projectID"
+			],
+			[
+				"co",
+				"colorCol1"
+			],
+			[
+				"limi",
+				"limitCol1"
+			],
+			[
+				"colo",
+				"colorCol3"
+			],
+			[
+				"color",
+				"colorCol1"
+			],
+			[
+				"nc",
+				"nCols3"
+			],
+			[
+				"is_a",
+				"is_array"
+			],
+			[
+				"is_",
+				"is_bool"
+			],
+			[
+				"is",
+				"is_float"
+			],
+			[
+				"var",
+				"var_dump"
+			],
+			[
+				"active",
+				"active_end"
+			],
+			[
+				"boar",
+				"boardID"
+			],
+			[
+				"boa",
+				"boardID"
+			],
+			[
+				"group",
+				"groupID"
+			],
+			[
+				"mar",
+				"margin-right"
+			],
+			[
+				"marg",
+				"margin-left"
+			],
+			[
+				"in",
+				"in_array"
+			],
+			[
+				"old",
+				"oldDevs"
+			],
+			[
+				"Use",
+				"Users_Groups"
+			],
+			[
+				"ol",
+				"oldDevs"
+			],
+			[
+				"value",
+				"value2"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"is_n",
+				"is_null"
+			],
+			[
+				"back",
+				"background-size"
+			],
+			[
+				"gr",
+				"groupID"
+			],
+			[
+				"inser",
+				"insertToUsers_Groups"
+			],
+			[
+				"inse",
+				"insertToUsers_Groups"
+			],
+			[
+				"ins",
+				"insertToUsers_Groups"
+			],
+			[
+				"fo",
+				"font-size"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"max-",
+				"max-height"
+			],
+			[
+				"max",
+				"max-width"
+			],
+			[
+				"paddin",
+				"padding-bottom"
+			],
+			[
+				"array_k",
+				"array_key_exists"
+			],
+			[
+				"input",
+				"inputData"
+			],
+			[
+				"post",
+				"postInputData"
+			],
+			[
+				"all",
+				"allInputData"
+			],
+			[
+				"page",
+				"pagename"
+			],
+			[
+				"function",
+				"function_exists"
+			],
+			[
+				"parse",
+				"parse_url"
+			],
+			[
+				"_",
+				"_PublicKey"
+			],
+			[
+				"base64",
+				"base64_encode"
+			],
+			[
+				"def",
+				"defaultController"
+			],
+			[
+				"defa",
+				"defaultPage"
+			],
+			[
+				"con",
+				"controller"
+			],
+			[
+				"defau",
+				"defaultController"
+			],
+			[
+				"_A",
+				"_ALLOW_REGISTRATION"
+			],
+			[
+				"ga",
+				"gameTime"
+			],
+			[
+				"img",
+				"imglink"
+			],
+			[
+				"cards",
+				"cardsCategories"
+			],
+			[
+				"r",
+				"resources"
+			],
+			[
+				"gam",
+				"gameStart"
+			],
+			[
+				"clic",
+				"clicksCnt"
+			],
+			[
+				"hel",
+				"helper1"
+			],
+			[
+				"he",
+				"helper3"
+			],
+			[
+				"velja",
+				"veljavenVzorec"
+			],
+			[
+				"help",
+				"helper2"
+			],
+			[
+				"Terka",
+				"TerkaV"
+			],
+			[
+				"Eno",
+				"EnotaV"
+			],
+			[
+				"Konst",
+				"KonstV"
+			],
+			[
+				"izp",
+				"izpolnjujejo"
+			],
+			[
+				"mno",
+				"mnozicaInterpretacij"
+			],
+			[
+				"spre",
+				"spremenljivkeIzjave"
+			],
+			[
+				"naj",
+				"najdiSpremenljivko"
+			],
+			[
+				"e",
+				"evalviraj"
+			],
+			[
+				"Int",
+				"IntOrdTreeMap"
+			],
+			[
+				"IN",
+				"IntOrdListSet"
+			],
+			[
+				"fun",
+				"functor	SML 'functor' declaration"
+			],
+			[
+				"to",
+				"toList"
+			],
+			[
+				"pie",
+				"pieceSize"
+			],
+			[
+				"number",
+				"numberOfCategories"
+			],
+			[
+				"num",
+				"numberOfCategories"
+			],
+			[
+				"no",
+				"novipolinom"
+			],
+			[
+				"Po",
+				"Polinom"
+			],
+			[
+				"p",
+				"push"
+			],
+			[
+				"reve",
+				"reverseString"
+			],
+			[
+				"zapore",
+				"zaporedniPravilni"
+			],
+			[
+				"int",
+				"integral"
+			],
+			[
+				"strukt",
+				"Struktura"
+			],
+			[
+				"kar",
+				"kartProd"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/controllers/Edittable.php",
+			"settings":
+			{
+				"buffer_size": 9570,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 35.0,
+		"selected_items":
+		[
+			[
+				"PHP",
+				"Set Syntax: PHP"
+			],
+			[
+				"install",
+				"Snippet: App-bindInstallPaths"
+			],
+			[
+				"P",
+				"SublimeREPL: PHP"
+			],
+			[
+				"racket",
+				"SublimeREPL: Racket"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Add Repository"
+			],
+			[
+				"sml",
+				"Snippet: SML 'datatype' declaration"
+			],
+			[
+				"repl: s",
+				"SublimeREPL: SML"
+			],
+			[
+				"repl",
+				"SublimeREPL: SML"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/models/Model.php",
+		"/C/Users/Sandi/Dropbox/Private/School/Forenzika/Lab2/Turkish.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/algoritmi/Seminar3/5000.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/algoritmi/Seminar3/5007.txt",
+		"/C/Users/Sandi/Desktop/Menegatti_sem3.txt",
+		"/C/cnwdata/log/trace3.txt",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.378/SERIAL.txt",
+		"/C/cnwdata/log/trace1.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/Programiranje II/SML/Vaje/dn8_63100383.sml",
+		"/C/Users/Sandi/Dropbox/Private/School/Programiranje II/Ziga SML/pr2/dn7_63090334.sml",
+		"/C/Users/Sandi/Dropbox/Private/School/Programiranje II/Lesar SML/seminar1_prvidel.sml",
+		"/C/Users/Sandi/Documents/Call Of Duty 2/call of duty 2/localization.txt",
+		"/C/Users/Sandi/Desktop/Seminar2 (1).java",
+		"/C/Users/Sandi/Dropbox/Private/School/Forenzika/Lab2/MailHack.txt",
+		"/C/Users/Sandi/Desktop/Seminar2.java",
+		"/C/Users/Sandi/Desktop/hackathon/twitter-api/test.php",
+		"/C/Users/Sandi/Desktop/hackathon/bluemix-api/test.php",
+		"/C/Users/Sandi/Desktop/hackathon/twitter-api/TwitterAPI.php",
+		"/C/Users/Sandi/Downloads/TMP/Seminar2 (2).java",
+		"/C/Users/Sandi/Downloads/TMP/Rezultati3.txt",
+		"/C/Users/Sandi/Desktop/hackathon/bluemix-api/WatsonService.php",
+		"/C/Users/Sandi/Desktop/hackathon/bmix-api/BluemixAPI.php",
+		"/C/Users/Sandi/Desktop/hackathon/wrapper/Wrapper.php",
+		"/C/Users/Sandi/Desktop/hackathon/test/index.php",
+		"/C/Users/Sandi/Desktop/hackathon/twitter.php",
+		"/C/Users/Sandi/Desktop/hackathon/result.php",
+		"/C/Users/Sandi/Desktop/myPassAndroid.txt",
+		"/C/Users/Sandi/Downloads/TMP/cmd_runner (1).sh",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.802/cmd_runner.sh",
+		"/C/Users/Sandi/Dropbox/Private/School/Algoritmi/Seminar 2 REPORT/times.txt",
+		"/C/Users/Sandi/Downloads/TMP/cmd_runner.sh",
+		"/C/Users/Sandi/Downloads/TMP/Seminar3.java",
+		"/C/Users/Sandi/Dropbox/Private/School/Algoritmi/Seminar3/src/run.java",
+		"/C/Users/Sandi/Dropbox/Private/School/algoritmi/Seminar3/src/Seminar3.java",
+		"/C/Users/Sandi/Dropbox/Private/School/Algoritmi/Seminar3/povezave.py",
+		"/C/Users/Sandi/Dropbox/Private/School/forenzika/recenzije/videoevidence/recenzija.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/Forenzika/Recenzije/VideoEvidence/recenzija.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/Forenzika/Recenzije/XFS/Recenzija.txt",
+		"/C/Users/Sandi/Downloads/TMP/Seminar2 (4).java",
+		"/C/Users/Sandi/Dropbox/Private/School/Algoritmi/Seminar2/src/Seminar2.java",
+		"/C/Users/Sandi/Downloads/TMP/Seminar2 (3).java",
+		"/C/Users/Sandi/Downloads/TMP/PerfectSoulmate/Rezultati2.txt",
+		"/C/Users/Sandi/Downloads/TMP/Seminar2 (1).java",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/boosting.py",
+		"/C/Users/Sandi/Dropbox/Private/School/Algoritmi/Seminar2/src/Tester.java",
+		"/C/Users/Sandi/Downloads/TMP/Seminar2.java",
+		"/C/Users/Sandi/Downloads/TMP/PerfectSoulmate/test.py",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/HomeWork/N5/Reports/dn5.py",
+		"/C/Users/Sandi/Downloads/TMP/Rezultati01.txt",
+		"/C/Users/Sandi/Downloads/TMP/PerfectSoulmate/Seminar2 (4).java",
+		"/C/Users/Sandi/Desktop/ResultsForNina.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/Algoritmi/Seminar2_2/src/Seminar2.java",
+		"/C/Users/Sandi/Dropbox/Private/School/algoritmi/seminarniny/src/Seminar2.java",
+		"/C/Users/Sandi/Downloads/TMP/SeminarNiny.java",
+		"/C/Users/Sandi/Downloads/TMP/Seminar2b.java",
+		"/C/Users/Sandi/Downloads/TMP/Tester.java",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/Python/arch_(93, 51, 9)_lambda_0.0015_OPT_SCALE.csv",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.292/dn5.py",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/Python/(93, 51, 9)TEST.csv",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/HomeWork/N5/test_smallest.csv",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/HomeWork/N5/train_smallest.csv",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/Python/ShouldBeAround_1.9436.csv",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/HomeWork/N5/train_reduced.csv",
+		"/C/Users/Sandi/Downloads/TMP/PerfectSoulmate/uniform.csv",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/HomeWork/N5/train.csv",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/core/Functions.php",
+		"/C/Users/Sandi/Desktop/hackathon/bmix-api/test.php",
+		"/C/Users/Sandi/Desktop/hackathon/bluemix-api/config.yml.dist",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.773/composer.json",
+		"/C/Users/Sandi/Desktop/sudoku2.cpp",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/core/Functional.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/views/projects.view.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/controllers/Projects.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/controllers/Showtable.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/views/createtablenext.view.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/models/project.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/controllers/Edittable.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/controllers/Createtable.php",
+		"/C/Users/Sandi/Downloads/TMP/naloga5 (1).py",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/models/board.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/views/edittable.view.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/controllers/Createtablesub.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/index.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/views/showtable.view.php",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/Python/hope.csv",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/HomeWork/N5/test.csv",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/Python/result_LROVA_lambda_0_191380952381_norm.csv",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/Python/dn4_2.py",
+		"/C/Users/Sandi/Downloads/TMP/uniform.csv",
+		"/C/Users/Sandi/Downloads/TMP/naloga5.py",
+		"/C/Users/Sandi/Dropbox/Private/School/OZIP/neural.py",
+		"/C/Users/Sandi/Desktop/musicparser.php",
+		"/C/Users/Sandi/Downloads/Seminar2Test.java",
+		"/C/Users/Sandi/Downloads/Seminar2.java",
+		"/C/Users/Sandi/Desktop/Nina_Algo_sem2_test.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/Algoritmi/Seminar2/src/run.java",
+		"/C/Users/Sandi/Downloads/Rezultati.txt",
+		"/C/Users/Sandi/Desktop/zemljisca.java",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.920/Zemljisce.java",
+		"/C/Users/Sandi/Desktop/musicmixset.txt",
+		"/C/Users/Sandi/Downloads/naloga5.py",
+		"/C/Users/Sandi/Desktop/zabeTest.cpp",
+		"/C/Users/Sandi/Downloads/zaba.cpp",
+		"/C/Users/Sandi/Desktop/UPM_Java_Sample.java",
+		"/C/Users/Sandi/Desktop/UPM_Python_sample.py3",
+		"/C/Users/Sandi/Desktop/UPM_C++_sample.cpp",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.641/sol2.cpp",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.476/sol2.cpp",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.130/sol.cpp",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.692/A.java",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.181/sol.cpp",
+		"/C/Users/Sandi/AppData/Local/Temp/Rar$DIa0.781/sol.cpp",
+		"/C/Users/Sandi/Desktop/neskoncinNiz.cpp",
+		"/C/Users/Sandi/Desktop/konjskedirke.java",
+		"/C/Users/Sandi/Downloads/TMP/Rezultati00.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/Forenzika/tmp.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/forenzika/Vaje/OLD/Izpiti/ResitveIzpitovBash.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/Forenzika/Vaje/1. Laboratorijska/report.txt",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/core/Router.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/controllers/Groups.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/core/Global.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/views/createtablesub.view.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/views/createtable.view.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/views/menu.view.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/core/Cache.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/controllers/Infogroup.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/views/groups.view.php",
+		"/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/models/group.php"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"treeset",
+			"f =",
+			"y=",
+			"y =",
+			"y",
+			"loss",
+			"060",
+			"293",
+			"63110354",
+			"break;",
+			"\": break;",
+			"var_dump",
+			"dg",
+			"&screenwidth={{scrWidth}}",
+			"			$sql = \"INSERT INTO Col (board_id, name, cardLimit, color, colOrder) VALUES ('{$boardID}', 'BackLog', '{$limit}', '{$color1}', '{$colOrder}')\";\n",
+			"addBetween",
+			"int",
+			"214",
+			"{$projectID}={$projectID}",
+			"?page=edittable$projectID",
+			"&projectID=6",
+			"name='{$fName}' id='textinput_100' value='{$name}'",
+			" &nbsp; {$remove} &nbsp; ",
+			"</big></big></big>",
+			"<big><big><big>",
+			"'text' name='limit",
+			"}}'",
+			"{{",
+			"}}'",
+			"{{",
+			"project",
+			"user",
+			"px;background-color:white;",
+			"parent, color",
+			", limit, ",
+			"coloumn",
+			"sem pregeldal",
+			"ž",
+			"š",
+			"č",
+			"PHP",
+			"<br>",
+			"active_end",
+			"active_start",
+			"active_end",
+			"log",
+			"144",
+			"0.1111111111111111",
+			"= LIKE",
+			"int($input",
+			"admin",
+			"result",
+			"clean(",
+			"-",
+			"2214",
+			"-",
+			"vals_legend",
+			"nan",
+			"game_canvas",
+			"play-field",
+			"playfield",
+			"there ",
+			"parent",
+			"poslji",
+			"win",
+			"difficulty",
+			"postapi",
+			"post",
+			"points",
+			"score",
+			"tocke",
+			"gettime",
+			"gettime=0",
+			"gettime = 0",
+			"gettime",
+			"cardsCategories",
+			"enak",
+			"ce-potem-sicer-pogoj",
+			"ce-potem-sicer",
+			"ce-potem-sicer-b",
+			"interval-e2",
+			"interval-od",
+			"divisible",
+			"num-ways",
+			"num-ways-memo",
+			"els",
+			"randomChoice",
+			"randomChoices",
+			"choices",
+			"step",
+			"text",
+			"timer",
+			"\"",
+			"text",
+			"front.",
+			"front.cla",
+			"prepare",
+			"draw",
+			"idx",
+			"tmp",
+			"cards",
+			"cardslist",
+			"clicks",
+			"clicksCnt",
+			"start",
+			"navadna vezava",
+			"ListPair",
+			".pair",
+			"getApi",
+			"niodgovora",
+			"urejeneSpremenljivke",
+			"old",
+			"getAPIData",
+			"ssh",
+			"numberOfCategories",
+			"random(",
+			"randomP",
+			"word",
+			"randomPiece(",
+			"randomPiece()",
+			"setNextPiece",
+			"filter",
+			"onAll(",
+			"onOdd(",
+			"stevec",
+			" ",
+			"Win32TextPrimIO:openRd: failed"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": true,
+		"regex": false,
+		"replace_history":
+		[
+			"\": return \"\";  break;",
+			"&screenwidth={$scrWidth}",
+			"long",
+			"{$projectID}",
+			"?page=edittable&projectID={$projectID}",
+			"$projectID={$projectID}",
+			"name='{$fName}' id='textinput_100' value='{$name}' required",
+			" {$remove}",
+			"</big></big>",
+			"<big><big>",
+			"'number' name='limit",
+			"}'",
+			"{$",
+			"'",
+			"$",
+			"px;background-color:#b7b7b7;",
+			"px;background-color:#727272;",
+			"parent_id, color",
+			", cardLimit, ",
+			"column",
+			"sem pregledal",
+			"0",
+			"(int)(",
+			"",
+			"Result",
+			"cleanInput(",
+			"veljaNaVseh(",
+			"naLihih(",
+			"counter"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/C/Users/Sandi/Dropbox/Private/School/SMRPO/ProjectGitHub/SMRPO/app/controllers/Edittable.php",
+					"settings":
+					{
+						"buffer_size": 9570,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1140,
+								1140
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 153.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 223.0,
+	"status_bar_visible": true
+}

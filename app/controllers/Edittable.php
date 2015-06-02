@@ -34,7 +34,8 @@ class Edittable extends Controller{
 		$groupID     = $group->getGroupIDFromProjectID($projectID);
 		$boardInfo   = $board->getBoardByProjectID($projectID, $groupID);
 		$boardID     = $boardInfo['board_id'];
-
+		//var_dump($boardID);
+		//exit();
 		/* ugly thing...redirect if board does not exist */
 		if($boardID == 0){
 			Functions::redirect("?page=projects");
