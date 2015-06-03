@@ -17,5 +17,4 @@ class col extends Model{
 		return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardId}';", $return = "array", $key ="column_id");
 	}
 	
-	
 }

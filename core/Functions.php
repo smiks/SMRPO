@@ -32,7 +32,7 @@ class Functions {
 	}
 
 	/* creates internal link. Example: domain.com/?page.... */
-	public function internalLink($url){
+	public static function internalLink($url){
 		global $_Domain, $_http;
 		$internalLink = $_http.$_Domain."/".$url;
 		return ($internalLink);

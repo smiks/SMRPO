@@ -13,10 +13,11 @@
 		      axisY:{
 		        title:"Number of cards",
 		        interval: 3,
-		        maximum: <?php echo $number ?>*2
+		        maximum: <?php echo $number ?>*3
 		      },
 		      axisX:{
-		        title: "Days"      
+		        title: "Days",
+		        labelAngle: -45
 		      },
 		      toolTip:{
 		        shared: true
@@ -35,10 +36,11 @@
 				        dataPoints: [
 				        <?php foreach($numCards as $date => $val)
 				        	{
+				        		$y = $numCards[$date][$colId];			   				        		
 				        		$year = date("Y", strtotime($date));
 				        		$month = date("m", strtotime($date));
 				        		$day = date("d", strtotime($date));
-				        		$y = $numCards[$date][$colId];
+				        		
 				        		?>
 				        		{ y: Number(<?php echo $y; ?>) , x: new Date(Number(<?php echo $year; ?>), Number(<?php echo $month; ?>)-1, Number(<?php echo $day; ?>)) },
 				        		<?php
@@ -68,9 +70,9 @@
 		<form action='?page=cumulativeFlow&width={{width}}&boardId={{boardId}}&projectID={{projectID}}' method='post'>
 			<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
 			<div style = "float:left; padding-top:10px; padding-left:5px"> From date: </div>
-			<input style="width:165px; float:left; margin-left:5px" type = "date" id = "fromDate" name="fromDate" value= <?php echo $fromDate; ?> />
+			<input style="width:165px; float:left; margin-left:5px" type = "date" id = "fromDate" name="fromDate" value="<?php echo"{$fromDate}"; ?>" />
 			<div style = "float:left; padding-left:10px; padding-top:10px;"> To date: </div>
-			<input style='width:165px; float:left; margin-left:5px' type = 'date' id = 'toDate' name='toDate' value= <?php echo $date; ?> /> <br>
+			<input style='width:165px; float:left; margin-left:5px' type = 'date' id = 'toDate' name='toDate' value="<?php echo"{$toDate}"; ?>" /> <br>
 			<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
 			<div style = "float:left; padding-top:10px; padding-left:5px"> Select columns: </div> <br><br>
 			<div>

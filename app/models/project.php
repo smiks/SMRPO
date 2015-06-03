@@ -141,14 +141,20 @@ class project extends Model{
 		$sql = "SELECT COUNT(*) FROM Group_Project LEFT JOIN Users_Groups ON (Users_Groups.group_id = Group_Project.group_id)
 				WHERE Users_Groups.user_id = '{$userid}' AND Group_Project.project_id = '{$projectID}' AND Users_Groups.permission LIKE ('_1_') LIMIT 1;";
 				#echo($sql);
-		return 1 == $this->sql($sql, $return = "single");
+		return 0 < $this->sql($sql, $return = "single");
 	}
 
 	public function isProductOwner($projectID, $userid)
 	{
 		$sql = "SELECT COUNT(*) FROM Group_Project LEFT JOIN Users_Groups ON (Users_Groups.group_id = Group_Project.group_id)
 				WHERE Users_Groups.user_id = '{$userid}' AND Group_Project.project_id = '{$projectID}' AND Users_Groups.permission LIKE ('1__') LIMIT 1;";
-		return 1 == $this->sql($sql, $return = "single");
+		return 0 < $this->sql($sql, $return = "single");
+	}
+
+	public function isMemberOfProject($projectID, $userid){
+		$sql = "SELECT COUNT(*) FROM Group_Project LEFT JOIN Users_Groups ON (Users_Groups.group_id = Group_Project.group_id)
+				WHERE Users_Groups.user_id = '{$userid}' AND Group_Project.project_id = '{$projectID}' LIMIT 1;";
+		return 0 < $this->sql($sql, $return = "single");
 	}
 
 	public function updateProject($id, $code, $name, $client, $start, $end, $group)

@@ -8,6 +8,7 @@ require_once 'app/models/card.php';
 require_once 'app/models/col.php';
 require_once 'app/models/user.php';
 require_once 'app/models/movements.php';
+require_once 'app/models/project.php';
 require_once 'core/Functions.php';
 require_once 'core/Global.php';
 
@@ -49,7 +50,9 @@ class MoveCard extends Controller{
 	public function post(&$board, &$card, &$col)
 	{
 		global $_http, $_Domain;
+		$userid = $_SESSION['userid'];
 		$move = new movements();
+		$project = new project();
 		$post = Functions::input("POST");
 		$get = Functions::input("GET");
 		$newColumn = (int)($post['columnID']);
@@ -57,14 +60,52 @@ class MoveCard extends Controller{
 		$boardID  = $board->getBoardByCardID($cardID);
 		$width = (int)($get['width']);
 		$projectID = (int)($get['projectID']);
-		$success = $card->moveCard($cardID, $newColumn);
-		$lastMoveID = $move->lastStatus($cardID);
+		$colInfo = $col->getColumn($newColumn);
+		$colLimit = $colInfo['cardLimit'];
+		$numCards = $card->countCards($boardID, $newColumn);
 
-		$move->moveCard($cardID, $newColumn, $boardID, $lastMoveID);
 
-		$url = $_http.$_Domain."/?page=showtable&projectID={$projectID}&width={$width}";
-		Functions::redirect($url);
+		/* URL of project */
+		$url = "?page=showtable&projectID={$projectID}&width={$width}";
+		$url = Functions::internalLink($url);
+
+		/* 	Errors */
+		$error = false;
+		/* 	Preveri, da uporabnik prestavlja samo kartice, ki pripadajo njegovemu projektu. */
+		$isMember = $project->isMemberOfProject($projectID, $userid);
+		if(!$isMember){
+			$error = "Forbidden. You do not work on this project.";
+			$errorCode = "403";
+			$data = array("error" => $error, "errorCode" => $errorCode);
+			$this->show("error.view.php", $data);
+			$error = true;
+		}
+
+		/* 	Preveri prestavljanje za en stolpec levo/desno (praviloma so dovoljeni samo pomiki za en stolpec v vsako smer). */
+
+		/* 	Preveri, ali se upošteva omejitev WIP (če pride do kršitve, se izpiše opozorilo, 
+			kartica pa se lahko premakne samo na izrecno zahtevo; kršitev se avtomatsko zabeleži). 
+			Limit 0 means no limit */
+		if($numCards > $colLimit){
+			// TODO 
+		}
+		/* 	Preveri prestavljanje za več stolpcev (prepovedano, izjema je vračanje iz sprejemenga testiranja) */
+
+		/* 	Preveri prestavljanje kartice, ki predstavlja zavrnjeno zgodbo (kartico lahko prestavi samo Product Owner, 
+			kartica se lahko prestavi v stolpec s karticami z najvišjo prioriteto ali v kateregakoli levo od njega; 
+			če pri tem pride do kršitve omejitve WIP, se ta kršitev zabeleži; tip/barva kartice se spremeni) */
 		
+		/* If moved back to parent with name BackLog check if product owner */
+		/* isPO = $project->isProductOwner($projectID, $userid); */
+
+		/* Everything ok - user is allowed to move the card */
+		if(!$error){
+			$success = $card->moveCard($cardID, $newColumn);
+			$lastMoveID = $move->lastStatus($cardID);
+			$move->moveCard($cardID, $newColumn, $boardID, $lastMoveID);
+
+			Functions::redirect($url);
+		}
 	}
 
 }

@@ -22,6 +22,10 @@ class CumulativeFlow extends Controller{
 	
 	public function get()
 	{
+		$card = new card();
+		$column = new col();
+		$movement = new movements();
+
 		$boardId= (int)(Functions::input()["GET"]["boardId"]);
 		
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
@@ -30,9 +34,6 @@ class CumulativeFlow extends Controller{
 		$date = Functions::dateDB();
 		$fromDate = date("Y-m-d", strtotime("-1 month"));
 		
-		$card = new card();
-		$column = new col();
-		$movement = new movements();
 		
 		$movements = $movement -> getMovements($boardId);
 		$cards = $card -> getCardsFromBoard($boardId);

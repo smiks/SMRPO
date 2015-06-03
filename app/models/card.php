@@ -25,6 +25,11 @@ public function addCard($projectID, $boardID, $color, $name, $columnID, $descrip
 		return true;
 	}
 	
+	public function countCards($boardID, $columnID){
+		$sql = "SELECT COUNT(*) FROM Card WHERE board_id='{$boardID}' AND column_id='{$columnID}'";
+		return $this->sql($sql, $return="single");
+	}
+	
 	public function getCards($projectId, $boardId)
 	{
 		return $this -> sql("SELECT * FROM Card WHERE board_id='{$boardId}' AND project_id='{$projectId}';", $return="array", $key="card_id");
