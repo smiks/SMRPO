@@ -90,7 +90,8 @@ class CreateCard extends Controller{
 			if($fristchildColumns == NULL)
 			{
 				if($existsPriority == TRUE){
-					$columnID = $colModel -> getPriorityColumn($boardID);
+					$getCol = $colModel -> getPriorityColumn($boardID);
+					$columnID = $getCol["column_id"];
 				} else {
 					$columnID = $topColumns;
 				}
@@ -98,7 +99,9 @@ class CreateCard extends Controller{
 			else
 			{
 				if($existsPriority == TRUE){
-					$columnID = $colModel -> getPriorityColumn($boardID);
+					$getCol = $colModel -> getPriorityColumn($boardID);
+					$columnID = $getCol["column_id"];
+					
 				} else {
 					$columnID = $lastchildColumns;
 				}
@@ -106,6 +109,7 @@ class CreateCard extends Controller{
 
 			$notExistsSilverBulletInColumn = $card -> notExistsSilverBulletInColumn($columnID, $boardID);
 		}
+		
 
 		//Get limit for column
 
