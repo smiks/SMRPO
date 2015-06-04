@@ -9,6 +9,7 @@ require_once 'app/models/col.php';
 require_once 'app/models/user.php';
 require_once 'app/models/movements.php';
 require_once 'app/models/project.php';
+require_once 'app/models/history.php';
 require_once 'core/Functions.php';
 require_once 'core/Global.php';
 
@@ -54,6 +55,7 @@ class MoveCard extends Controller{
 		$project = new project();
 		$post = Functions::input("POST");
 		$get = Functions::input("GET");
+		$history = new history();
 		$newColumn = (int)($post['columnID']);
 		$cardID   = (int)($get["cardID"]);
 		$boardID  = $board->getBoardByCardID($cardID);
@@ -61,6 +63,8 @@ class MoveCard extends Controller{
 		$projectID = (int)($get['projectID']);
 		$colInfo = $col->getColumn($newColumn);
 		$colLimit = $colInfo['cardLimit'];
+		$cardInfo = $card->getCard($cardID);
+		$currCol  = $cardInfo['column_id'];
 		$numCards = $card->countCards($boardID, $newColumn);
 
 		/* 	Errors */
@@ -80,23 +84,57 @@ class MoveCard extends Controller{
 		/* 	Preveri, ali se upošteva omejitev WIP (če pride do kršitve, se izpiše opozorilo, 
 			kartica pa se lahko premakne samo na izrecno zahtevo; kršitev se avtomatsko zabeleži). 
 			Limit 0 means no limit */
-			$numCards = $colLimit+1; // && $colLimit > 0
-		if($numCards > $colLimit){
-			// TODO
+		if($numCards > $colLimit && $colLimit > 0){
 			/* confirmation page */
 			$url = "?page=confirmwip&cardID={$cardID}&newColumn={$newColumn}&boardID={$boardID}&projectID={$projectID}&width={$width}";
 			$url = Functions::internalLink($url);
 			Functions::redirect($url);
 			$error = true;
 		}
+
+
 		/* 	Preveri prestavljanje za več stolpcev (prepovedano, izjema je vračanje iz sprejemenga testiranja) */
+		if(!isset($_POST['rejected'])){
+			/* 	check previous and new column id and check for neighbours 
+				if neighbours true is ok, if false -> throw error */
+			$isNeighbour = $col->isNeighbour($currCol, $newColumn);
+			if(!$isNeighbour){
+				$error = "Forbidden. Only adjacent columns are allowed.";
+				$errorCode = "403";
+				$data = array("error" => $error, "errorCode" => $errorCode);
+				$this->show("error.view.php", $data);
+				$error = true;
+			}
+
+		}
+
 
 		/* 	Preveri prestavljanje kartice, ki predstavlja zavrnjeno zgodbo (kartico lahko prestavi samo Product Owner, 
 			kartica se lahko prestavi v stolpec s karticami z najvišjo prioriteto ali v kateregakoli levo od njega; 
 			če pri tem pride do kršitve omejitve WIP, se ta kršitev zabeleži; tip/barva kartice se spremeni) */
 		
-		/* If moved back to parent with name BackLog check if product owner */
-		/* isPO = $project->isProductOwner($projectID, $userid); */
+			/* If moved back to parent with name BackLog check if product owner */
+			$isPO = $project->isProductOwner($projectID, $userid);
+			if($isPO && isset($_POST['rejected'])){
+				/* find right column */
+				$newColumn = $col->getRejectColumn($boardID);
+				/* updace card color */
+				$color = "660066";
+				$card->updateColor($cardID, $color);
+				$type = "Rejection";
+				$event = "Card rejected";
+				$details = "Card was rejected";
+				$date = Functions::dateDB();
+				$history->insertHistory($cardID, $type, $event, $userid, $details, $date);			
+			}
+
+			elseif(!$isPO && isset($_POST['rejected'])){
+				$error = "Forbidden. Only Product Owner can reject card.";
+				$errorCode = "403";
+				$data = array("error" => $error, "errorCode" => $errorCode);
+				$this->show("error.view.php", $data);
+				$error = true;
+			}
 
 		/* Everything ok - user is allowed to move the card */
 		if(!$error){

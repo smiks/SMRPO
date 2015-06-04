@@ -5,7 +5,7 @@
 
 <div class="center_block">
 	<form action='' method='post'>
-		Column<br>
+		Move card to column:<br>
 		<select name='columnID'>
 		<?
 			foreach($columns as $id => $name){
@@ -22,7 +22,11 @@
 		?>
 		</select>
 		<br>
-		<input type='submit' value='submit'>
+		<input type='submit' name='submit' value='Move'>
+		<br>
+		or move card back to backlog (rejected card).
+		<br>
+		<input type='submit' name='rejected' value='Reject card'>
 	</form>
 	
 </div>

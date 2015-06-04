@@ -17,6 +17,61 @@ class col extends Model{
 		return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardId}';", $return = "array", $key ="column_id");
 	}
 
+	/* reject column: last column of backlog */
+	public function getRejectColumn($boardID){
+		/* check if priority Column exists */
+		$sql = "SELECT column_id FROM Col WHERE priority_col='1' AND board_id='{$boardID}' LIMIT 1;";
+		$priorityID = $this->sql($sql, $return="single");
+		if($priorityID != 0){
+			return $priorityID;
+		}
+		/* if it doesnt exist move it to last backLog column */
+		$sql = "SELECT column_id FROM Col WHERE name LIKE('BackLog') AND board_id='{$boardID}' LIMIT 1;";
+		$backlogID = $this->sql($sql, $return="single");
+		$sql = "SELECT column_id FROM Col WHERE parent_id='{$backlogID}' AND board_id='{$boardID}' ORDER BY colOrder DESC LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
+
+	public function isNeighbour($column1, $column2){
+		/* checks if parent is not null */
+		$sql = "SELECT parent_id FROM Col WHERE column_id='{$column1}' LIMIT 1;";
+		$parent1 = $this->sql($sql, $return="single");
+		$sql = "SELECT parent_id FROM Col WHERE column_id='{$column2}' LIMIT 1;";
+		$parent2 = $this->sql($sql, $return="single");
+
+		/* if moving to subcolumns */
+		if(!is_null($parent1) && !is_null($parent2)){
+			$sql = "SELECT colOrder FROM Col WHERE column_id='{$column1}' LIMIT 1;";
+			$colOrd1 = $this->sql($sql, $return="single");
+			$sql = "SELECT colOrder FROM Col WHERE column_id='{$column2}' LIMIT 1;";
+			$colOrd2 = $this->sql($sql, $return="single");
+
+			/* diff allowed: 1 */
+			$diff =  abs($colOrd1-$colOrd2);
+			if($diff == 1){
+				return true;
+			}
+		}
+
+		/* if moving to parent column and parent has a child -> not good */
+		if(is_null($parent1)){
+			$sql = "SELECT column_id FROM Col WHERE parent_id='{$column1}' LIMIT 1;";
+			$colP1 = $this->sql($sql, $return="single");
+			if($colP1 != 0){
+				return false;
+			}
+		}
+		if(is_null($parent2)){
+			$sql = "SELECT column_id FROM Col WHERE parent_id='{$column2}' LIMIT 1;";
+			$colP2 = $this->sql($sql, $return="single");
+			if($colP2 != 0){
+				return false;
+			}
+		}
+
+		return false;
+	}
+
 
 	public function existsPriorityColumn($boardID) {
 		global $db;

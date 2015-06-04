@@ -87,6 +87,13 @@ public function addCard($projectID, $boardID, $color, $name, $columnID, $descrip
 
 		return true;	
 	}
+
+	public function updateColor($cardID, $color){
+		global $db;
+		$sql = "UPDATE Card SET color='{$color}' WHERE card_id='{$cardID}' LIMIT 1;";
+		$db->query($sql);
+		return true;
+	}
 	
 	public function moveCard($cardID, $colID){
 		global $db;
