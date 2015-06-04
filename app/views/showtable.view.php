@@ -115,7 +115,7 @@
 		
 			echo "	
 			<div id='div_{$name_no_whitespace}_{$swimline_name}_1' class='mainPanelBig outline'>
-				<center><p><b> {$name}</b><br> Limit:{$limit} </p></center>
+				<center><p><b> {$name}</b><br> Limit:{$limit}<br><a href='?page=editColumn&columnID={$column_id}'>Edit column</a> </p></center>
 				<div class='fake_underline' style='background-color:{$color};'></div>
 				<div >
 			";
@@ -172,7 +172,7 @@
 						<center>
 						<div id='sub_{$sub_name_no_whitespace}_{$swimline_name}_1' class='child_column_big outline' 
 						style='display:inline-block;'>
-							<center><p><b> {$sub_name}</b><br> Limit: {$sub_limit} </p></center>
+							<center><p><b> {$sub_name}</b><br> Limit: {$sub_limit} <br><a href='?page=editColumn&columnID={$sub_column_id}'>Edit column</a></br> </p></center>
 							<div class='fake_underline_thin' style='background-color:{$color};'></div>
 						";	
 							
