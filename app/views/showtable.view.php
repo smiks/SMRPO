@@ -149,7 +149,7 @@
 							style='height:20px; width:20px;'/>
 						</a><br>
 						<a href='?page=comments&cardID={$card_id}'>Comments</a></br><br>
-						<a href='?page=history&cardID={$card_id}'>History</a></br>
+						<a href='?page=showHistory&cardID={$card_id}'>History</a></br>
 					</div>";
 				}
 			}
@@ -204,7 +204,7 @@
 						</a>
 						<br>
 						<a href='?page=comments&cardID={$card_id}'>Comments</a></br><br>
-						<a href='?page=history&cardID={$card_id}'>History</a></br>
+						<a href='?page=showHistory&cardID={$card_id}'>History</a></br>
 					</div>";
 								}
 							}		
