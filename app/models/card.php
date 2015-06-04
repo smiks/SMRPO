@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Model.php';
+require_once 'app/models/movements.php';
 
 class card extends Model{	
 	
@@ -21,6 +22,10 @@ public function addCard($projectID, $boardID, $color, $name, $columnID, $descrip
 		{
 			$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'WIPViolation', 'WIP Violation', '{$currentUser}', 'WIP Violation happened.', '{$date}');");
 		}
+
+		$move = new movements();
+
+		$move -> moveCard($cardID, $columnID, $boardID, NULL);
 
 		return true;
 	}
