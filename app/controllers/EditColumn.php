@@ -54,11 +54,19 @@ class EditColumn extends Controller{
 		$projectID = $input["projectID"];
 
 		$board = new board();
+		$card = new card();
 
 		$b = $board -> getBoardByProjectID($projectID);
 		$boardID = $b["board_id"];
 
-		$noOfCards = $board -> getNumberOfCardsInColumn($id);
+		$fristchildColumns = $board -> getMinColumnIDByBoardIDandParentID($boardID, $id);
+
+		if($fristchildColumns == NULL) {
+			$noOfCards = $board -> getNumberOfCardsInColumn($id);
+
+		} else {
+			$noOfCards = $card -> countChildCards($boardID, $id);
+		}
 		
 		if ($limit <= $noOfCards && $limit != 0)
 		{
