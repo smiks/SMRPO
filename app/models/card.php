@@ -1,6 +1,8 @@
 <?php
 
 require_once 'Model.php';
+require_once 'app/models/movements.php';
+require_once 'app/models/board.php';
 
 class card extends Model{	
 	
@@ -22,12 +24,34 @@ public function addCard($projectID, $boardID, $color, $name, $columnID, $descrip
 			$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'WIPViolation', 'WIP Violation', '{$currentUser}', 'WIP Violation happened.', '{$date}');");
 		}
 
+		$move = new movements();
+
+		$move -> moveCard($cardID, $columnID, $boardID, NULL);
+
 		return true;
 	}
 	
 	public function countCards($boardID, $columnID){
 		$sql = "SELECT COUNT(*) FROM Card WHERE board_id='{$boardID}' AND column_id='{$columnID}'";
 		return $this->sql($sql, $return="single");
+	}
+
+	public function countChildCards($boardID, $columnID){
+		
+		$board = new board();
+
+		$childColumns = $board -> getColumnsByParent($boardID, $columnID);
+
+		$c = 0;
+
+		foreach($childColumns as $key => $value){
+				$col = $childColumns[$key];
+				$id = $col["column_id"];
+				$sql = "SELECT COUNT(*) FROM Card WHERE board_id='{$boardID}' AND column_id='{$id}'";
+				$c = $c + $this->sql($sql, $return="single");
+			}
+
+		return $c;
 	}
 	
 	public function getCards($projectId, $boardId)

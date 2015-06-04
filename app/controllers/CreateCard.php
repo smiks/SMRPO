@@ -5,6 +5,7 @@ require_once 'app/models/user.php';
 require_once 'app/models/project.php';
 require_once 'app/models/card.php';
 require_once 'app/models/board.php';
+require_once 'app/models/col.php';
 require_once 'core/Cache.php';
 require_once 'core/Functions.php';
 require_once 'core/Global.php';
@@ -54,14 +55,20 @@ class CreateCard extends Controller{
 
 		$card = new card();
 		$board = new board();
+		$colModel = new col();
 
 		$boardID = $board -> getBoardIDByProjectID($projectID);
+
+		//To fejkamo, ker nimamo določenega atributa ob kreiranju. 
+		//V primeru, da še noben stolpec ni z najvišjo prioriteto, potem se avtomatsko premakne v mejnega
 		
 		$topColumns = $board -> getMinColumnIDByBoardIDandParentID($boardID, null);
 
 		$fristchildColumns = $board -> getMinColumnIDByBoardIDandParentID($boardID, $topColumns);
 		
 		$lastchildColumns = $board -> getMaxColumnIDByBoardIDandParentID($boardID, $topColumns);
+
+		$existsPriority = $colModel -> existsPriorityColumn($boardID);
 		
 		if($type == 0)
 		{
@@ -82,15 +89,27 @@ class CreateCard extends Controller{
 			$color = "red";
 			if($fristchildColumns == NULL)
 			{
-				$columnID = $topColumns;
+				if($existsPriority == TRUE){
+					$getCol = $colModel -> getPriorityColumn($boardID);
+					$columnID = $getCol["column_id"];
+				} else {
+					$columnID = $topColumns;
+				}
 			}
 			else
 			{
-				$columnID = $lastchildColumns;
+				if($existsPriority == TRUE){
+					$getCol = $colModel -> getPriorityColumn($boardID);
+					$columnID = $getCol["column_id"];
+					
+				} else {
+					$columnID = $lastchildColumns;
+				}
 			}
 
 			$notExistsSilverBulletInColumn = $card -> notExistsSilverBulletInColumn($columnID, $boardID);
 		}
+		
 
 		//Get limit for column
 
@@ -98,7 +117,7 @@ class CreateCard extends Controller{
 
 		$noOfCards = $board -> getNumberOfCardsInColumn($columnID);
 		
-		if ($limit == $noOfCards && $limit != 0)
+		if ($limit <= $noOfCards && $limit != 0)
 		{
 			$WIPViolation = true;
 		}

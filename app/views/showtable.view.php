@@ -113,12 +113,22 @@
 		
 		if(is_null($parent_id)){
 		
-			echo "	
+			if($isKM) {
+				echo "	
 			<div id='div_{$name_no_whitespace}_{$swimline_name}_1' class='mainPanelBig outline'>
-				<center><p><b> {$name}</b><br> Limit:{$limit} </p></center>
+				<center><p><b> {$name}</b><br> Limit:{$limit}<br><a href='?page=editColumn&columnID={$column_id}&projectID={$projectId}&width={$screenWidth}'>Edit column</a> </p></center>
 				<div class='fake_underline' style='background-color:{$color};'></div>
 				<div >
 			";
+			} else {
+				echo "	
+			<div id='div_{$name_no_whitespace}_{$swimline_name}_1' class='mainPanelBig outline'>
+				<center><p><b> {$name}</b><br> Limit:{$limit} <br> </p></center>
+				<div class='fake_underline' style='background-color:{$color};'></div>
+				<div >
+			";
+			}
+			
 			// <div style='display:flex;justify-content:center;'> to je bil zgornji prazni div, ampak ne delajo pozicije kartic in 
 			
 			//ADDING CARDS TO COLUMNS WITHOUT SUBCOLUMNS:
@@ -149,7 +159,7 @@
 							style='height:20px; width:20px;'/>
 						</a><br>
 						<a href='?page=comments&cardID={$card_id}'>Comments</a></br><br>
-						<a href='?page=history&cardID={$card_id}'>History</a></br>
+						<a href='?page=showHistory&cardID={$card_id}'>History</a></br>
 					</div>";
 				}
 			}
@@ -168,13 +178,24 @@
 						
 						$sub_name_no_whitespace = str_replace(' ', '', $sub_name);
 						
-						echo "
+						if($isKM) {
+							echo "
 						<center>
 						<div id='sub_{$sub_name_no_whitespace}_{$swimline_name}_1' class='child_column_big outline' 
 						style='display:inline-block;'>
-							<center><p><b> {$sub_name}</b><br> Limit: {$sub_limit} </p></center>
+							<center><p><b> {$sub_name}</b><br> Limit: {$sub_limit} <br><a href='?page=editColumn&columnID={$sub_column_id}&projectID={$projectId}&width={$screenWidth}'>Edit column</a></br> </p></center>
 							<div class='fake_underline_thin' style='background-color:{$color};'></div>
 						";	
+						} else {
+							echo "
+						<center>
+						<div id='sub_{$sub_name_no_whitespace}_{$swimline_name}_1' class='child_column_big outline' 
+						style='display:inline-block;'>
+							<center><p><b> {$sub_name}</b><br> Limit: {$sub_limit} <br> </p></center>
+							<div class='fake_underline_thin' style='background-color:{$color};'></div>
+						";	
+						}
+						
 							
 							//ADDING CARDS TO SUBCOLUMNS:
 							$cards = $data[$projectId ]['cards'];
@@ -204,7 +225,7 @@
 						</a>
 						<br>
 						<a href='?page=comments&cardID={$card_id}'>Comments</a></br><br>
-						<a href='?page=history&cardID={$card_id}'>History</a></br>
+						<a href='?page=showHistory&cardID={$card_id}'>History</a></br>
 					</div>";
 								}
 							}		
