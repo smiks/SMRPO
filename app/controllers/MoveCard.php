@@ -49,7 +49,6 @@ class MoveCard extends Controller{
 
 	public function post(&$board, &$card, &$col)
 	{
-		global $_http, $_Domain;
 		$userid = $_SESSION['userid'];
 		$move = new movements();
 		$project = new project();
@@ -63,11 +62,6 @@ class MoveCard extends Controller{
 		$colInfo = $col->getColumn($newColumn);
 		$colLimit = $colInfo['cardLimit'];
 		$numCards = $card->countCards($boardID, $newColumn);
-
-
-		/* URL of project */
-		$url = "?page=showtable&projectID={$projectID}&width={$width}";
-		$url = Functions::internalLink($url);
 
 		/* 	Errors */
 		$error = false;
@@ -86,8 +80,14 @@ class MoveCard extends Controller{
 		/* 	Preveri, ali se upošteva omejitev WIP (če pride do kršitve, se izpiše opozorilo, 
 			kartica pa se lahko premakne samo na izrecno zahtevo; kršitev se avtomatsko zabeleži). 
 			Limit 0 means no limit */
+			$numCards = $colLimit+1; // && $colLimit > 0
 		if($numCards > $colLimit){
-			// TODO 
+			// TODO
+			/* confirmation page */
+			$url = "?page=confirmwip&cardID={$cardID}&newColumn={$newColumn}&boardID={$boardID}&projectID={$projectID}&width={$width}";
+			$url = Functions::internalLink($url);
+			Functions::redirect($url);
+			$error = true;
 		}
 		/* 	Preveri prestavljanje za več stolpcev (prepovedano, izjema je vračanje iz sprejemenga testiranja) */
 
@@ -103,7 +103,9 @@ class MoveCard extends Controller{
 			$success = $card->moveCard($cardID, $newColumn);
 			$lastMoveID = $move->lastStatus($cardID);
 			$move->moveCard($cardID, $newColumn, $boardID, $lastMoveID);
-
+			/* URL of project */
+			$url = "?page=showtable&projectID={$projectID}&width={$width}";
+			$url = Functions::internalLink($url);
 			Functions::redirect($url);
 		}
 	}

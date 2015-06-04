@@ -19,4 +19,4 @@ class history extends Model{
 	}
 	
 	
-}his
+}
