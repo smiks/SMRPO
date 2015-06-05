@@ -51,6 +51,7 @@ Router::make('cumulativeFlow', 'app/controllers/CumulativeFlow.php');
 Router::make('movecard', 'app/controllers/MoveCard.php');
 Router::make('confirmwip', 'app/controllers/Confirmwip.php');
 Router::make('editColumn', 'app/controllers/EditColumn.php');
+Router::make('averageleadtime', 'app/controllers/AverageLeadTime.php');
 Router::route();
 /* optional "garbage collector" */
 $variables = array('user', 'group', 'board', 'project'); /* You can put name of variables that you want to unset in this array. */

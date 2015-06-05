@@ -31,15 +31,15 @@
 			if($isKM){ 
 				if($swimline_name != ""){
 					echo "
-					<a href='?page=copyTable&projectID={$swimline_name}'style='text-decoration:none;'>
-						<img src='../../static/images/copy_icon.png' style='width:20px;height:20px;text-decoration:none;' />
+					<a href='?page=copyTable&projectID={$swimline_name}'style='text-decoration:none;' title='Copy Table'>
+						<img src='../../static/images/copy_icon.png' style='width:20px;height:20px;text-decoration:none;'  title='Copy Table'/>
 					</a>
 					";
 				}
 				else{
 					echo "
 					<a href='?page=copyTable&projectID={$projectID}'style='text-decoration:none;'>
-						<img src='../../static/images/copy_icon.png' style='width:20px;height:20px;text-decoration:none;' />
+						<img src='../../static/images/copy_icon.png' style='width:20px;height:20px;text-decoration:none;'  title='Copy Table'/>
 					</a>
 					";
 				}
@@ -91,6 +91,11 @@
 				font-size:20px;">
 					Cumulative Flow
 				</a>
+				&nbsp; &nbsp; 				
+				<a href="?page=averageLeadTime&boardId={{boardId}}&projectID={{projectID}}&width={{screenWidth}}" style="text-decoration:none; 
+				font-size:20px;">
+					Average Lead Time <img alt='Average Lead Time' title='Average Lead Time' src='../../static/images/analytics_icon.png' style='height:18px; width:18px;'/>
+				</a>				
 			<?php }
 		echo "	
 			</div>

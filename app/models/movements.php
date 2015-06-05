@@ -9,6 +9,16 @@ class movements extends Model{
 		return $this -> sql("SELECT * FROM Movements WHERE board_id='{$boardId}';", $return="array", $key="id");
 	}
 
+	public function getCardMovements($cardID)
+	{
+		return $this -> sql("SELECT * FROM Movements WHERE card_id='{$cardID}';", $return="array", $key="id");
+	}
+
+	public function getCardStats($cardID, $columnID){
+		$sql = "SELECT * FROM Movements WHERE card_id='{$cardID}' AND column_id='{$columnID}';";
+		return $this -> sql($sql, $return="array", $key="id");
+	}
+
 	public function lastStatus($cardID){
 		$sql = "SELECT MAX(id) FROM Movements WHERE card_id='{$cardID}' LIMIT 1;";
 		return $this->sql($sql, $return="single");

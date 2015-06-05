@@ -79,6 +79,11 @@ public function addCard($projectID, $boardID, $color, $name, $columnID, $descrip
 		return($data);
 	}
 	
+	public function getCardName($cardID){
+		$sql = "SELECT name FROM Card WHERE card_id='{$cardID}' LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
+
 	public function updateCard($cardId, $cardTitle, $cardDesc, $developer, $cardSize, $cardDeadLine)
 	{
 		global $db;

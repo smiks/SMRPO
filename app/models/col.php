@@ -17,6 +17,30 @@ class col extends Model{
 		return $this -> sql("SELECT * FROM Col WHERE board_id='{$boardId}';", $return = "array", $key ="column_id");
 	}
 
+	/* returns ID of last subcolumn of main BackLog column */
+	public function getBackLogID($boardID){
+		$BackLog = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('BackLog') LIMIT 1;", $return = "single");
+		return $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND parent_id='{$BackLog}' ORDER BY colOrder DESC LIMIT 1;", $return = "single");
+	}
+
+	/* returns ID of last subcolumn of main Development column */
+	public function getDevelopID($boardID){
+		$Develop = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Development') LIMIT 1;", $return = "single");
+		return $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND parent_id='{$Develop}' ORDER BY colOrder DESC LIMIT 1;", $return = "single");
+	}
+
+	/* returns IDs of all subcolumns of main Development column */
+	public function getDevelopIDs($boardID){
+		$Develop = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Development') LIMIT 1;", $return = "single");
+		return $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND parent_id='{$Develop}';", $return = "array", $key="column_id");
+	}
+
+	/* returns ID of first subcolumn of main Done column */
+	public function getDoneID($boardID){
+		$Done = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Done') LIMIT 1;", $return = "single");
+		return $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND parent_id='{$Done}' ORDER BY colOrder ASC LIMIT 1;", $return = "single");
+	}
+
 	/* reject column: last column of backlog */
 	public function getRejectColumn($boardID){
 		/* check if priority Column exists */
