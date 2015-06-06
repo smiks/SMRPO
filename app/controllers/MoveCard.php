@@ -40,7 +40,9 @@ class MoveCard extends Controller{
 		$currCol  = $cardInfo['column_id'];
 		$columns  = [];
 		foreach($cols as $key => $value){
-			$columns[$key] = $value['name'];
+			if($col->isNeighbour($currCol, $key)){
+				$columns[$key] = $value['name'];
+			}
 		}
 
 		$data = array("columns" => $columns, "cardName" => $cardName, "currCol" => $currCol);

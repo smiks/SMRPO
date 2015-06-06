@@ -5,7 +5,7 @@
 
 <div class="center_block">
 	<form action='' method='post'>
-		Move card to column:<br>
+		Move card to adjacent column:<br>
 		<select name='columnID'>
 		<?
 			foreach($columns as $id => $name){
