@@ -23,6 +23,21 @@ class col extends Model{
 		return $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND parent_id='{$BackLog}' ORDER BY colOrder DESC LIMIT 1;", $return = "single");
 	}
 
+	/* return colOrder depending on column_id and board_id */
+	public function getColOrder($colID, $boardID){
+		$sql = "SELECT colOrder FROM Col WHERE column_id = '{$colID}' AND board_id = '{$boardID}' LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
+
+	/* returns IDs and names of columns between col1 and col2 (both included) */
+	public function getColumnsBetween($col1, $col2, $boardID){
+		$order1 = $this->getColOrder($col1, $boardID);
+		$order2 = $this->getColOrder($col2, $boardID);
+		$sql = "SELECT name, column_id FROM Col WHERE colOrder >= {$order1} AND colOrder <= {$order2} AND board_id = '{$boardID}' ";
+		return $this->sql($sql, $return="array", $key="column_id");
+	}
+
+
 	/* returns ID of last subcolumn of main Development column */
 	public function getDevelopID($boardID){
 		$Develop = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Development') LIMIT 1;", $return = "single");

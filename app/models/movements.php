@@ -19,6 +19,11 @@ class movements extends Model{
 		return $this -> sql($sql, $return="array", $key="id");
 	}
 
+	public function getDates($columnID, $boardID){
+		$sql = "SELECT * FROM Movements WHERE column_id='{$columnID}' AND board_id='{$boardID}';";
+		return $this -> sql($sql, $return="array", $key="id");
+	}
+
 	public function lastStatus($cardID){
 		$sql = "SELECT MAX(id) FROM Movements WHERE card_id='{$cardID}' LIMIT 1;";
 		return $this->sql($sql, $return="single");

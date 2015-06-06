@@ -19,21 +19,26 @@ class AverageLeadTime extends Controller{
 		$move  = new movements();
 		$board = new board();
 		switch($_SERVER['REQUEST_METHOD']){
-			case "GET": $this->get($card); break;
+			case "GET": $this->get($card, $col); break;
 			case "POST": $this->post($card, $col, $move, $board); break;
 		}		
 	}
 	
-	public function get(&$card)
+	public function get(&$card, &$col)
 	{
 		$get = Functions::input("GET");
 		$boardID = $get['boardId'];
 		$cards = $card -> getCardsFromBoard($boardID);
+		$cols  = $col -> getAllColumns($boardID);
 		$cardsData = [];
+		$colsData  = [];
+		foreach($cols as $key => $value){
+			$colsData[$key] = $value['name'];
+		}
 		foreach($cards as $key => $value){
 			$cardsData[$key] = $value['name'];
 		}
-		$data = array("cards" => $cardsData);
+		$data = array("cards" => $cardsData, "cols" => $colsData);
 		$this -> show("averageLeadTime.view.php", $data);
 	}
 
@@ -42,30 +47,35 @@ class AverageLeadTime extends Controller{
 		$post = Functions::input("POST");
 		$projectID = Functions::input("GET")['projectID'];
 		$cards = $post['cards'];
+		$width = Functions::input("GET")['width']+91;
+		if(sizeOf($cards) == 0){
+			$url = "?page=showtable&projectID={$projectID}&width={$width}";
+			$url = Functions::internalLink($url);
+			Functions::redirect($url);
+		}
+
+		$startCol = $post["startCol"];
+		$endCol   = $post["endCol"];
 		$movements  = [];
 		$boardID    = $board->getBoardIDByProjectID($projectID);
-		$BackLogID  = $col->getBackLogID($boardID);
 		$DevelopIDs = $col->getDevelopIDs($boardID);
-		$DoneID     = $col->getDoneID($boardID);
+		$colRange = $col->getColumnsBetween($startCol, $endCol, $boardID);
 
-		$cardBacklog = [];
+
+		/* development statistic */
 		$cardDevelop = [];
-		$cardDone    = [];
-
+		$cardNames = [];
 		foreach($cards as $id){
 			$movements[$id]   = $move->getCardMovements($id);
-			#$cardBacklog[$id] = $move->getCardStats($id, $BackLogID);
+			$cardNames[$id] = $card->getCardName($id);
 			$devStatus = [];
 			foreach($DevelopIDs as $devID => $_){
 				$status = $move->getCardStats($id, $devID);
 				array_push($devStatus, $status);
 			}
 			$cardDevelop[$id] = $devStatus;
-			#$cardDone[$id]    = $move->getCardStats($id, $DoneID);
 		}
 
-		$statistic = [];
-		#dbg($cardDevelop);
 		$datesDiffs = [];
 		foreach($cardDevelop as $cID => $array){
 			foreach($array as $moveLogs){
@@ -86,13 +96,70 @@ class AverageLeadTime extends Controller{
 			}
 		}
 
+
+		/* column range statistic */
+			/* build list with column IDs you are checking */
+			$colRangeIDs = [];
+			$selectedColsNames = [];
+			foreach($colRange as $colArray){
+				foreach($colArray as $key => $value){
+					if($key == "column_id"){
+						$colID = $value;
+						array_push($colRangeIDs, $value);
+					}
+					if($key == "name"){
+						$colName = $value;
+					}
+				}
+				$selectedColsNames[$colID] = $colName;
+			}
+
+
+			/* prepare card-col map */	
+			$cardColMap = array();
+			foreach($movements as $card2 => $cardMoves){
+				foreach($cardMoves as $moveID => $moveStats){
+					
+					/* saved check if column_id is one of selected columns */
+					$selected = false;
+
+					foreach($moveStats as $key => $value){
+						if($key == "column_id"){
+							/* check if column_id is one of selected */
+							if(in_array($value, $colRangeIDs)){
+								$selected = true;
+							}
+							$columnID = $value;
+						}
+						if($key == "date_input"){
+							$dateInput = $value;
+						}
+						if($key == "date_output"){
+							$dateOutput = $value;
+						}
+					}
+					/* if column_id is selected, save it */
+					if($selected){
+						if(!is_null($dateOutput)){
+							$diff = $this->timeDiff($dateInput, $dateOutput);
+						}
+						else{
+							$diff = $this->timeDiff($dateInput, Functions::dateDB());
+						}
+						/* if card gets in and out of the column in same day it counts as half a day */
+						$diff == 0 ? $diff += 0.5 : $diff;	
+						$cardColMap[$card2][$columnID] += $diff;
+					}
+				}
+			}
+
+		/* development statistic */
 		$cards = [];
 		foreach($datesDiffs as $cardID => $time){
 			$cardName = $card->getCardName($cardID);
 			$cards[$cardName] = $time;
 		}
-
-		$data = array("cardsStats" => $cards);
+		$data = array("cardsStats" => $cards, "colNames" => $selectedColsNames, "cardColMap" => $cardColMap, "cardNames" => $cardNames);
 		$this -> show("averageLeadTimeShow.view.php", $data);
 
 	}

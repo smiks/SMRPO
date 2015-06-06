@@ -12,6 +12,33 @@
 				echo"<input type='checkbox' name='cards[]' value='{$id}' class='chk'>{$name}<br>";
 			}
 		?>
+		<br>
+		<b>Start column<b><br>
+		<select name='startCol'>
+		<?
+			foreach($cols as $id => $name){
+				echo"<option value='{$id}'>{$name}</option>";
+			}
+
+		?>
+		</select>
+		<br>
+		<b>End column<b><br>
+		<select name='endCol'>
+		<?
+			$len = sizeOf($cols);
+			$counter = 1;
+			foreach($cols as $id => $name){
+				$selected = "";
+				if($counter == $len){
+					$selected = " selected ";
+				}
+				echo"<option value='{$id}' {$selected}>{$name}</option>";
+				$counter++;
+			}
+
+		?>
+		</select>
 		<input type='submit' value='submit'>
 	</form>
 </div>
