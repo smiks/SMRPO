@@ -147,6 +147,8 @@ class CumulativeFlow extends Controller{
 		$columns = $column -> getAllColumns($boardId);
 		$cols = array();
 		$crds = array();
+		$minColNumber = 50;
+		$maxColNumber = 0;
 		
 		foreach ($cards as $cardId => $val)
 		{
@@ -161,9 +163,30 @@ class CumulativeFlow extends Controller{
 		{
 			$col = $columns[$colId];
 			if(in_array($col['name'], $input))
+			{
 				$cols[$colId] = array("name" => $col['name'], "checked" => true);
+				
+				$colNum = $col['colOrder'];
+				if($colNum < $minColNumber)
+					$minColNumber = $colNum;
+				if($colNum > $maxColNumber)
+					$maxColNumber = $colNum;
+			}
 			else
 				$cols[$colId] = array("name" => $col['name'], "checked" => false);
+		}
+		
+		foreach ($cols as $colId => $val)
+		{
+			$col = $columns[$colId];
+			
+			if($col['colOrder'] >= $minColNumber && $col['colOrder'] <= $maxColNumber)
+				$cols[$colId]['checked'] = true;
+			
+			$parentId = $col['parent_id'];
+			$parent = $columns[$parentId];
+			if($parent['colOrder'] == $minColNumber || $parent ['colOrder'] == $maxColNumber)
+				$cols[$colId]['checked'] = true;
 		}
 
 		$dates = $this -> getDates($fromDate, $toDate);
