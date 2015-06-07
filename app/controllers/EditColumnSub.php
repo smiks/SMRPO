@@ -28,23 +28,6 @@ class EditColumnSub extends Controller{
 	public function get()
 	{
 
-		$columnID = Functions::input("GET")["columnID"];
-		$name = Functions::input("GET")["name"];
-		$limit = (int)(Functions::input("GET")["limit"]);
-		$priority = Functions::input("GET")["priority"];
-		$testing = Functions::input("GET")["testing"];
-		$projectID = (int)(Functions::input()["GET"]["projectID"]);
-		$width= (int)(Functions::input()["GET"]["width"]);
-		$userId = $_SESSION['userid'];
-
-		$colModel = new col();
-
-		$column = $colModel -> getColumn($columnID);
-		
-
-		$data = array("columnID" => $columnID, "projectID" => $projectID, "width" => $width, "name" => $name, "limit" => $limit, "priority" => $priority, "testing" => $testing);
-		$this -> show("editColumn.view.php", $data);
-
 	}
 	
 	public function post()
@@ -52,7 +35,8 @@ class EditColumnSub extends Controller{
 		$input = Functions::input("POST");
 
 		$id = $input["columnID"];
-		$name = $input["name"];
+		$cName = $input["cName"];
+
 		$limit = $input["limit"];
 		$priority = $input["priority"];
 		$testing = $input["testing"];
@@ -75,7 +59,8 @@ class EditColumnSub extends Controller{
 		if(isset($_POST['submitYes'])){
 
 			$column = new col();
-			$column -> updateColumn($id, $name, $limit, $priority, $testing, $boardID, true);
+						
+			$column -> updateColumn($id, $cName, $limit, $priority, $testing, $boardID, true);
 
 			$link = "?page=showtable&projectID={$projectID}&width={$width}";
 			Functions::redirect($link);

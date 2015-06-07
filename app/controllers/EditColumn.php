@@ -80,8 +80,9 @@ class EditColumn extends Controller{
 		if($WIPViolation)
 		{
 			$message = "By changing the limit, WIP violation will occur. Change can be accepted only by an explicit requirement.";
-			$data = array("message" => $message);
-			$this->show("editColumnSub.view.php&projectID={$projectID}&width={$width}&columnID={$columnID}&name={$name}&limit={$limit}&priority={$priority}&testing={$testing}", $data);
+			$data = array("message" => $message, "projectID" => $projectID, "width" => $width, "columnID" => $id, "cName" => $name, "limit" => $limit, "priority" => $priority, "testing" => $testing);
+			
+			$this->show("editColumnSub.view.php", $data);
 		}
 		else {
 			$column = new col();
