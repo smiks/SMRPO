@@ -77,9 +77,6 @@ class EditColumn extends Controller{
 			$WIPViolation = false;
 		}
 		
-		$column = new col();
-		$column -> updateColumn($id, $name, $limit, $priority, $testing, $boardID, $WIPViolation);
-
 		if($WIPViolation)
 		{
 			$message = "By changing the limit, WIP violation will occur. Change can be accepted only by an explicit requirement.";
@@ -87,6 +84,9 @@ class EditColumn extends Controller{
 			$this->show("editColumnSub.view.php", $data);
 		}
 		else {
+			$column = new col();
+			$column -> updateColumn($id, $name, $limit, $priority, $testing, $boardID, $WIPViolation);
+
 			$link = "?page=showtable&projectID={$projectID}&width={$width}";
 			Functions::redirect($link);
 		}

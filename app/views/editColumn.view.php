@@ -24,16 +24,6 @@
 			
 		<label class="cool_font"> Column limit </label><br>
 		<input type ="text" value="<?php echo $limit; ?>" id ="limit" name="limit" placeholder = "Column limit" required /><br>
-			
-		<label class="cool_font"> Highest priority column </label><br>
-		Yes: <input type="radio" value="1" name="priority"<?php if ($priority) echo "checked ";?>>
-		&nbsp;&nbsp;&nbsp;
-		No: <input type="radio" value="0" name="priority" <?php if (!$priority) echo "checked ";?>><br>
-
-		<label class="cool_font"> Acceptance testing column </label><br>
-		Yes: <input type="radio" value="1" name="testing" <?php if ($testing) echo "checked ";?>>
-		&nbsp;&nbsp;&nbsp;
-		No: <input type="radio" value="0" name="testing" <?php if (!$testing) echo "checked ";?>><br>
 
 		<input type="hidden" value="<?php echo $projectID; ?>" name="projectID" id="projectID">
 		<input type="hidden" value="<?php echo $screenWidth; ?>" name="screenWidth" id="screenWidth">
