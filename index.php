@@ -51,6 +51,7 @@ Router::make('cumulativeFlow', 'app/controllers/CumulativeFlow.php');
 Router::make('movecard', 'app/controllers/MoveCard.php');
 Router::make('confirmwip', 'app/controllers/Confirmwip.php');
 Router::make('editColumn', 'app/controllers/EditColumn.php');
+Router::make('editColumnSub', 'app/controllers/EditColumnSub.php');
 Router::make('averageleadtime', 'app/controllers/AverageLeadTime.php');
 Router::make('criticalcards', 'app/controllers/CriticalCards.php');
 Router::make('addtoboard', 'app/controllers/AddToBoard.php');
