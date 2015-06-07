@@ -68,7 +68,7 @@ class EditColumn extends Controller{
 			$noOfCards = $card -> countChildCards($boardID, $id);
 		}
 		
-		if ($limit <= $noOfCards && $limit != 0)
+		if ($limit < $noOfCards && $limit != 0)
 		{
 			$WIPViolation = true;
 		}
