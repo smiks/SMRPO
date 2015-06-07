@@ -2,8 +2,7 @@
 [include]app/views/menu.view.php[/include]
 
 <center>
-
-<br><div class="center_block_header"> Edit Column </div><br>
+<br><div class="center_block_header"> Edit Column - WIP VIOLATION DETECTED </div><br>
 
 <div class="center_block" style="max-width:10%;">
 	
@@ -14,6 +13,19 @@
 		{{message}}
 	<? } ?>
 	</p>
+
+	<form action='' method='post'>
+		<input type="hidden" value="<?php echo $projectID; ?>" name="projectID" id="projectID">
+		<input type="hidden" value="<?php echo $width; ?>" name="width" id="width">
+		<input type="hidden" value="<?php echo $testing; ?>" name="testing" id="testing">
+		<input type="hidden" value="<?php echo $priority; ?>" name="priority" id="priority">
+		<input type="hidden" value="<?php echo $limit; ?>" name="limit" id="limit">
+		<input type="hidden" value="<?php echo $name; ?>" name="name" id="name">
+		<input type="hidden" value="<?php echo $columnID; ?>" name="columnID" id="columnID">
+		<input type='submit' name='submitYes' value='Yes, I want to'>
+		<br>
+		<input type='submit' name='submitNo' value='No, I do not want to'>
+	</form>
 	
 </div>
 </center>
