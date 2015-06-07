@@ -4,6 +4,7 @@
 	<br><div class="center_block_header" style="width:97%">
 		Projects
 		<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>
+		<a href="#criticalCards"><img src="../../static/images/cal_time_icon.png" style="width:20px;height:20px"/></a>
 	</div><br>
    	<table id="field" style="padding:30px;display:block;">
 		<tr>
@@ -32,6 +33,7 @@
                 $start = date('d.m.Y', strtotime($project['date_start']));
                 $end = date('d.m.Y', strtotime($project['date_end']));
                 $group = $project['group'];
+                $groupId = $project['groupId'];
                 $client = strtoupper($project['client']);
                 $boardExists = $project['boardExists'];
                 $numActive = $project['numActive'];
@@ -96,14 +98,13 @@
 									<? echo"<a href='?page=createtable&projectID={$id}'>Create board</a>"; ?>
 								</div>
 							</td>
-						<? } ?>
-						<? if($boardExists == 1) { //ROK ?> 
 							<td style="padding-right:15px;">
-								<div id="menu_option" onClick="location.href='?page=copytable<? echo"&projectID={$id}"; ?>'" style="float:right;">
-									<? echo"<a href='?page=copytable&projectID={$id}'>Copy board</a>"; ?>
+								<div id="menu_option" onClick="location.href='?page=addtoboard<? echo"&projectID={$id}&groupID={$groupId}"; ?>'" style="float:right;">
+									<? echo"<a href='?page=addtoboard&projectID={$id}&groupID={$groupId}'>Add to board</a>"; ?>
 								</div>
 							</td>
-						<? } // ROK ?> 
+						<? } ?>
+						
 					<? } ?>
 			</tr>
 		<?php } ?>
@@ -140,6 +141,40 @@
 				</div>
 				<div class="modal-footer">
 					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+	
+           <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="criticalCards" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">Critical Cards Settings: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					
+						
+					<form action='?page=criticalcards' method='post'>
+						<label class="cool_font"> Enter number of days: </label><br>
+						<input type="number" name="criticalCardsDays" placeholder="Critical cards" required /><br>
+						Info: all cards with deadline range (today + n_days) will flash. 
+						<?php
+						$criticalDays = $_SESSION['criticalDays'];
+						echo "<br>Currently set to value: {$criticalDays}<br>";
+						?>
+						<input type='submit' value='Save settings!' name='submit'><br>
+					</form>
+						
+						
+					
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Cancel</a>  <!--CHANGED TO "#close"-->
 				</div>
 			</div>
 		</div>

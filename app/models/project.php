@@ -120,6 +120,13 @@ class project extends Model{
 		return($data);
 	}
 	
+	public function getGroupId($id){
+		global $db;
+		$q1 = $db -> query("SELECT group_id FROM Group_Project WHERE project_id='{$id}';");
+		$data = $db -> fetch_single($q1);
+		return($data);
+	}
+	
 
 	public function getDevelopers($projectID){
 

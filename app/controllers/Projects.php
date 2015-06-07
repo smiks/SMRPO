@@ -33,9 +33,11 @@ class Projects extends Controller{
 			$project = $projects[$key];
 			$projectID = $project['id_project'];
 			$group = $p->getGroupName($projectID);
+			$groupId = $p -> getGroupId($projectID);
 			$boardExists = $board -> boardExists($projectID);
 			$numActive = $p -> activeUserOnProject($userId, $projectID);
        		$projects[$key]['group'] = $group;
+       		$projects[$key]['groupId'] = $groupId;
        		$projects[$key]['client'] = $project['client'];
         	$projects[$key]['boardExists'] = $boardExists;
         	$projects[$key]['numActive'] = $numActive;
