@@ -68,7 +68,7 @@ class EditColumn extends Controller{
 			$noOfCards = $card -> countChildCards($boardID, $id);
 		}
 		
-		if ($limit <= $noOfCards && $limit != 0)
+		if ($limit < $noOfCards && $limit != 0)
 		{
 			$WIPViolation = true;
 		}
@@ -77,16 +77,17 @@ class EditColumn extends Controller{
 			$WIPViolation = false;
 		}
 		
-		$column = new col();
-		$column -> updateColumn($id, $name, $limit, $priority, $testing, $boardID, $WIPViolation);
-
 		if($WIPViolation)
 		{
 			$message = "By changing the limit, WIP violation will occur. Change can be accepted only by an explicit requirement.";
-			$data = array("message" => $message);
+			$data = array("message" => $message, "projectID" => $projectID, "width" => $width, "columnID" => $id, "cName" => $name, "limit" => $limit, "priority" => $priority, "testing" => $testing);
+			
 			$this->show("editColumnSub.view.php", $data);
 		}
 		else {
+			$column = new col();
+			$column -> updateColumn($id, $name, $limit, $priority, $testing, $boardID, $WIPViolation);
+
 			$link = "?page=showtable&projectID={$projectID}&width={$width}";
 			Functions::redirect($link);
 		}

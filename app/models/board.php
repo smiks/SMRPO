@@ -105,6 +105,15 @@ class board extends Model{
 		
 		return 1 == $numOfCols;
 	}
+	
+	public function insertIntoBoard($boardID, $groupID, $boardName, $projectID)
+	{
+		global $db;
+		$sql = "INSERT INTO Board (board_id, group_id, name, project_id) VALUES ('{$boardID}','{$groupID}','{$boardName}','{$projectID}');";
+		$db -> query($sql);
+		
+		return true;
+	}
 
 	public function getBoardID($groupID, $projectID = 0){
 		if($projectID == 0){
@@ -118,6 +127,11 @@ class board extends Model{
 	
 	public function getBoardIDByProjectID($projectID){
 		$sql = "SELECT board_id FROM Board WHERE project_id = '{$projectID}' LIMIT 1;";
+		return ($this->sql($sql, $return="single"));
+	}
+	
+	public function getBoardName($boardID){
+		$sql = "SELECT name FROM Board WHERE board_id = '{$boardID}' LIMIT 1;";
 		return ($this->sql($sql, $return="single"));
 	}
 	
@@ -137,6 +151,16 @@ class board extends Model{
 	public function getBoardByCardID($cardID){
 		$sql = "SELECT board_id FROM Card WHERE card_id='{$cardID}' LIMIT 1;";
 		return $this->sql($sql, $return="single");
+	}
+	
+	public function getBoards($groupId)
+	{
+		return $this -> sql("SELECT * FROM Board WHERE group_id='{$groupId}';", $return="array", $key="groupId");
+	}
+	
+	public function getBoardsById($groupId)
+	{
+		return $this -> sql("SELECT * FROM Board WHERE group_id='{$groupId}';", $return="array", $key="id");
 	}
 	
 	

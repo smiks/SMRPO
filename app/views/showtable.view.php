@@ -9,13 +9,12 @@
 <center>
 <?php
 	
-	foreach ($data as $projectId => $value){
+	foreach ($data as $projectId => $value){ // tale foreach izrisuje swimline-e
 	
-		
 		$swimline= $data[$projectId];
-		//var_dump($swimline);
 		$swimline_name = reset($swimline['cards'])['project_id'];	
 		$swimline_name = str_replace(' ', '', $swimline_name); // this is actually projectID
+		
 		echo "
 			<div id='swl_{$swimline_name}_1' style='height:135%;width:150%;min-width:15%;'>
 			<br><div class='center_block_header2' style='margin:2px 0 1px 0;line-height:40px;'>		
@@ -101,9 +100,8 @@
 			</div>
 		";
 
-	foreach ($cells as $cellId => $value)
+	foreach ($cells as $cellId => $value) // tale foreach izrisuje stolpce
 	{
-		
 		$cell = $cells[$cellId];
 		$name = $cell['name'];
 		$limit = $cell['limit'];
@@ -149,10 +147,24 @@
 					$card_id = $card['card_id'];
 					$card_color = $card['color'];
 					$card_limit = $card['limit'];
+					$card_deadline = $card['deadline'];
+									
+					// get critical days from session
+					$critical_days = $_SESSION['criticalDays'];
+					$today = date('Y-m-j');
+					$diff = strtotime($card_deadline) - strtotime($today);
+					$diff = $diff / (3600*24);
+									
+					// if-else controlls critical cards
+					if($diff < 0 || $diff <= $critical_days){
+						echo "<div id='card_div' class='card_div_critical' style='border-color:{$card_color};'>";
+					}
+					else{
+						echo "<div id='card_div' class='card_div' style='border-color:{$card_color};'>";
+					}
 					
 
 					echo "
-					<div id='card_div' class='card_div' style='border-color:{$card_color};'>
 						<b>{$card_name}</b><br>
 						<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
 							<img alt='editCard' src='../../static/images/settings_icon.png' 
@@ -193,12 +205,12 @@
 						";	
 						} else {
 							echo "
-						<center>
-						<div id='sub_{$sub_name_no_whitespace}_{$swimline_name}_1' class='child_column_big outline' 
-						style='display:inline-block;'>
-							<center><p><b> {$sub_name}</b><br> Limit: {$sub_limit} <br> </p></center>
-							<div class='fake_underline_thin' style='background-color:{$color};'></div>
-						";	
+							<center>
+							<div id='sub_{$sub_name_no_whitespace}_{$swimline_name}_1' class='child_column_big outline' 
+							style='display:inline-block;'>
+								<center><p><b> {$sub_name}</b><br> Limit: {$sub_limit} <br> </p></center>
+								<div class='fake_underline_thin' style='background-color:{$color};'></div>
+							";	
 						}
 						
 							
@@ -214,24 +226,37 @@
 									$card_description = $card['description'];
 									$card_id = $card['card_id'];
 									$card_color = $card['color'];
-				
+									$card_deadline = $card['deadline'];
 									
-													echo "
-					<div id='card_div' class='card_div' style='border-color:{$card_color};'>
-						<b>{$card_name}</b><br>
-						<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
-							<img alt='editCard' src='../../static/images/settings_icon.png' 
-							style='height:20px; width:23px;'/>
-						</a>
-						&nbsp;
-						<a href='?page=movecard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
-							<img alt='editCard' src='../../static/images/move_icon.png' 
-							style='height:20px; width:20px;'/>
-						</a>
-						<br>
-						<a href='?page=comments&cardID={$card_id}'>Comments</a></br><br>
-						<a href='?page=showHistory&cardID={$card_id}'>History</a></br>
-					</div>";
+									// get critical days from session
+									$critical_days = $_SESSION['criticalDays'];
+									$today = date('Y-m-j');
+									$diff = strtotime($card_deadline) - strtotime($today);
+									$diff = $diff / (3600*24);
+									
+									// if-else controlls critical cards
+									if($diff < 0 || $diff <= $critical_days){
+										echo "<div id='card_div' class='card_div_critical' style='border-color:{$card_color};'>";
+									}
+									else{
+										echo "<div id='card_div' class='card_div' style='border-color:{$card_color};'>";
+									}
+									echo "
+									
+										<b>{$card_name}</b><br>
+										<a href='?page=editcard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
+											<img alt='editCard' src='../../static/images/settings_icon.png' 
+											style='height:20px; width:23px;'/>
+										</a>
+										&nbsp;
+										<a href='?page=movecard&cardID={$card_id}&projectID={$projectId}&width={$screenWidth}' style='text-decoration:none;'>
+											<img alt='editCard' src='../../static/images/move_icon.png' 
+											style='height:20px; width:20px;'/>
+										</a>
+										<br>
+										<a href='?page=comments&cardID={$card_id}'>Comments</a></br><br>
+										<a href='?page=showHistory&cardID={$card_id}'>History</a></br>
+									</div>";
 								}
 							}		
 							
