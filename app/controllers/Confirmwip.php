@@ -90,6 +90,11 @@ class Confirmwip extends Controller{
 			$details = "WIP Violation happened.";
 			$date = Functions::dateDB();
 			$history->insertHistory($cardID, $type, $event, $userid, $details, $date);
+			$colName = $col->getColName($newColumn);
+			$type = "Movement";
+			$event = "Card moved";
+			$details = "Card was moved to column {$colName} (WIP Violation occured)";
+			$history->insertHistory($cardID, $type, $event, $userid, $details, $date);
 			/* URL of project */
 			$url = "?page=showtable&projectID={$projectID}&width={$width}";
 			$url = Functions::internalLink($url);

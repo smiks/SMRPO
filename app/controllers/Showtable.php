@@ -32,6 +32,7 @@ class Showtable extends Controller{
 	private function get($board, $group, $project){
 		
 		$user = new user();
+		$card = new card();
 		$userId = (int)($_SESSION['userid']);
 		$isAdmin = $user -> isAdmin($userId);		
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
@@ -63,18 +64,19 @@ class Showtable extends Controller{
 			
 			$cells = array();
 			$cells = $this -> getCells(0, 160, $screenWidth-30, null, $boardId, $cells);
-			
+			$allProjectID = array();
+
 			foreach($projects as $projectId => $val)
 			{
 				$project = $projects[$projectId];
-				
-				$card = new card();
+				array_push($allProjectID, $projectId);
+
 				$cards = $card -> getCards($projectId, $boardId);
 	
 				$data[$projectId] = array("cards" => $cards);
 			}
 			
-			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM, "isPO" => $isPO, "screenWidth" => $screenWidth, "boardId" => $boardId);
+			$dataToShow = array("data" => $data, "boardName" => $boardName, "groupId" => $groupId, "cells" => $cells, "isEmpty" => $isEmpty, "projectID" => $projectID, "isKM" => $isKM, "isPO" => $isPO, "screenWidth" => $screenWidth, "boardId" => $boardId, "allProjectID"=> $allProjectID);
 			$this->show("showtable.view.php", $dataToShow);
 		}
 	}

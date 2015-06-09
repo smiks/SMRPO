@@ -45,4 +45,10 @@ class movements extends Model{
 			$db->query($sql);
 		}
 	}
+
+	public function getInputDate($boardID, $colID, $cardID)
+	{
+		$sql = "SELECT date_input FROM Movements WHERE board_id='{$boardID}' AND card_id='{$cardID}' AND column_id='{$colID}' ORDER BY date_input ASC LIMIT 1;";
+		return $this -> sql($sql, $return="single");
+	}
 }

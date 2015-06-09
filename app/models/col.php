@@ -37,6 +37,12 @@ class col extends Model{
 		return $this->sql($sql, $return="array", $key="column_id");
 	}
 
+	/* returns name of a column with given ID */
+	public function getColName($columnID){
+		$sql = "SELECT name FROM Col WHERE column_id = '{$columnID}' LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
+
 
 	/* returns ID of last subcolumn of main Development column */
 	public function getDevelopID($boardID){
@@ -55,6 +61,87 @@ class col extends Model{
 		$Done = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Done') LIMIT 1;", $return = "single");
 		return $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND parent_id='{$Done}' ORDER BY colOrder ASC LIMIT 1;", $return = "single");
 	}
+
+	/* returns IDs of all subcolumns of main Done column */
+	public function getDoneIDs($boardID){
+		$Done = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Done') LIMIT 1;", $return = "single");
+		return $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND parent_id='{$Done}';", $return = "array", $key="column_id");
+	}
+
+	/* returns first subcolumn of development or development if it does not have any subcolumn */
+	public function getFirstDevColDate($boardID){
+		$Develop = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Development') LIMIT 1;", $return = "single");
+		$sql = "SELECT COUNT(*) FROM Col WHERE board_id='{$boardID}' AND parent_id='{$Develop}' LIMIT 1;";
+		$subCols = $this -> sql($sql, $return="single");
+		if($subCols > 0){
+			$sql = "SELECT Movements.date_input FROM Movements LEFT JOIN Col ON (Movements.column_id=Col.column_id) WHERE Col.board_id='{$boardID}' AND Col.parent_id='{$Develop}' ORDER BY Col.colOrder ASC, Movements.date_input ASC LIMIT 1;";
+			return $this->sql($sql, $return="single");
+		}
+		$sql = "SELECT Movements.date_input FROM Movements LEFT JOIN Col ON (Movements.column_id=Col.column_id) WHERE Col.board_id='{$boardID}' Col.name LIKE ('Development') ORDER BY Movements.date_input ASC LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
+
+	/* returns cardLimit of a parent of given column */
+	public function getParentLimit($columnID){
+		$sql = "SELECT parent_id FROM Col WHERE column_id = '{$columnID}' LIMIT 1;";
+		$parentID = $this->sql($sql, $return="single");
+		$sql = "SELECT cardLimit FROM Col WHERE column_id = '{$parentID}' LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
+
+
+	/* first column after testing (if any) otherwise first column in done (related to date_input) */
+	public function getNextTesting($boardID){
+
+		/* if no subcolumn return DONE column no matter what */
+		$Done = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Done') LIMIT 1;", $return = "single");
+		$child = $this -> sql("SELECT COUNT(*) FROM Col WHERE board_id='{$boardID}' AND parent_id='{$Done}' LIMIT 1;", $return = "single");
+		if($child == 0){
+			return $Done;
+		}
+
+		/* if Done parent has subcolumns, find testingCol */
+		$sql = "SELECT column_id FROM Col WHERE board_id = '{$boardID}' AND testing_col = 1 LIMIT 1;";
+		$tCol = $this->sql($sql, $return="single");
+		/* if testingCol  return next */
+		if($tCol != 0){
+			$sql = "SELECT column_id
+					FROM Col
+					WHERE board_id =  '{$boardID}' AND parent_id = '{$Done}' AND
+					colOrder > (SELECT colOrder FROM Col WHERE board_id='{$boardID}' AND parent_id='{$Done}' AND testing_col=1) LIMIT 1;";
+			return $this -> sql($sql, $return="single");
+
+		}
+		/* if no testingCol return First */
+		else{
+			$sql = "SELECT column_id
+					FROM Col
+					WHERE board_id =  '{$boardID}' AND parent_id = '{$Done}' ORDER BY colOrder ASC LIMIT 1;";
+			return $this -> sql($sql, $return="single");
+		}	
+		
+	}
+
+
+	/* returns date of first card insert to development columns */
+	public function getStartDevelpomentDate($boardID, $showSQL=false){
+		$innerSQL = "SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE ('Development') LIMIT 1";
+		$sql = "SELECT date_input FROM Movements LEFT JOIN Col ON (Movements.column_id=Col.column_id) WHERE Col.board_id='{$boardID}' AND Col.parent_id = ({$innerSQL}) ORDER BY date_input ASC LIMIT 1;";
+		if($showSQL){
+			echo"<li>{$sql}</li>";
+		}
+		return $this->sql($sql, $return="single");
+	}
+
+	/* returns date of first card insert to done columns (testing column - acceptance ready column is not counted) */
+	public function getStartDoneDate($boardID, $showSQL=false){
+		$innerSQL = "SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE ('Done') LIMIT 1";
+		$sql = "SELECT date_input FROM Movements LEFT JOIN Col ON (Movements.column_id=Col.column_id) WHERE Col.board_id='{$boardID}' AND Col.parent_id = ({$innerSQL}) AND testing_col = 0 ORDER BY date_input ASC LIMIT 1;";
+		if($showSQL){
+			echo"<li>{$sql}</li>";
+		}
+		return $this->sql($sql, $return="single");
+	}	
 
 	/* reject column: last column of backlog */
 	public function getRejectColumn($boardID){

@@ -80,7 +80,17 @@ public function addCard($projectID, $boardID, $color, $name, $columnID, $descrip
 	}
 	
 	public function getCardName($cardID){
-		$sql = "SELECT name FROM Card WHERE card_id='{$cardID}' LIMIT 1;";
+		$sql = "SELECT name FROM Card WHERE card_id = '{$cardID}' LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
+
+	public function getMaxCardSize($boardID){
+		$sql = "SELECT MAX(size) FROM Card WHERE board_id = '{$boardID}' LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
+
+	public function getOldestCard($boardID){
+		$sql = "SELECT date FROM History LEFT JOIN Card ON (History.card_id=Card.card_id) WHERE History.type LIKE ('create') AND board_id='{$boardID}' ORDER BY date ASC LIMIT 1;";
 		return $this->sql($sql, $return="single");
 	}
 
@@ -99,11 +109,37 @@ public function addCard($projectID, $boardID, $color, $name, $columnID, $descrip
 		$db->query($sql);
 		return true;
 	}
+
+	public function updateType($cardID, $type){
+		global $db;
+		$sql = "UPDATE Card SET type='{$type}' WHERE card_id='{$cardID}' LIMIT 1;";
+		$db->query($sql);
+		return true;
+	}	
 	
 	public function moveCard($cardID, $colID){
 		global $db;
 		$sql = "UPDATE Card SET column_id='{$colID}' WHERE card_id='{$cardID}' LIMIT 1;";
 		$db->query($sql);
 		return true;
+	}
+	
+	public function addToShow($cardId)
+	{
+		global $db;
+		$sql = "INSERT INTO Show_Card (card_id, deadline, size, type) VALUES ('{$card_id}', 0, 0, 0);";
+		$db->query($sql);
+		return true;
+	}
+	
+	public function getCardId($boardId, $cardName)
+	{
+		$sql = "SELECT card_id FROM Card WHERE board_id='{$boardId}' AND name LIKE '{$cardName}' LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
+	
+	public function getData($cardId)
+	{
+		return $this -> sql("SELECT * FROM Show_Card WHERE card_id='{$cardId}';", $return="array", $key="card_id");
 	}
 }

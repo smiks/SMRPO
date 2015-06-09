@@ -18,5 +18,11 @@ class history extends Model{
 		return $this -> sql("SELECT * FROM History WHERE card_id='{$cardID}';", $return="array", $key="history_id");
 	}
 	
+	public function getCreateDate($cardID)
+	{
+		$sql = "SELECT date FROM History WHERE card_id='{$cardID}' AND type LIKE ('create');";
+		return $this -> sql($sql, $return="single");
+	}
+	
 	
 }

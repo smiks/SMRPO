@@ -95,6 +95,20 @@ class project extends Model{
 		return ($ret);
 	}
 
+	public function getProjectsByUserID ($userID)
+	{
+		$sql = "SELECT * FROM Users_Groups 
+		LEFT JOIN Group_Project ON (Users_Groups.group_id=Group_Project.group_id) 
+		INNER JOIN Project ON (Group_Project.project_id=Project.id_project) 
+		WHERE Users_Groups.permission LIKE ('_1_') 
+		AND Users_Groups.user_id='{$userID}'
+		AND Project.id_project 
+		NOT IN 
+		(SELECT project_id FROM Board);";
+		
+		return $this -> sql($sql, $return="array", $key="project_id");
+	}
+
 	public function getAllProjects(){
 		return $this->sql("SELECT * FROM Project;", $return = "array", $key ="id_project");
 	}
@@ -117,6 +131,13 @@ class project extends Model{
 		$group = $db -> fetch_single($q1);
 		$q = $db -> query("SELECT group_name FROM Groups WHERE group_id = '{$group}';");
 		$data = $db -> fetch_single($q);
+		return($data);
+	}
+	
+	public function getGroupId($id){
+		global $db;
+		$q1 = $db -> query("SELECT group_id FROM Group_Project WHERE project_id='{$id}';");
+		$data = $db -> fetch_single($q1);
 		return($data);
 	}
 	
@@ -155,6 +176,11 @@ class project extends Model{
 		$sql = "SELECT COUNT(*) FROM Group_Project LEFT JOIN Users_Groups ON (Users_Groups.group_id = Group_Project.group_id)
 				WHERE Users_Groups.user_id = '{$userid}' AND Group_Project.project_id = '{$projectID}' LIMIT 1;";
 		return 0 < $this->sql($sql, $return = "single");
+	}
+
+	public function removeProject($projectID){
+		$sql = "DELETE FROM Project WHERE id_project='{$projectID}' LIMIT 1;";
+		$db -> query($sql);
 	}
 
 	public function updateProject($id, $code, $name, $client, $start, $end, $group)

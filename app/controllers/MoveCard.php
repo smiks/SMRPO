@@ -65,6 +65,7 @@ class MoveCard extends Controller{
 		$projectID = (int)($get['projectID']);
 		$colInfo = $col->getColumn($newColumn);
 		$colLimit = $colInfo['cardLimit'];
+		$parLimit = $col->getParentLimit($newColumn);
 		$cardInfo = $card->getCard($cardID);
 		$currCol  = $cardInfo['column_id'];
 		$numCards = $card->countCards($boardID, $newColumn);
@@ -86,7 +87,8 @@ class MoveCard extends Controller{
 		/* 	Preveri, ali se upošteva omejitev WIP (če pride do kršitve, se izpiše opozorilo, 
 			kartica pa se lahko premakne samo na izrecno zahtevo; kršitev se avtomatsko zabeleži). 
 			Limit 0 means no limit */
-		if($numCards > $colLimit && $colLimit > 0){
+		#echo"<li>{$colLimit} {$numCards} {$parLimit}</li>";exit();
+		if(($colLimit > 0 && $numCards >= $colLimit) || ($numCards >= $parLimit && $parLimit > 0)){
 			/* confirmation page */
 			$url = "?page=confirmwip&cardID={$cardID}&newColumn={$newColumn}&boardID={$boardID}&projectID={$projectID}&width={$width}";
 			$url = Functions::internalLink($url);
@@ -122,7 +124,9 @@ class MoveCard extends Controller{
 				$newColumn = $col->getRejectColumn($boardID);
 				/* updace card color */
 				$color = "660066";
+				$type = "2";
 				$card->updateColor($cardID, $color);
+				#$card->updateType($cardID, $type);
 				$type = "Rejection";
 				$event = "Card rejected";
 				$details = "Card was rejected";
@@ -140,6 +144,12 @@ class MoveCard extends Controller{
 
 		/* Everything ok - user is allowed to move the card */
 		if(!$error){
+			$colName = $col->getColName($newColumn);
+			$type = "Movement";
+			$event = "Card moved";
+			$details = "Card was moved to column {$colName}";
+			$date = Functions::dateDB();
+			$history->insertHistory($cardID, $type, $event, $userid, $details, $date);
 			$success = $card->moveCard($cardID, $newColumn);
 			$lastMoveID = $move->lastStatus($cardID);
 			$move->moveCard($cardID, $newColumn, $boardID, $lastMoveID);

@@ -16,7 +16,7 @@
 		foreach($cardsStats as $name => $time){
 			echo"<li> Card <b>{$name}</b> was under development for <b>{$time}</b> days.";
 			if($time*$tolerance > $average){
-				echo"<a style='color:#990000; text-decoration:none;' title='Took longer than {$tolerPerc}% compared to average.'>!!</a>";
+				echo"<a style='color:#990000; text-decoration:none;' title='Took more than {$tolerPerc}% longer compared to average.'>!!</a>";
 			}
 			echo"</li>";
 			#$total += $time;
