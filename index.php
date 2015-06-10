@@ -55,6 +55,7 @@ Router::make('editColumnSub', 'app/controllers/EditColumnSub.php');
 Router::make('averageleadtime', 'app/controllers/AverageLeadTime.php');
 Router::make('criticalcards', 'app/controllers/CriticalCards.php');
 Router::make('addtoboard', 'app/controllers/AddToBoard.php');
+Router::make('wipViolations', 'app/controllers/WIPViolations.php');
 Router::route();
 /* optional "garbage collector" */
 $variables = array('user', 'group', 'board', 'project'); /* You can put name of variables that you want to unset in this array. */
