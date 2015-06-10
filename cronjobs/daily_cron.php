@@ -4,12 +4,17 @@ require_once '../config/connect.php';
 require_once '../core/Router.php';
 require_once '../core/Functions.php';
 require_once 'user.php';
+require_once 'settings.php';
 
-	$numberOfDays = 10;
+	$settings = new settings();
+	$numberOfDays = (int)($settings -> getCriticalDays());
+	var_dump($numberOfDays);
+	exit();
 
 	function sendMail($to, $subject, $body){
 		$headers .= 'From: Kanbanize <noreply@'.$_Domain.'>'.$eol;
 		mail($to, $subject, $body, $headers);
+		echo"<li>Email is sent to {$to}</li>";
 	}
 
 	function duedates()

@@ -84,13 +84,13 @@ class Confirmwip extends Controller{
 		if(!$error){
 			$success = $card->moveCard($cardID, $newColumn);
 			$lastMoveID = $move->lastStatus($cardID);
+			$colName = $col->getColName($newColumn);
 			$move->moveCard($cardID, $newColumn, $boardID, $lastMoveID);
 			$type = "WIPViolation";
 			$event = "WIP Violation";
-			$details = "WIP Violation happened.";
+			$details = "WIP Violation happened when moving card in column: {$colName}.";
 			$date = Functions::dateDB();
 			$history->insertHistory($cardID, $type, $event, $userid, $details, $date);
-			$colName = $col->getColName($newColumn);
 			$type = "Movement";
 			$event = "Card moved";
 			$details = "Card was moved to column {$colName} (WIP Violation occured)";

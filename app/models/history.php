@@ -17,6 +17,12 @@ class history extends Model{
 	{
 		return $this -> sql("SELECT * FROM History WHERE card_id='{$cardID}';", $return="array", $key="history_id");
 	}
+
+	public function getHistoryForCardIDWIP($cardID)
+	{
+		return $this -> sql("SELECT * FROM History WHERE card_id='{$cardID}' AND type='WIPViolation';", $return="array", $key="history_id");
+	}
+	
 	
 	public function getCreateDate($cardID)
 	{

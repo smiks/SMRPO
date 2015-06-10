@@ -248,6 +248,15 @@ class col extends Model{
 
 		//TUKAJ BO TREBA DODATI ŠE ZAPIS V TABELO ZA WIP KRŠITVE
 
+		$date = date("Y-m-d"); 
+		$columnName = $this -> getColName($columnID);
+		$userID = $_SESSION['userid'];
+
+		if($WIPViolation)
+		{
+			$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('0', 'WIPViolation', 'WIP Violation', '{$userID}', CONCAT('WIP Violation happened in column : ','{$columnName}',', when changing column limit.'), '{$date}');");
+		}
+
 		return true;
 
 	}

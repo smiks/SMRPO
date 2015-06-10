@@ -3,6 +3,7 @@
 require_once 'Model.php';
 require_once 'app/models/movements.php';
 require_once 'app/models/board.php';
+require_once 'app/models/col.php';
 
 class card extends Model{	
 	
@@ -16,12 +17,15 @@ public function addCard($projectID, $boardID, $color, $name, $columnID, $descrip
 		$db -> query("UPDATE Project SET active='0' WHERE id_project='{$projectID}';");
 
 		$date = date("Y-m-d"); 
+		$coll = new col();
+		$collummn = $coll -> getColumn($columnID);
+		$columnName = $collummn['name'];
 
 		$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'create', 'Card Created', '{$currentUser}', CONCAT('Card : ','{$name}'), '{$date}');");
 
 		if($WIPViolation)
 		{
-			$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'WIPViolation', 'WIP Violation', '{$currentUser}', 'WIP Violation happened.', '{$date}');");
+			$db -> query("INSERT INTO History (card_id, type, event, user_id, details, date) VALUES ('{$cardID}', 'WIPViolation', 'WIP Violation', '{$currentUser}', CONCAT('WIP Violation happened in column : ','{$columnName}',', when creating card.'), '{$date}');");
 		}
 
 		$move = new movements();
