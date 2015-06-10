@@ -150,6 +150,33 @@
 		
 	</form>
 </div>
+
+
+       <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Filter' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					<p>
+						Selecing project is mandatory. For Selected project you can select what filters you want to apply <br>
+						(checkboxes on the right) and settings for each one of them (one the left). If you selected Average Lead Time<br>
+						you also have to select column range (start and end column).
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+
+
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="static/js/checkAll.js"></script>
 [include]app/views/footer.view.php[/include]

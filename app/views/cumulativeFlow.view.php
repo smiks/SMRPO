@@ -61,9 +61,10 @@
 		  </script>
 </head>	  
 
-<br><div class="center_block_header" style="width:97%">
-		Cumulative flow
-</div><br>
+<br><div class="center_block_header"> 
+		Cumulative Flow
+		<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>
+	</div><br>
 <div>
 	<div style="width:530px; height: 700px; margin-top: 20px; margin-left:10px; background-color:white; border-radius: 6px; font: 18px/18px BryantProBoldAlternateRegular; float:left">
 		Shown data
@@ -105,5 +106,29 @@
 	
 	</div>
 </div>
+
+       <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Cumulative flow' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					<p>
+						Applied filter settings from previous page are used to draw this cumulative flow chart.<br>
+						You can alter chart settings on the left side. Settings that can be changed are <br>
+						Date (X-axis) and columns (what columns should be presented).
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
 
 [include]app/views/footer.view.php[/include]

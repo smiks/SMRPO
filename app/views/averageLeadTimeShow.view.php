@@ -1,7 +1,10 @@
 [include]app/views/header.view.php[/include]
 [include]app/views/menu.view.php[/include]	
 <center>
-<br><div class="center_block_header"> Analytics - Average Lead Time</div><br>
+	<br><div class="center_block_header"> 
+		Average Lead Time
+		<a href="#info"><img src="../../static/images/info-icon.svg" style="width:20px;height:20px"/></a>
+	</div><br>
 
 <div class="center_block">
 	<?
@@ -52,4 +55,33 @@
 		}
 	?>	
 </center>
+
+       <!-- Modal -->
+		<div style="margin-left:10%;">
+		<div class="modal" id="info" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-header">
+					<br><label class="cool_font" style="font-size:30px;">'Average Lead Time' help: </label><br><br>
+					<a href="#close" class="close" aria-hidden="true">×</a> <!--CHANGED TO "#close"-->
+				</div>
+				<div class="modal-body" align="justify">
+					<p>
+						Applied filter settings from previous page are used to show you cards' statistics.<br>
+						Development statistics, shows how long has each card be in development phase. <br>
+						It also shows minimum, maximum and average time of development phase. <br>
+						If card has been in development phase longer than 25% more than average time, <br>
+						two exclamation marks appear next to length.<br>
+						Statistics, shows how long has each card be in previously selected columns.<br>
+						Travel statistics, shows how long has each card been travelling through the board.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#close" class="btn">Okay, thanks!</a>  <!--CHANGED TO "#close"-->
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	<!-- /Modal -->
+
 [include]app/views/footer.view.php[/include]
