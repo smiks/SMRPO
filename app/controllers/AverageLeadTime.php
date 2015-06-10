@@ -26,19 +26,14 @@ class AverageLeadTime extends Controller{
 	
 	public function get(&$card, &$col)
 	{
-		$get = Functions::input("GET");
-		$boardID = $get['boardId'];
-		$cards = $card -> getCardsFromBoard($boardID);
-		$cols  = $col -> getAllColumns($boardID);
-		$cardsData = [];
-		$colsData  = [];
-		foreach($cols as $key => $value){
-			$colsData[$key] = $value['name'];
-		}
-		foreach($cards as $key => $value){
-			$cardsData[$key] = $value['name'];
-		}
-		$data = array("cards" => $cardsData, "cols" => $colsData);
+		$boardId= (int)(Functions::input()["GET"]["boardID"]);		
+		$projectID = (int)(Functions::input()["GET"]["projectID"]);
+		$width= (int)(Functions::input()["GET"]["width"]);
+		$cards = $_SESSION['cards'];
+
+		dbg($cards);
+
+		exit();
 		$this -> show("averageLeadTime.view.php", $data);
 	}
 

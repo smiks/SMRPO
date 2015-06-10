@@ -66,6 +66,12 @@ class Filter extends Controller{
 	public function post()
 	{
 		$input = Functions::input("POST");
+
+		/* selectedFilters looks like
+		 [0]=> string(8) "creation" [1]=> string(3) "done" [2]=> string(7) "develop" [3]=> string(5) "range" [4]=> string(4) "type" 
+		*/
+		$selectedFilters = $input["filters"];
+
 		$projects = $input['projects'];
 		
 		$fromDateCreation = $input['fromDateCreation'];
@@ -109,70 +115,107 @@ class Filter extends Controller{
 			$cardColor = $card['color'];
 			#var_dump($cardSize);
 			#var_dump($cardType);
-			if($minSize != "" && $maxSize != "" && $cardSize < $minSize && $cardSize > $maxSize)
+
+			/* checking range filter */
+			if(($cardSize < $minSize || $cardSize > $maxSize) && $this->isSelected("range", $selectedFilters))
 			{
+				echo"<li>Range filter was selected</li>";
 				$isOk = false;
 				continue;
 			}
 			
-			if($tip != "" && $cardType != $tip)
+			/* checking type filter */
+			if($tip != 2 && $cardType != $tip && $this->isSelected("type", $selectedFilters))
 			{
-				$isOk = false;
-				continue;				
-			}
-
-			if($tip == 2 && $color != "66066")
-			{
+				echo"<li>Type filter was selected</li>";
 				$isOk = false;
 				continue;
 			}
 
+			/* checking type filter */
+			if($tip == 2 && $cardColor != "660066" && $this->isSelected("type", $selectedFilters))
+			{
+				echo"<li>Type filter was selected</li>";
+				$isOk = false;
+				continue;
+			}
+
+
+			/* checking creation filter */
 			$createdDate = $history -> getCreateDate($cardId);
 			#var_dump($createdDate);
-			if($createdDate < $fromDateCreation || $createdDate > $toDateCreation)
+			if(($createdDate < $fromDateCreation || $createdDate > $toDateCreation) && $this->isSelected("creation", $selectedFilters))
 			{
+				echo"<li>Creation filter was selected</li>";
 				$isOk = false;
 				continue;
 			}
 			
+			/* checking develop filter */
 			$lastDevDate = $column -> getFirstDevColDate($boardID);
+			$isInsideDev = $movement -> checkIfExists($boardID, $cardId, $fromDateDev, $toDateDev);
 			#var_dump($lastDevDate);
-			if($lastDevDate < $fromDateDev || $lastDevDate > $toDateDev)
+			if(!$isInsideDev && $this->isSelected("develop", $selectedFilters))
 			{
+				echo"<li>Develop filter was selected</li>";
 				$isOk = false;
 				continue;
 			}
-			echo"<hr>BID {$boardID}<br>";
+			
 			$colIDNextTesting = $column -> getNextTesting($boardID);
-			echo"<li>{$colIDNextTesting} :: {$cardId}</li>";
-			echo"<br>";
+
+			/* checking done filter */
 			$doneDate = $movement -> getInputDate($boardID, $colIDNextTesting, $cardId);
-			var_dump($doneDate);
-			echo"<br>";
-			if($doneDate < $fromDateDone || $doneDate > $toDateDone)
+			#var_dump($doneDate);
+			if(($doneDate < $fromDateDone || $doneDate > $toDateDone) && $this->isSelected("done", $selectedFilters))
 			{
+				echo"<li>Done filter was selected</li>";
 				$isOk = false;
 				continue;
 			}
 			
 			if($isOk)
 			{
-				$cards[$cardId] = $card;
+				$cards[$cardId] = $movement->getData($cardId);
 			}
+
+			#echo"<hr>BID {$boardID}<br>";
+			#echo"<li>{$colIDNextTesting} :: {$cardId}</li>";
+			#echo"<br>";
 			
 		}
 		
-		var_dump($cards);
 
+		/* what we need */
+			/* we need card_id, column_id, all date_input and all date_output */
+		/* when do we need */
+			/* now */
+		/* what will be key */
+			/* column_id */
+
+		/* 
+			$cards = [ $cardID => [  movemendID => [all movements data of card with id cardID ] ] ]
+		 */
 		$_SESSION['cards'] = $cards;
 		
 		
-		//$url = "?page=[{$goto}]&boardID={$boardID}&projectID={$projects}&width={$width}";
-		//$repl = array("[flow]", "[time]");
-		//$replc = array("cumulativeFlow", "averageLeadTime");
-		//$url = str_replace($repl, $replc, $url);
-		//$url = Functions::internalLink($url);
-		//Functions::redirect($url);
+		$url = "?page=[{$goto}]&boardID={$boardID}&projectID={$projects}&width={$width}";
+		$repl = array("[flow]", "[time]", "[wip]");
+		$replc = array("cumulativeFlow", "averageLeadTime", "wipViolations");
+		$url = str_replace($repl, $replc, $url);
+		$url = Functions::internalLink($url);
+		Functions::redirect($url);
+	}
+
+	private function isSelected($filter, $arrayOfFilters){
+		if(sizeOf($arrayOfFilters) == 0)
+			return false;
+		foreach($arrayOfFilters as $key => $value){
+			#echo"<b>::{$filter}<>{$value}::</b><br>";
+			if($filter == $value)
+				return true;
+		}
+		return false;
 	}
 	
 }

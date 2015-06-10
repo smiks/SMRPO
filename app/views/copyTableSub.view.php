@@ -1,5 +1,5 @@
 [include]app/views/header.view.php[/include]
-[include]app/views/adminmenu.view.php[/include]	
+[include]app/views/menu.view.php[/include]	
 
 <center>
 <br><div class="center_block_header"> Copy table </div><br>

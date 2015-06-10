@@ -13,7 +13,7 @@
 		      axisY:{
 		        title:"Number of cards",
 		        interval: 3,
-		        maximum: <?php echo $number ?>*3
+		        maximum: <?php echo $number; ?>
 		      },
 		      axisX:{
 		        title: "Days",
@@ -66,7 +66,7 @@
 </div><br>
 <div>
 	<div style="width:530px; height: 700px; margin-top: 20px; margin-left:10px; background-color:white; border-radius: 6px; font: 18px/18px BryantProBoldAlternateRegular; float:left">
-		Filter data
+		Shown data
 		<form action='?page=cumulativeFlow&width={{width}}&boardId={{boardId}}&projectID={{projectID}}' method='post'>
 			<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
 			<div style = "float:left; padding-top:10px; padding-left:5px"> From date: </div>
@@ -81,7 +81,6 @@
 					{
 						$col = $cols[$colId];
 						$name = $col['name'];
-						$parentId = $col['parentId'];
 						$checked = $col['checked'];
 						$showCheck = "checked";
 						if(!$checked)
@@ -90,29 +89,13 @@
 					}
 				?>
 			</div>
-			<div style="height:3px; background-color: #3F3F3E;margin-top:33px"></div>
-			<div style = "float:left; padding-top:10px; padding-left:5px"> Select cards: </div> <br><br>
-			<div>
-				<?php
-					foreach($crds as $cardId => $val)
-					{
-						$card = $crds[$cardId];
-						$name = $card ['name'];
-						$colId= $card ['columnId'];
-						$checked = $card['checked'];
-						$showCheck = "checked";
-						if(!$checked)
-							$showCheck ="";
-						echo "<input type='checkbox' name='$name' value='$name' style='margin-left:80px' {$showCheck}>$name<br>";
-					}
-				?>
-			</div>
 			<input type="hidden" value=<?php echo $boardId; ?> name="boardId" id="boardId"/>
 			<input type="hidden" value=<?php echo $projectID; ?> name="projectID" id="projectID"/>
 			<input type="hidden" value=<?php echo $width; ?> name="width" id="width"/>
+			<input type="hidden" value=<?php echo $cards; ?> name="crds" id="crds"/>
+			
 			<input type="submit" value="Show cumulative flow" style = "width: 400px; margin-top:80px"/><br>
 			<?php echo "<a href='?page=showtable&projectID={$projectID}&width={$width}' class='btn_signup'>Back</a>" ?>
-			
 			
 		</form>
 		

@@ -44,9 +44,9 @@ class AddProjectToBoard extends Controller{
 		$oldProjectID = (int)($input["oldproject"]);
 		if($projectID != 0)
 		{
-			$boardID = $board->getBoardIDByProjectID($oldprojectID);
+			$boardID = $board->getBoardIDByProjectID($oldProjectID);
 			$board->updateBoardProject($projectID, $boardID);
-			$project->removeProject($oldprojectID);
+			$project->removeProject($oldProjectID);
 		}
 		$url = "?page=projects";
 		$url = Functions::internalLink($url);

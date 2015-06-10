@@ -43,7 +43,6 @@ class col extends Model{
 		return $this->sql($sql, $return="single");
 	}
 
-
 	/* returns ID of last subcolumn of main Development column */
 	public function getDevelopID($boardID){
 		$Develop = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Development') LIMIT 1;", $return = "single");

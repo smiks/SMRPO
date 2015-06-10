@@ -51,4 +51,38 @@ class movements extends Model{
 		$sql = "SELECT date_input FROM Movements WHERE board_id='{$boardID}' AND card_id='{$cardID}' AND column_id='{$colID}' ORDER BY date_input ASC LIMIT 1;";
 		return $this -> sql($sql, $return="single");
 	}
+
+	public function checkIfExists($boardID, $cardID, $fromDateDev, $toDateDev, $showSQL = false){
+		$Develop = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Development') LIMIT 1;", $return = "single");
+		
+		$sql = "SELECT COUNT(*) FROM Col WHERE board_id='{$boardID}' AND parent_id='{$Develop}' LIMIT 1;";
+		$subCols = $this -> sql($sql, $return="single");
+
+		/* children exist */
+		if($subCols > 0){
+			$Develop = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND parent_id='{$Develop}' ORDER BY colOrder ASC LIMIT 1;", $return = "single");
+		}
+
+		/* huh, no kids you say ?? */
+		$sql = "SELECT COUNT(*) 
+				FROM Movements 
+				WHERE 	card_id='{$cardID}' AND
+						board_id='{$boardID}' AND 
+						column_id='{$Develop}' AND 
+						(date_input BETWEEN '{$fromDateDev}' AND '{$toDateDev}');";
+
+		if($showSQL){
+			echo"<br>{$sql}<br>";
+		}
+
+		$count = $this->sql($sql, $return="single");
+
+		return ($count > 0);
+
+	}
+
+	public function getData($cardID){
+		$sql = "SELECT * FROM Movements WHERE card_id='{$cardID}';";
+		return $this->sql($sql, $return="array", $key="id");
+	}
 }

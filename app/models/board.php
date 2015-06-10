@@ -12,6 +12,13 @@ class board extends Model{
 		$outputVal   = str_replace($replace, $replacement, $value);
 		return $outputVal;
 	}
+	
+	public function updateBoardProject($projectID, $boardID)
+	{
+		global $db;
+		$sql = "UPDATE Board SET project_id='{$projectID}' WHERE board_id='{$boardID}';";
+		$db -> query($sql);
+	}
 
 
 	public function addNewBoard($boardName, $groupID, $projectID, $parentOne, $parentTwo, $parentThree, $subC1, $subC2, $subC3){
@@ -167,6 +174,12 @@ class board extends Model{
 	public function getAllProjects($boardId)
 	{
 		return $this -> sql("SELECT * FROM Board WHERE board_id='{$boardId}';", $return="array", $key="project_id");
+	}
+	
+	public function getProjects($boardId)
+	{
+		$sql = "SELECT project_id, Project.name FROM Project LEFT JOIN Board ON (Project.id_project=Board.project_id) WHERE board_id='{$boardId}';";
+		return $this -> sql($sql, $return="array", $key="project_id");
 	}
 	
 	public function getColumnsByParent($boardID, $parentId)
