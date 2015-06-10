@@ -57,9 +57,10 @@ class Filter extends Controller{
 		/* max card size */
 		$maxSize = $card->getMaxCardSize($boardID);
 
-		/*  */
+		/* columns */
+		$colNames  = $col->getColNames($boardID);
 		
-		$data = array("projects" => $projects, "fromDateCreation" => $fromDateCreation, "fromDateDev" => $fromDateDev, "fromDateDone" => $fromDateDone,"maxSize" => $maxSize, "boardID" => $boardID, "projectID" => $projectID, "width" => $width, "goto" => $goto);
+		$data = array("projects" => $projects, "fromDateCreation" => $fromDateCreation, "fromDateDev" => $fromDateDev, "fromDateDone" => $fromDateDone,"maxSize" => $maxSize, "boardID" => $boardID, "projectID" => $projectID, "width" => $width, "goto" => $goto, "colNames" => $colNames);
 		$this -> show("filter.view.php", $data);
 	}
 	
@@ -88,6 +89,9 @@ class Filter extends Controller{
 		
 		$tip = $input['tip'];
 		$goto = $input['goto'];
+
+		$startCol = $input['startCol'];
+		$endCol   = $input['endCol'];
 		
 		$boardID = $input['boardID'];
 		#$projectID = $input['projectID'];
@@ -142,7 +146,8 @@ class Filter extends Controller{
 
 
 			/* checking creation filter */
-			$createdDate = $history -> getCreateDate($cardId);
+			//$createdDate = $history -> getCreateDate($cardId);
+			$createdDate = $movement->getLowestDate($cardId);
 			#var_dump($createdDate);
 			if(($createdDate < $fromDateCreation || $createdDate > $toDateCreation) && $this->isSelected("creation", $selectedFilters))
 			{
@@ -177,6 +182,7 @@ class Filter extends Controller{
 			if($isOk)
 			{
 				$cards[$cardId] = $movement->getData($cardId);
+				var_dump($cards[$cardId]);
 			}
 
 			#echo"<hr>BID {$boardID}<br>";
@@ -184,6 +190,7 @@ class Filter extends Controller{
 			#echo"<br>";
 			
 		}
+		var_dump($cards);
 		
 
 		/* what we need */
@@ -197,8 +204,9 @@ class Filter extends Controller{
 			$cards = [ $cardID => [  movemendID => [all movements data of card with id cardID ] ] ]
 		 */
 		$_SESSION['cards'] = $cards;
-		
-		
+		$_SESSION['startCol'] = $startCol;
+		$_SESSION['endCol']   = $endCol;
+
 		$url = "?page=[{$goto}]&boardID={$boardID}&projectID={$projects}&width={$width}";
 		$repl = array("[flow]", "[time]", "[wip]");
 		$replc = array("cumulativeFlow", "averageLeadTime", "wipViolations");

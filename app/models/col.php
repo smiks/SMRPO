@@ -43,6 +43,21 @@ class col extends Model{
 		return $this->sql($sql, $return="single");
 	}
 
+	/* returns dictionary column_id => column_name */
+	public function getColNames($boardID){
+		global $db;
+		$sql = "SELECT column_id, name FROM Col WHERE board_id='{$boardID}'";
+		$q = $db->query($sql);
+		$cols = [];
+		while($r=$db->fetch_row($q)){
+			$cid = $r['column_id'];
+			$cname = $r['name'];
+			$cols[$cid] = $cname;
+		}
+
+		return $cols;
+	}
+
 	/* returns ID of last subcolumn of main Development column */
 	public function getDevelopID($boardID){
 		$Develop = $this -> sql("SELECT column_id FROM Col WHERE board_id='{$boardID}' AND name LIKE('Development') LIMIT 1;", $return = "single");

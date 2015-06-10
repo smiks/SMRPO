@@ -15,7 +15,11 @@
 			<?
 			foreach($projects as $projectID2 => $project){
 				$projectName = $project['name'];
-				echo"<option value='{$projectID2}'>{$projectName }</option>";
+				$selected = "";
+				if($projectID2 == $projectID){
+					$selected = " selected ";
+				}
+				echo"<option value='{$projectID2}' {$selected}>{$projectName }</option>";
 			}
 			?>
 			</select><br>
@@ -97,9 +101,46 @@
 		<input type='checkbox' name='filters[]' value='type' class='chk'>			
 		</td>
 		</tr>
+		<?
+		if($goto == "time"){
+		?>
+			<tr>
+				<td>
+			<label class="cool_font">Start Column</label><br>
+			<select name='startCol'>
+			<?
+				foreach($colNames as $id => $name){
+					echo"<option value='{$id}'>{$name}</option>";
+				}
+
+			?>
+			</select>
+			<br>
+			<label class="cool_font">End Column</label><br>
+			<select name='endCol'>
+			<?
+				$len = sizeOf($colNames);
+				$counter = 1;
+				foreach($colNames as $id => $name){
+					$selected = "";
+					if($counter == $len){
+						$selected = " selected ";
+					}
+					echo"<option value='{$id}' {$selected}>{$name}</option>";
+					$counter++;
+				}
+
+			?>
+			</select>				
+				</td>
+			</tr>
+		<?
+		}
+		?>
 		</table>
 		<input type="hidden" name="goto" value="{{goto}}" />
 		<input type="hidden" name="boardID" value="{{boardID}}">
+		<input type="hidden" name="width" value="{{width}}">
 		<input type="submit" value="Submit"/><br>
 		
 		{% if(isset($error)){ %}

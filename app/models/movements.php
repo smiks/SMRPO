@@ -85,4 +85,14 @@ class movements extends Model{
 		$sql = "SELECT * FROM Movements WHERE card_id='{$cardID}';";
 		return $this->sql($sql, $return="array", $key="id");
 	}
+
+	public function getLowestDate($cardID){
+		$sql = "SELECT MIN(date_input) FROM Movements WHERE card_id='{$cardID}' LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}
+
+	public function getHighestDate($cardID){
+		$sql = "SELECT MAX(date_input) FROM Movements WHERE card_id='{$cardID}' LIMIT 1;";
+		return $this->sql($sql, $return="single");
+	}	
 }

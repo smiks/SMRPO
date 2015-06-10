@@ -19,22 +19,96 @@ class AverageLeadTime extends Controller{
 		$move  = new movements();
 		$board = new board();
 		switch($_SERVER['REQUEST_METHOD']){
-			case "GET": $this->get($card, $col); break;
+			case "GET": $this->get($card, $col, $move); break;
 			case "POST": $this->post($card, $col, $move, $board); break;
 		}		
 	}
 	
-	public function get(&$card, &$col)
+	public function get(&$card, &$col, &$moveModel)
 	{
-		$boardId= (int)(Functions::input()["GET"]["boardID"]);		
+		$boardID = (int)(Functions::input()["GET"]["boardID"]);		
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
-		$width= (int)(Functions::input()["GET"]["width"]);
+		$width = (int)(Functions::input()["GET"]["width"]);
 		$cards = $_SESSION['cards'];
+		$colNames  = $col->getColNames($boardID);
+		$cardNames = [];
 
-		dbg($cards);
+		foreach($cards as $cardID => $_){
+			$cardName = $card->getCardName($cardID);
+			$cardNames[$cardID] = $cardName;
+		}
 
-		exit();
-		$this -> show("averageLeadTime.view.php", $data);
+		/* specially for no real reason and because card on kanbanize is creepy */
+		$DevelopIDs = $col->getDevelopIDs($boardID);
+		$cardDevelop = [];
+		$travelTime = [];
+
+		$startCol = $_SESSION['startCol'];
+		$endCol   = $_SESSION['endCol'];
+		$colRange = $col->getColumnsBetween($startCol, $endCol, $boardID);
+
+		/* column range statistic */
+			/* build list with column IDs you are checking */
+			$colRangeIDs = [];
+			foreach($colRange as $colArray){
+				foreach($colArray as $key => $value){
+					if($key == "column_id"){
+						$colID = $value;
+						array_push($colRangeIDs, $value);
+					}
+				}
+			}
+
+		$cardColMap = array();
+		foreach($cards as $cardID => $moves){
+			#echo"<br>CARD ID: {$cardID}";
+			foreach($moves as $moveID => $move){
+				$found = false;
+				$devCard = false;
+				foreach($move as $key => $value){
+					#echo"<li>{$key} => {$value} </li>";
+
+					if($key == "column_id"){
+						if(in_array($value, $colRangeIDs)){
+							$found = true;
+						}
+						$columnID = $value;
+						if(in_array($value, $DevelopIDs)){
+								$devCard = true;
+						}
+					}
+					if($key == "date_input"){
+						$dateInput = $value;
+					}
+					if($key == "date_output"){
+						$dateOutput = $value;
+					}
+				}
+
+				if($found)
+				{
+					if(!is_null($dateOutput)){
+						$diff = $this->timeDiff($dateInput, $dateOutput);
+					}
+					else{
+						$diff = $this->timeDiff($dateInput, Functions::dateDB());
+					}
+					/* if card gets in and out of the column in same day it counts as half a day */
+					$diff == 0 ? $diff += 0.5 : $diff;	
+					$cardColMap[$cardID][$columnID] += $diff;
+					$cardDevelop[$cardID] += $diff;
+					$low  = $moveModel->getLowestDate($cardID);
+					$high = $moveModel->getHighestDate($cardID);
+					$travelTime[$cardID] = $this->timeDiff($low, $high);
+				}
+
+			}
+		}
+
+
+		#dbg($cardColMap);
+		$data = array("colNames" => $colNames, "cardNames" => $cardNames, "cardColMap" => $cardColMap, "cardDev" => $cardDevelop, "traveTime" => $travelTime);
+		$this -> show("averageLeadTimeShow.view.php", $data);
 	}
 
 	public function post(&$card, &$col, &$move, &$board)
