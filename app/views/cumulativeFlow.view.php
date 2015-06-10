@@ -13,7 +13,7 @@
 		      axisY:{
 		        title:"Number of cards",
 		        interval: 3,
-		        maximum: <?php echo $number; ?>
+		        maximum: <?php echo ($number+2); ?>
 		      },
 		      axisX:{
 		        title: "Days",
@@ -92,11 +92,9 @@
 			<input type="hidden" value=<?php echo $boardId; ?> name="boardId" id="boardId"/>
 			<input type="hidden" value=<?php echo $projectID; ?> name="projectID" id="projectID"/>
 			<input type="hidden" value=<?php echo $width; ?> name="width" id="width"/>
-			<input type="hidden" value=<?php echo $cards; ?> name="crds" id="crds"/>
 			
 			<input type="submit" value="Show cumulative flow" style = "width: 400px; margin-top:80px"/><br>
 			<?php echo "<a href='?page=showtable&projectID={$projectID}&width={$width}' class='btn_signup'>Back</a>" ?>
-			
 		</form>
 		
 		
