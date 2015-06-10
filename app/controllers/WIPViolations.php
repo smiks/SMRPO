@@ -42,20 +42,15 @@ class WIPViolations extends Controller{
 
 			//Za vsako kršitev se izpiše številka in ime kartice, datum kršitve, stolpec kršitve, uporabnik, ki je s prestavljanjem kartice povzročil kršitev, in vzrok kršitve. Izpis naj bo urejen po stolpcih.
 
-			toShow[$key]['cardID'] = $cardID;
-			toShow[$key]['cardName'] = $card -> getCardName($cardID);
-			toShow[$key]['date'] = $cardHistory['date'];
-			toShow[$key]['userName'] = $userName;
-			toShow[$key]['userSurname'] = $userSurname;
-			toShow[$key]['details'] = $cardHistory['details'];
+			$toShow[$key]['cardID'] = $cardID;
+			$toShow[$key]['cardName'] = $card -> getCardName($cardID);
+			$toShow[$key]['date'] = $cardHistory['date'];
+			$toShow[$key]['userName'] = $userName;
+			$toShow[$key]['userSurname'] = $userSurname;
+			$toShow[$key]['details'] = $cardHistory['details'];
 		}
 
 		$data = array("toShow" => $toShow);
         $this->show("wipViolations.view.php", $data);
 	}
 }
-
-
-
-
-
