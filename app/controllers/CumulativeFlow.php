@@ -22,45 +22,43 @@ class CumulativeFlow extends Controller{
 	
 	public function get()
 	{
-		$card = new card();
-		$column = new col();
-		$movement = new movements();
-
-		$boardId= (int)(Functions::input()["GET"]["boardId"]);
-		
+		$boardId= (int)(Functions::input()["GET"]["boardID"]);		
 		$projectID = (int)(Functions::input()["GET"]["projectID"]);
 		$width= (int)(Functions::input()["GET"]["width"]);
-		
-		$date = Functions::dateDB();
-		$fromDate = date("Y-m-d", strtotime("-1 month"));
-		
-		
-		$movements = $movement -> getMovements($boardId);
-		$cards = $card -> getCardsFromBoard($boardId);
+		//$cards = [ $cardID => [  movemendID => [all movements data of card with id cardID ] ] ]
+		$cards = $_SESSION['cards'];
+
+		$column = new col();
 		$columns = $column -> getAllColumns($boardId);
+		
 		$cols = array();
-		$crds = array();
-		
-		foreach ($cards as $cardId => $val)
-		{
-			$crd = $cards[$cardId];
-			
-			$crds[$cardId] = array("name" => $crd['name'], "checked" => true);
-		}
-		
+				
 		foreach ($columns as $colId => $val)
 		{
 			$col = $columns[$colId];
 			$cols[$colId] = array("name" => $col['name'], "checked" => true);
-		}			
+		}	
+
+		$date = Functions::dateDB();
+		$fromDate = date("Y-m-d", strtotime("-10 days"));	
 		
 		$dates = $this -> getDates($fromDate, $date);
 		
 		
-		$data= $this -> numOfCards($dates, $movements, $columns, $crds);
-		$numCards = sizeOf($cards);
-
-		$data = array("cols" => $cols, "crds" => $crds, "width" => $width, "projectID" => $projectID, "boardId" => $boardId, "movements" => $movements, "number" => $numCards , "numCards" => $data, "fromDate" => $fromDate, "toDate" => $date);
+		$data= $this -> numOfCards($dates, $cards, $columns);
+		
+		$maxNumber = 0;
+		$number = 0;
+		foreach($data as $date => $columnIDs)
+		{
+			foreach ($columnIDs as $colID => $num)
+				$number += $num;
+			if($maxNumber < $number)
+				$maxNumber = $number;
+			$number = 0;
+		}
+		
+		$data = array("cols" => $cols, "width" => $width, "projectID" => $projectID, "boardId" => $boardId, "number" => $maxNumber, "numCards" => $data, "fromDate" => $fromDate, "toDate" => $date);
 		
 		$this -> show("cumulativeFlow.view.php", $data);
 	}
@@ -84,50 +82,57 @@ class CumulativeFlow extends Controller{
 		return $dates;
 	}
 	
-	public function numOfCards($dates, $movements, $columns, $cards)
+	private function timeDiff($date1, $date2){
+		$date1 = new DateTime($date1);
+		$date2 = new DateTime($date2);
+		$interval = $date1->diff($date2);
+		/* return difference in days */
+		return (int)($interval->format('%a'));
+	}
+	
+	public function numOfCards($dates, $cards, $columns)
 	{
 		$cardsPerDay = array();
-		foreach($dates as $i => $val)
+		foreach ($dates as $i => $date)
 		{
-			$date = $dates[$i];
-			
-			
 			$numberOfCards = array();
-		
-			foreach ($movements as $id => $val)
+			foreach($cards as $cardID => $movementIDs)
 			{
-				$number = 0;
-				$cardId = $movements[$id]['card_id'];
-				if($cards[$cardId]['checked'] == false)
-					continue;
-				if($movements[$id]['date_input'] <= $date && ($movements[$id]['date_output'] == null || $movements[$id]['date_output'] >= $date))
+				foreach($movementIDs as $movementID => $movement)
 				{
-					$colId = $movements[$id]['column_id'];
-					if(array_key_exists($colId, $numberOfCards))
-						$number = $numberOfCards[$colId] + 1;
-					else
-						$number = 1;
+					$columnID = $movement['column_id'];
+					$inputDate = $movement['date_input'];
+					$outputDate = $movement['date_output'];
+					
+					//echo"<li>DATE: {$date}</li>";					
+					if($inputDate <= $date && (is_null($outputDate) || $outputDate >= $date))
+					{
+						$parentID = $columns[$columnID]['parent_id'];
+						$columnToCheck = $columnID;
+						if(!is_null($parentID))
+							$columnToCheck = $parentID;
+
+						if(array_key_exists($columnID, $numberOfCards))
+							$numberOfCards[$columnID] += 1;
+						else
+							$numberOfCards[$columnID] = 1;
 						
-					$numberOfCards[$colId] = $number;
-				}
-			}			
-
-			foreach ($numberOfCards as $colId => $val)
-			{
-				$column = $columns[$colId];
-				$parentId = $column['parent_id'];
-				if($parentId  != null)
-					if(array_key_exists($parentId , $numberOfCards))
-						$numberOfCards[$parentId] = $numberOfCards[$parentId] + $numberOfCards[$colId];
-					else
-						$numberOfCards[$parentId] = $numberOfCards[$colId];
+						if(!is_null($parentID))
+						{
+							if(array_key_exists($parentID, $numberOfCards))
+								$numberOfCards[$parentID] += 1;
+							else
+								$numberOfCards[$parentID] = 1;
+						}
+					}
+				}	
 			}
-
-			$cardsPerDay[$date] = $numberOfCards;	
+			
+			$cardsPerDay[$date] = $numberOfCards;
 		}
+		
 		return $cardsPerDay;
 	}
-
 
 	public function post()
 	{
@@ -137,31 +142,20 @@ class CumulativeFlow extends Controller{
 		$boardId = $input["boardId"];
 		$width= $input["width"];
 		$projectID= $input["projectID"];
+		$width = $input['width'];
 		
-		$card = new card();
+		$cards = $_SESSION['cards'];
+		
 		$column = new col();
-		$movement = new movements();
-		
-		$movements = $movement -> getMovements($boardId);		
-		$cards = $card -> getCardsFromBoard($boardId);
 		$columns = $column -> getAllColumns($boardId);
+		
 		$cols = array();
-		$crds = array();
-		$minColNumber = 50;
+		
+		$minColNumber = 50000;
 		$maxColNumber = 0;
 		
-		foreach ($cards as $cardId => $val)
+		foreach ($columns as $colId => $col)
 		{
-			$crd = $cards[$cardId];
-			if(in_array($crd['name'], $input))
-				$crds[$cardId] = array("name" => $crd['name'], "checked" => true);
-			else
-				$crds[$cardId] = array("name" => $crd['name'], "checked" => false);
-		}
-		
-		foreach ($columns as $colId => $val)
-		{
-			$col = $columns[$colId];
 			if(in_array($col['name'], $input))
 			{
 				$cols[$colId] = array("name" => $col['name'], "checked" => true);
@@ -188,13 +182,23 @@ class CumulativeFlow extends Controller{
 			if($parent['colOrder'] == $minColNumber || $parent ['colOrder'] == $maxColNumber)
 				$cols[$colId]['checked'] = true;
 		}
-
+		
 		$dates = $this -> getDates($fromDate, $toDate);
 		
-		$data= $this -> numOfCards($dates, $movements, $columns, $crds);
-		$numCards = sizeOf($cards);
+		$data= $this -> numOfCards($dates, $cards, $columns);
 		
-		$data = array("cols" => $cols,"crds" => $crds, "width" => $width, "projectID" => $projectID, "boardId" => $boardId, "movements" => $movements, "number" => $numCards , "numCards" => $data, "fromDate" => $fromDate, "toDate" => $toDate);
+		$maxNumber = 0;
+		$number = 0;
+		foreach($data as $date => $columnIDs)
+		{
+			foreach ($columnIDs as $colID => $num)
+				$number += $num;
+			if($maxNumber < $number)
+				$maxNumber = $number;
+			$number = 0;
+		}
+		
+		$data = array("cols" => $cols, "width" => $width, "projectID" => $projectID, "boardId" => $boardId, "number" => $maxNumber, "numCards" => $data, "fromDate" => $fromDate, "toDate" => $toDate);
 		
 		$this -> show("cumulativeFlow.view.php", $data);
 	}
