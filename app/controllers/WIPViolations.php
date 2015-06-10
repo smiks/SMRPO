@@ -28,12 +28,12 @@ class WIPViolations extends Controller{
 		$cards = $_SESSION['cards'];
 		$history = new history();
 		$user = new user();
+		$card = new card();
 
 		$toShow = [];
 
 		foreach ($cards as $key => $value) {
-			$card = $cards[$key];
-			$cardID = $card['card_id'];
+			$cardID = $key;
 			$cardHistory = $history -> getHistoryForCardIDWIP($cardID);
 			$userWIPID = $cardHistory['user_id'];
 			$userWIP = $user -> userInfoByID($userWIPID);
@@ -43,7 +43,7 @@ class WIPViolations extends Controller{
 			//Za vsako kršitev se izpiše številka in ime kartice, datum kršitve, stolpec kršitve, uporabnik, ki je s prestavljanjem kartice povzročil kršitev, in vzrok kršitve. Izpis naj bo urejen po stolpcih.
 
 			toShow[$key]['cardID'] = $cardID;
-			toShow[$key]['cardName'] = $card['name'];
+			toShow[$key]['cardName'] = $card -> getCardName($cardID);
 			toShow[$key]['date'] = $cardHistory['date'];
 			toShow[$key]['userName'] = $userName;
 			toShow[$key]['userSurname'] = $userSurname;
